@@ -14,7 +14,7 @@ import android.view.View;
 public class PixelGridView extends View {
 
     private int numColumns, numRows;
-    private int cellWidth, cellHeight;
+    private float cellWidth, cellHeight;
     private Paint paint = new Paint();
     private boolean[][] cellChecked;
 
@@ -60,8 +60,11 @@ public class PixelGridView extends View {
             numRows = 1;
         }
 
-        cellWidth = this.getWidth() / numColumns;
-        cellHeight = this.getHeight() / numRows;
+        System.out.println("DEVICE W: " + getWidth());
+        System.out.println("DEVICE H: " + getHeight());
+
+        cellWidth = (float) getWidth() / numColumns;
+        cellHeight = (float) getHeight() / numRows;
         cellChecked = new boolean[numColumns][numRows];
 
         /* Invalidate view so it's redrawn */
@@ -70,8 +73,8 @@ public class PixelGridView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int width = this.getWidth();
-        int height = this.getHeight();
+        int width = getWidth();
+        int height = getHeight();
 
         canvas.drawColor(Color.WHITE);
 

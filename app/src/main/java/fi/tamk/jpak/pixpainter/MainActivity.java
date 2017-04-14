@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         PixelGridView pixelGrid = new PixelGridView(this, null);
-        pixelGrid.setNumColumns(4);
-        pixelGrid.setNumRows(6);
+        pixelGrid.setNumColumns(32);
+        pixelGrid.setNumRows(52);
 
         setContentView(pixelGrid);
         //setContentView(R.layout.activity_main);
