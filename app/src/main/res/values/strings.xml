@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PixPainter</string>
+    <string name="create_new_pic">Start drawing</string>
+    <string name="columns">Columns</string>
+    <string name="rows">Rows</string>
 </resources>
