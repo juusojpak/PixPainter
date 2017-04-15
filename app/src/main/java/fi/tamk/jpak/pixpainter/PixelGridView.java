@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -60,9 +61,6 @@ public class PixelGridView extends View {
             numRows = 1;
         }
 
-        System.out.println("DEVICE W: " + getWidth());
-        System.out.println("DEVICE H: " + getHeight());
-
         cellWidth = (float) getWidth() / numColumns;
         cellHeight = (float) getHeight() / numRows;
         cellChecked = new boolean[numColumns][numRows];
@@ -104,13 +102,21 @@ public class PixelGridView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            int column = (int)(event.getX() / cellWidth);
-            int row = (int)(event.getY() / cellHeight);
+        System.out.println("X: " + event.getX());
+        System.out.println("Y: " + event.getY());
 
-            cellChecked[column][row] = !cellChecked[column][row];
-            invalidate();
-        }
+        int column = (int)(event.getX() / cellWidth);
+        int row = (int)(event.getY() / cellHeight);
+        cellChecked[column][row] = true;
+        invalidate();
+
+        return true;
+    }
+
+    @Override
+    public boolean onDragEvent(DragEvent event) {
+        System.out.println("dragX: " + event.getX());
+        System.out.println("dragY: " + event.getY());
 
         return true;
     }
