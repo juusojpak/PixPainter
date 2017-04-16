@@ -45,7 +45,7 @@ public class EditorActivity extends AppCompatActivity {
         }
     }
 
-    public void colorPickerClick(View v) {
+    public void handleColorPickerClick(View v) {
         ColorPickerDialog cpDialog = new ColorPickerDialog();
         cpDialog.show(getFragmentManager(), "ColorPickerDialog");
     }
