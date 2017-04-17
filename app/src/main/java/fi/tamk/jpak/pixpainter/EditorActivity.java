@@ -1,18 +1,19 @@
 package fi.tamk.jpak.pixpainter;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
+import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
 
-public class EditorActivity extends AppCompatActivity {
+public class EditorActivity extends AppCompatActivity implements ColorPickerListener {
 
     private PixelGridView pixelgrid;
-    private Color primaryColor;
+    private ColorPickerDialog cpDialog;
+    private ColorARGB primaryColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,20 @@ public class EditorActivity extends AppCompatActivity {
         if (editorLayout != null) {
             editorLayout.addView(pixelgrid, params);
         }
+
+        cpDialog = new ColorPickerDialog();
+        cpDialog.setColorPickerListener(this);
     }
 
     public void handleColorPickerClick(View v) {
-        ColorPickerDialog cpDialog = new ColorPickerDialog();
         cpDialog.show(getFragmentManager(), "ColorPickerDialog");
+    }
+
+    @Override
+    public void onColorChanged(ColorARGB color) {
+        System.out.println("Color changed: " + color.toHexString());
+        System.out.println(color.toString());
+        this.primaryColor = color;
+        pixelgrid.setPaintColor(color);
     }
 }
