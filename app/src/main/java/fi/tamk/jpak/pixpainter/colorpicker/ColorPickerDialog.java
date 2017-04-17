@@ -1,6 +1,7 @@
 package fi.tamk.jpak.pixpainter.colorpicker;
 
 import android.app.DialogFragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,6 +93,7 @@ public class ColorPickerDialog extends DialogFragment {
                 greenBar.setProgress(selectedColor.getG());
                 blueBar.setProgress(selectedColor.getB());
                 setColorTexts();
+                setColorArea();
             }
 
         } catch (NullPointerException e) {
@@ -114,6 +116,12 @@ public class ColorPickerDialog extends DialogFragment {
         ((TextView) getDialog().findViewById(R.id.blueText)).setText(bStr);
     }
 
+    public void setColorArea() {
+        View area = getDialog().findViewById(R.id.colorArea);
+        int colorInt = Color.parseColor(selectedColor.toHexString());
+        area.setBackgroundColor(colorInt);
+    }
+
     public class ColorBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
         @Override
@@ -130,6 +138,7 @@ public class ColorPickerDialog extends DialogFragment {
             }
 
             setColorTexts();
+            setColorArea();
         }
 
         @Override
