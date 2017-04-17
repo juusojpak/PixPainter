@@ -3,9 +3,12 @@
     <string name="create_new_pic">Start drawing</string>
     <string name="columns">Columns</string>
     <string name="rows">Rows</string>
-    <string name="red">Red: </string>
-    <string name="green">Green: </string>
-    <string name="blue">Blue: </string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="redVal">Red: </string>
+    <string name="greenVal">Green: </string>
+    <string name="blueVal">Blue: </string>
     <string name="select">Select</string>
     <string name="cancel">Cancel</string>
 </resources>

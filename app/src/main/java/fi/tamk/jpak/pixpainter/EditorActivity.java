@@ -12,7 +12,6 @@ import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
 public class EditorActivity extends AppCompatActivity implements ColorPickerListener {
 
     private PixelGridView pixelgrid;
-    private ColorPickerDialog cpDialog;
     private ColorARGB primaryColor;
 
     @Override
@@ -32,6 +31,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         pixelgrid = new PixelGridView(this, null);
         pixelgrid.setNumColumns(cols);
         pixelgrid.setNumRows(rows);
+        primaryColor = new ColorARGB();
 
         LinearLayout editorLayout = (LinearLayout) findViewById(R.id.rootLayout)
                 .findViewById(R.id.editorLayout);
@@ -44,12 +44,11 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         if (editorLayout != null) {
             editorLayout.addView(pixelgrid, params);
         }
-
-        cpDialog = new ColorPickerDialog();
-        cpDialog.setColorPickerListener(this);
     }
 
     public void handleColorPickerClick(View v) {
+        ColorPickerDialog cpDialog = ColorPickerDialog.newInstance(primaryColor);
+        cpDialog.setColorPickerListener(this);
         cpDialog.show(getFragmentManager(), "ColorPickerDialog");
     }
 

@@ -85,7 +85,6 @@ public class PixelGridView extends View {
             for (int j = 0; j < numRows; j++) {
                 if (cellChecked[i][j]) {
                     ColorARGB c = pixels[i][j];
-                    System.out.println("c: " + c.toHexString());
                     paint.setARGB(c.getA(), c.getR(), c.getG(), c.getB());
                     canvas.drawRect(
                         i * cellWidth,
@@ -118,7 +117,6 @@ public class PixelGridView extends View {
         int row = (int)(event.getY() / cellHeight);
 
         cellChecked[column][row] = true;
-        System.out.println("PAINT: " + paintColor.toString());
         pixels[column][row].setA(paintColor.getA());
         pixels[column][row].setR(paintColor.getR());
         pixels[column][row].setG(paintColor.getG());

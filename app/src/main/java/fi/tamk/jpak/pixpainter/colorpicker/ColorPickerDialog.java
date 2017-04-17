@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import fi.tamk.jpak.pixpainter.ColorARGB;
 import fi.tamk.jpak.pixpainter.R;
@@ -19,17 +20,30 @@ public class ColorPickerDialog extends DialogFragment {
 
     private ColorARGB selectedColor;
     private ColorPickerListener cpListener;
+    private SeekBar redBar, greenBar, blueBar;
 
     public ColorPickerDialog() {}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.color_dialog, container);
+    public static ColorPickerDialog newInstance(ColorARGB selectedColor) {
+        ColorPickerDialog cpd = new ColorPickerDialog();
+        Bundle args = new Bundle();
+        args.putInt("a", selectedColor.getA());
+        args.putInt("r", selectedColor.getR());
+        args.putInt("g", selectedColor.getG());
+        args.putInt("b", selectedColor.getB());
+        cpd.setArguments(args);
+
+        return cpd;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        getDialog().setTitle("Color Picker");
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        selectedColor = new ColorARGB();
+        selectedColor.setA(getArguments().getInt("a"));
+        selectedColor.setR(getArguments().getInt("r"));
+        selectedColor.setG(getArguments().getInt("g"));
+        selectedColor.setB(getArguments().getInt("b"));
+        return inflater.inflate(R.layout.color_dialog, container);
     }
 
     @Override
@@ -48,7 +62,6 @@ public class ColorPickerDialog extends DialogFragment {
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("CANCEL");
                     dismiss();
                 }
             });
@@ -57,10 +70,7 @@ public class ColorPickerDialog extends DialogFragment {
             selectButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("SELECT");
-
                     if (cpListener != null) {
-                        System.out.println("ColorPicker NOT NULL");
                         cpListener.onColorChanged(selectedColor);
                     }
 
@@ -68,15 +78,21 @@ public class ColorPickerDialog extends DialogFragment {
                 }
             });
 
-            SeekBar redBar = (SeekBar) getDialog().findViewById(R.id.redBar);
-            SeekBar greenBar = (SeekBar) getDialog().findViewById(R.id.greenBar);
-            SeekBar blueBar = (SeekBar) getDialog().findViewById(R.id.blueBar);
+            redBar = (SeekBar) getDialog().findViewById(R.id.redBar);
+            greenBar = (SeekBar) getDialog().findViewById(R.id.greenBar);
+            blueBar = (SeekBar) getDialog().findViewById(R.id.blueBar);
+
             ColorBarChangeListener barListener = new ColorBarChangeListener();
             redBar.setOnSeekBarChangeListener(barListener);
             greenBar.setOnSeekBarChangeListener(barListener);
             blueBar.setOnSeekBarChangeListener(barListener);
 
-            selectedColor = new ColorARGB();
+            if (selectedColor != null) {
+                redBar.setProgress(selectedColor.getR());
+                greenBar.setProgress(selectedColor.getG());
+                blueBar.setProgress(selectedColor.getB());
+                setColorTexts();
+            }
 
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -87,6 +103,15 @@ public class ColorPickerDialog extends DialogFragment {
 
     public void setColorPickerListener(ColorPickerListener listener) {
         cpListener = listener;
+    }
+
+    public void setColorTexts() {
+        String rStr = getString(R.string.redVal) + " " + selectedColor.getR();
+        String gStr = getString(R.string.greenVal) + " " + selectedColor.getG();
+        String bStr = getString(R.string.blueVal) + " " + selectedColor.getB();
+        ((TextView) getDialog().findViewById(R.id.redText)).setText(rStr);
+        ((TextView) getDialog().findViewById(R.id.greenText)).setText(gStr);
+        ((TextView) getDialog().findViewById(R.id.blueText)).setText(bStr);
     }
 
     public class ColorBarChangeListener implements SeekBar.OnSeekBarChangeListener {
@@ -103,6 +128,8 @@ public class ColorPickerDialog extends DialogFragment {
             } else if (seekBar.getId() == R.id.blueBar) {
                 selectedColor.setB(progress);
             }
+
+            setColorTexts();
         }
 
         @Override
