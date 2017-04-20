@@ -11,4 +11,5 @@
     <string name="blueVal">Blue: </string>
     <string name="select">Select</string>
     <string name="cancel">Cancel</string>
+    <string name="color">Color</string>
 </resources>
