@@ -9,7 +9,7 @@ public class Pixel {
     private boolean isChecked;
 
     public Pixel() {
-        this.color = new ColorARGB(0, 0, 0, 0);
+        this.color = new ColorARGB();
         this.isChecked = false;
     }
 

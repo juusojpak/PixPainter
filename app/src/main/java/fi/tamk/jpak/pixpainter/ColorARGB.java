@@ -10,17 +10,18 @@ public class ColorARGB {
     private int a, r, g, b;
 
     public ColorARGB() {
-        this.a = 255;
+        this.a = 0;
         this.r = 0;
         this.g = 0;
         this.b = 0;
     }
 
     public ColorARGB(int a, int r, int g, int b) {
-        setA(a);
-        setR(r);
-        setG(g);
-        setB(b);
+        this.a = 0;
+        this.r = 0;
+        this.g = 0;
+        this.b = 0;
+        setARGB(a, r, g, b);
     }
 
     public int getA() {
@@ -28,9 +29,7 @@ public class ColorARGB {
     }
 
     public void setA(int a) {
-        if (a >= 0 && a <= 255) {
-            this.a = a;
-        }
+        if (a >= 0 && a <= 255) this.a = a;
     }
 
     public int getR() {
@@ -38,9 +37,7 @@ public class ColorARGB {
     }
 
     public void setR(int r) {
-        if (r >= 0 && r <= 255) {
-            this.r = r;
-        }
+        if (r >= 0 && r <= 255) this.r = r;
     }
 
     public int getG() {
@@ -48,9 +45,7 @@ public class ColorARGB {
     }
 
     public void setG(int g) {
-        if (g >= 0 && g <= 255) {
-            this.g = g;
-        }
+        if (g >= 0 && g <= 255) this.g = g;
     }
 
     public int getB() {
@@ -58,9 +53,14 @@ public class ColorARGB {
     }
 
     public void setB(int b) {
-        if (b >= 0 && b <= 255) {
-            this.b = b;
-        }
+        if (b >= 0 && b <= 255) this.b = b;
+    }
+
+    public void setARGB(int a, int r, int g, int b) {
+        if (a >= 0 && a <= 255) this.a = a;
+        if (r >= 0 && r <= 255) this.r = r;
+        if (g >= 0 && g <= 255) this.g = g;
+        if (b >= 0 && b <= 255) this.b = b;
     }
 
     public String toString() {
