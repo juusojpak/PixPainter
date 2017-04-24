@@ -20,8 +20,8 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         setContentView(R.layout.activity_editor);
 
         Intent intent = getIntent();
-        int cols = 1;
-        int rows = 1;
+        int cols = 20;
+        int rows = 24;
 
         if (intent != null) {
             cols = intent.getExtras().getInt("columns");

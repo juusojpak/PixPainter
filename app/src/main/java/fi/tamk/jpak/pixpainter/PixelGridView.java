@@ -18,8 +18,7 @@ public class PixelGridView extends View {
     private float cellWidth, cellHeight;
     private Paint paint = new Paint();
     private ColorARGB paintColor;
-    private ColorARGB[][] pixels;
-    private boolean[][] cellChecked;
+    private Pixel[][] pixels;
 
     public PixelGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -66,8 +65,7 @@ public class PixelGridView extends View {
 
         cellWidth = (float) getWidth() / numColumns;
         cellHeight = (float) getHeight() / numRows;
-        cellChecked = new boolean[numColumns][numRows];
-        pixels = new ColorARGB[numColumns][numRows];
+        pixels = new Pixel[numColumns][numRows];
         initializePixels();
 
         /* Invalidate view so it's redrawn */
@@ -83,8 +81,8 @@ public class PixelGridView extends View {
         /* Fill selected cells */
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
-                if (cellChecked[i][j]) {
-                    ColorARGB c = pixels[i][j];
+                if (pixels[i][j].isChecked()) {
+                    ColorARGB c = pixels[i][j].getColor();
                     paint.setARGB(c.getA(), c.getR(), c.getG(), c.getB());
                     canvas.drawRect(
                         i * cellWidth,
@@ -115,14 +113,16 @@ public class PixelGridView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int column = (int)(event.getX() / cellWidth);
         int row = (int)(event.getY() / cellHeight);
+        ColorARGB tmp = pixels[column][row].getColor();
+        tmp.setA(paintColor.getA());
+        tmp.setR(paintColor.getR());
+        tmp.setG(paintColor.getG());
+        tmp.setB(paintColor.getB());
 
-        cellChecked[column][row] = true;
-        pixels[column][row].setA(paintColor.getA());
-        pixels[column][row].setR(paintColor.getR());
-        pixels[column][row].setG(paintColor.getG());
-        pixels[column][row].setB(paintColor.getB());
-
+        pixels[column][row].setChecked(true);
+        pixels[column][row].setColor(tmp);
         invalidate();
+
         return true;
     }
 
@@ -137,7 +137,7 @@ public class PixelGridView extends View {
     public void initializePixels() {
         for (int i = 0; i < numColumns; i++) {
             for (int j = 0; j < numRows; j++) {
-                pixels[i][j] = new ColorARGB(0, 255, 255, 255);
+                pixels[i][j] = new Pixel();
             }
         }
     }
