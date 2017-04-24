@@ -13,6 +13,16 @@ public abstract class Tool {
     private ColorARGB primaryColor;
     private ColorARGB secondaryColor;
 
+    public Tool() {
+        this.name = "Unknown";
+        this.strokeSize = 1;
+    }
+
+    public Tool(String name, int strokeSize){
+        this.name = name;
+        this.strokeSize = strokeSize;
+    }
+
     public String getName() {
         return name;
     }

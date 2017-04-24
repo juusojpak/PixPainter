@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
+import fi.tamk.jpak.pixpainter.tools.Shape;
+import fi.tamk.jpak.pixpainter.tools.ShapeType;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 
 public class EditorActivity extends AppCompatActivity implements ColorPickerListener {
@@ -18,6 +20,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     private ColorARGB secondaryColor;
     private Tool activeTool;
     private Pencil pencilTool;
+    private Shape shapeTool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         primaryColor = new ColorARGB(255, 0, 0, 0);
         secondaryColor = new ColorARGB(255, 255, 255, 255);
         pencilTool = new Pencil();
+        shapeTool = new Shape();
+
         activeTool = pencilTool;
         activeTool.setPrimaryColor(primaryColor);
         activeTool.setSecondaryColor(secondaryColor);
@@ -64,10 +69,21 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         cpDialog.show(getFragmentManager(), "ColorPickerDialog");
     }
 
+    public void handlePencilClick(View v) {
+        this.activeTool = pencilTool;
+        updateActiveToolColor();
+        pixelgrid.setTool(activeTool);
+    }
+
+    public void handleShapeClick(View v) {
+        this.activeTool = shapeTool;
+        updateActiveToolColor();
+        pixelgrid.setTool(activeTool);
+    }
+
     @Override
     public void onColorChanged(ColorARGB color) {
         System.out.println("Color changed: " + color.toHexString());
-        System.out.println(color.toString());
         this.primaryColor = color;
         updateActiveToolColor();
     }

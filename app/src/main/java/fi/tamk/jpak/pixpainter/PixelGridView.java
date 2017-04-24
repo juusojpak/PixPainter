@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -72,7 +71,7 @@ public class PixelGridView extends View {
 
         cellWidth = (float) getWidth() / numColumns;
         cellHeight = (float) getHeight() / numRows;
-        pixels = new Pixel[numColumns][numRows];
+        pixels = new Pixel[numRows][numColumns];
         initializePixels();
 
         /* Invalidate view so it's redrawn */
@@ -86,16 +85,17 @@ public class PixelGridView extends View {
         canvas.drawColor(Color.WHITE);
 
         /* Fill selected cells */
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numColumns; j++) {
                 if (pixels[i][j].isChecked()) {
+
                     ColorARGB c = pixels[i][j].getColor();
                     paint.setARGB(c.getA(), c.getR(), c.getG(), c.getB());
                     canvas.drawRect(
-                        i * cellWidth,
-                        j * cellHeight,
-                        (i + 1) * cellWidth,
-                        (j + 1) * cellHeight,
+                        j * cellWidth,
+                        i * cellHeight,
+                        (j + 1) * cellWidth,
+                        (i + 1) * cellHeight,
                         paint
                     );
                 }
@@ -123,17 +123,9 @@ public class PixelGridView extends View {
         return true;
     }
 
-    @Override
-    public boolean onDragEvent(DragEvent event) {
-        System.out.println("dragX: " + event.getX());
-        System.out.println("dragY: " + event.getY());
-
-        return true;
-    }
-
     public void initializePixels() {
-        for (int i = 0; i < numColumns; i++) {
-            for (int j = 0; j < numRows; j++) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numColumns; j++) {
                 pixels[i][j] = new Pixel();
             }
         }
