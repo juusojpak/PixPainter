@@ -10,27 +10,61 @@
     tools:context="fi.tamk.jpak.pixpainter.EditorActivity">
 
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:id="@+id/toolsetupLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/colorPrimaryDark">
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/editorLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6">
+        android:layout_weight="8">
     </LinearLayout>
 
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:orientation="horizontal"
         android:gravity="center"
+        android:padding="6dp"
         android:background="@color/colorPrimaryDark">
 
         <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/colorPickerButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_margin="1dp"
             android:text="@string/color"
             android:onClick="handleColorPickerClick"/>
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/pencilButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/pencil"
+            android:onClick="handlePencilClick"/>
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/shapeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/shape"
+            android:onClick="handleShapeClick"/>
 
     </LinearLayout>
 </LinearLayout>
