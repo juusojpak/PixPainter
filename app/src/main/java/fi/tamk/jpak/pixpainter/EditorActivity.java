@@ -8,11 +8,16 @@ import android.widget.LinearLayout;
 
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
+import fi.tamk.jpak.pixpainter.tools.Pencil;
+import fi.tamk.jpak.pixpainter.tools.Tool;
 
 public class EditorActivity extends AppCompatActivity implements ColorPickerListener {
 
     private PixelGridView pixelgrid;
     private ColorARGB primaryColor;
+    private ColorARGB secondaryColor;
+    private Tool activeTool;
+    private Pencil pencilTool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +36,14 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         pixelgrid = new PixelGridView(this, null);
         pixelgrid.setNumColumns(cols);
         pixelgrid.setNumRows(rows);
-        primaryColor = new ColorARGB();
+
+        primaryColor = new ColorARGB(255, 0, 0, 0);
+        secondaryColor = new ColorARGB(255, 255, 255, 255);
+        pencilTool = new Pencil();
+        activeTool = pencilTool;
+        activeTool.setPrimaryColor(primaryColor);
+        activeTool.setSecondaryColor(secondaryColor);
+        pixelgrid.setTool(activeTool);
 
         LinearLayout editorLayout = (LinearLayout) findViewById(R.id.rootLayout)
                 .findViewById(R.id.editorLayout);
@@ -57,6 +69,11 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         System.out.println("Color changed: " + color.toHexString());
         System.out.println(color.toString());
         this.primaryColor = color;
-        pixelgrid.setPaintColor(color);
+        updateActiveToolColor();
+    }
+
+    public void updateActiveToolColor() {
+        this.activeTool.setPrimaryColor(this.primaryColor);
+        this.activeTool.setSecondaryColor(this.secondaryColor);
     }
 }

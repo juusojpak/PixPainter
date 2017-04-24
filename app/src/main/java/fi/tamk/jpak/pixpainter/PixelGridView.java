@@ -9,6 +9,9 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
+import fi.tamk.jpak.pixpainter.tools.Pencil;
+import fi.tamk.jpak.pixpainter.tools.Tool;
+
 /**
  * Created by Juuso Pakarinen on 15/04/2017.
  */
@@ -16,17 +19,21 @@ public class PixelGridView extends View {
 
     private int numColumns, numRows;
     private float cellWidth, cellHeight;
-    private Paint paint = new Paint();
-    private ColorARGB paintColor;
+    private Pencil defaultTool;
+    private Tool tool;
+    private Paint paint;
     private Pixel[][] pixels;
 
     public PixelGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        paintColor = new ColorARGB();
+        defaultTool = new Pencil();
+        tool = defaultTool;
+        paint = new Paint();
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        paint.setARGB(255, 0, 0, 0);
+        paint.setARGB(0, 0, 0, 0);
         numColumns = 1;
         numRows = 1;
+        calculateDimensions();
     }
 
     public void setNumColumns(int numColumns) {
@@ -104,25 +111,15 @@ public class PixelGridView extends View {
         for (int i = 1; i < numRows; i++) {
             canvas.drawLine(0, i * cellHeight, width, i * cellHeight, paint);
         }
-
-        paint.setARGB(paintColor.getA(), paintColor.getR(), paintColor.getG(),
-                paintColor.getB());
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int column = (int)(event.getX() / cellWidth);
         int row = (int)(event.getY() / cellHeight);
-        ColorARGB tmp = pixels[column][row].getColor();
-        tmp.setA(paintColor.getA());
-        tmp.setR(paintColor.getR());
-        tmp.setG(paintColor.getG());
-        tmp.setB(paintColor.getB());
+        tool.handleDraw(row, column, pixels);
 
-        pixels[column][row].setChecked(true);
-        pixels[column][row].setColor(tmp);
         invalidate();
-
         return true;
     }
 
@@ -142,8 +139,11 @@ public class PixelGridView extends View {
         }
     }
 
-    public void setPaintColor(ColorARGB color) {
-        paintColor = color;
-        paint.setARGB(color.getA(), color.getR(), color.getG(), color.getB());
+    public void setTool(Tool tool) {
+        if (tool != null) {
+            this.tool = tool;
+        } else {
+            this.tool = defaultTool;
+        }
     }
 }
