@@ -15,7 +15,7 @@ public class Pixel {
         this.color = new ColorARGB();
     }
 
-    public Pixel(int x, int y, ColorARGB color, boolean isChecked) {
+    public Pixel(int x, int y, ColorARGB color) {
         this.x = x;
         this.y = y;
         this.color = color;

@@ -40,7 +40,9 @@ public class PaintBucket extends Tool {
                                 && !marked[p.getY()][p.getX()]) {
 
                             marked[p.getY()][p.getX()] = true;
-                            p.setColor(newColor);
+                            p.setColor(new ColorARGB(newColor.getA(),
+                                    newColor.getR(), newColor.getG(),
+                                    newColor.getB()));
 
                             if ((p.getX() + 1) < pixels[0].length) {
                                 queue.add(pixels[p.getY()][p.getX() + 1]);

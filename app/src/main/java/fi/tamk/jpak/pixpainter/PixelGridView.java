@@ -122,9 +122,11 @@ public class PixelGridView extends View {
         System.out.println(tool.getType());
 
         if (tool.getType() == ToolType.FILL) {
+            System.out.println("FILLING");
             tool.handleDraw(row, column, pixels, primaryColor,
                     pixels[row][column].getColor());
         } else {
+            System.out.println("DRAWING");
             tool.handleDraw(row, column, pixels, primaryColor, secondaryColor);
         }
 
