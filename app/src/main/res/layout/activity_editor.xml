@@ -18,6 +18,16 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@color/colorPrimaryDark">
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/colorPickerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/color"
+            android:onClick="handleColorPickerClick"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -41,21 +51,21 @@
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/colorPickerButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/color"
-            android:onClick="handleColorPickerClick"/>
-
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/pencilButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
             android:text="@string/pencil"
             android:onClick="handlePencilClick"/>
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/brushButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/brush"
+            android:onClick="handleBrushClick"/>
 
         <Button
             style="?android:attr/buttonBarButtonStyle"

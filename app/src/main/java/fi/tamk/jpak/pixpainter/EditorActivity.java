@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
+import fi.tamk.jpak.pixpainter.tools.Brush;
 import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Shape;
@@ -26,6 +27,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     private ColorARGB secondaryColor;
     private Tool activeTool;
     private Pencil pencilTool;
+    private Brush brushTool;
     private Shape shapeTool;
     private PaintBucket bucketTool;
 
@@ -53,6 +55,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         pixelgrid.setColors(primaryColor, secondaryColor);
 
         pencilTool = new Pencil();
+        brushTool = new Brush(3);
         shapeTool = new Shape();
         bucketTool = new PaintBucket();
         activeTool = pencilTool;
@@ -107,6 +110,12 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         highlightToolButton();
     }
 
+    public void handleBrushClick(View v) {
+        this.activeTool = brushTool;
+        updatePixelGrid();
+        highlightToolButton();
+    }
+
     @Override
     public void onColorChanged(ColorARGB color) {
         this.primaryColor = color;
@@ -126,12 +135,19 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
 
         int activeColor = 0xffed9135;
 
-        if (activeTool.getType() == ToolType.PEN) {
-            toolButtons.get(1).setTextColor(activeColor);
-        } else if (activeTool.getType() == ToolType.SHAPE) {
-            toolButtons.get(2).setTextColor(activeColor);
-        } else if (activeTool.getType() == ToolType.FILL) {
-            toolButtons.get(3).setTextColor(activeColor);
+        switch (activeTool.getType()) {
+            case PEN:
+                toolButtons.get(0).setTextColor(activeColor);
+                break;
+            case BRUSH:
+                toolButtons.get(1).setTextColor(activeColor);
+                break;
+            case SHAPE:
+                toolButtons.get(2).setTextColor(activeColor);
+                break;
+            case FILL:
+                toolButtons.get(3).setTextColor(activeColor);
+                break;
         }
     }
 }

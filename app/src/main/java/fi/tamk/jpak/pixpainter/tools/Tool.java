@@ -9,16 +9,13 @@ import fi.tamk.jpak.pixpainter.Pixel;
 public abstract class Tool {
 
     private ToolType type;
-    private int strokeSize;
 
     public Tool() {
         this.type = null;
-        this.strokeSize = 1;
     }
 
-    public Tool(ToolType type, int strokeSize){
+    public Tool(ToolType type){
         this.type = type;
-        this.strokeSize = strokeSize;
     }
 
     public ToolType getType() {
@@ -27,14 +24,6 @@ public abstract class Tool {
 
     public void setType(ToolType type) {
         this.type = type;
-    }
-
-    public int getStrokeSize() {
-        return strokeSize;
-    }
-
-    public void setStrokeSize(int strokeSize) {
-        this.strokeSize = strokeSize;
     }
 
     public abstract void handleDraw(int row, int col, Pixel[][] pixels,

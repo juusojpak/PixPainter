@@ -9,7 +9,7 @@ import fi.tamk.jpak.pixpainter.Pixel;
 public class Pencil extends Tool {
 
     public Pencil() {
-        super(ToolType.PEN, 1);
+        super(ToolType.PEN);
     }
 
     @Override

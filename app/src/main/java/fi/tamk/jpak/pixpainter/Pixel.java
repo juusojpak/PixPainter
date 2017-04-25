@@ -44,4 +44,22 @@ public class Pixel {
     public void setColor(ColorARGB color) {
         this.color = color;
     }
+
+    public void blendColor(ColorARGB blendColor, int fade) {
+        int a, r, g, b;
+        int rDiff = Math.abs(this.color.getR() - blendColor.getR());
+        int gDiff = Math.abs(this.color.getG() - blendColor.getG());
+        int bDiff = Math.abs(this.color.getB() - blendColor.getB());
+
+        a = this.color.getA() + (blendColor.getA() / fade);
+        r = this.color.getR() + (rDiff / fade);
+        g = this.color.getG() + (gDiff / fade);
+        b = this.color.getB() + (bDiff / fade);
+        if (a > 255) a = 255;
+        if (r > 255) r = 255;
+        if (g > 255) g = 255;
+        if (b > 255) b = 255;
+
+        this.color.setARGB(a, r, g, b);
+    }
 }

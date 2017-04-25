@@ -12,7 +12,7 @@ import fi.tamk.jpak.pixpainter.Pixel;
 public class PaintBucket extends Tool {
 
     public PaintBucket() {
-        super(ToolType.FILL, 1);
+        super(ToolType.FILL);
     }
 
     @Override

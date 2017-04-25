@@ -13,15 +13,36 @@ public class Shape extends Tool {
     private int height;
 
     public Shape() {
-        super(ToolType.SHAPE, 6);
+        super(ToolType.SHAPE);
         this.type = ShapeType.RECTANGLE;
         this.width = 6;
         this.height = 6;
     }
 
     public Shape(ShapeType type, int width, int height) {
+        super(ToolType.SHAPE);
         this.type = type;
         this.width = width;
+        this.height = height;
+    }
+
+    public ShapeType getShapeType() {
+        return type;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
         this.height = height;
     }
 
