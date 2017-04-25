@@ -8,9 +8,9 @@ import android.widget.LinearLayout;
 
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
+import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Shape;
-import fi.tamk.jpak.pixpainter.tools.ShapeType;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 
 public class EditorActivity extends AppCompatActivity implements ColorPickerListener {
@@ -21,6 +21,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     private Tool activeTool;
     private Pencil pencilTool;
     private Shape shapeTool;
+    private PaintBucket bucketTool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +43,12 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
 
         primaryColor = new ColorARGB(255, 0, 0, 0);
         secondaryColor = new ColorARGB(255, 255, 255, 255);
+        pixelgrid.setColors(primaryColor, secondaryColor);
+
         pencilTool = new Pencil();
         shapeTool = new Shape();
-
+        bucketTool = new PaintBucket();
         activeTool = pencilTool;
-        activeTool.setPrimaryColor(primaryColor);
-        activeTool.setSecondaryColor(secondaryColor);
         pixelgrid.setTool(activeTool);
 
         LinearLayout editorLayout = (LinearLayout) findViewById(R.id.rootLayout)
@@ -71,25 +72,28 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
 
     public void handlePencilClick(View v) {
         this.activeTool = pencilTool;
-        updateActiveToolColor();
-        pixelgrid.setTool(activeTool);
+        updatePixelGrid();
     }
 
     public void handleShapeClick(View v) {
         this.activeTool = shapeTool;
-        updateActiveToolColor();
-        pixelgrid.setTool(activeTool);
+        updatePixelGrid();
+    }
+
+    public void handleFillClick(View v) {
+        this.activeTool = bucketTool;
+        updatePixelGrid();
     }
 
     @Override
     public void onColorChanged(ColorARGB color) {
         System.out.println("Color changed: " + color.toHexString());
         this.primaryColor = color;
-        updateActiveToolColor();
+        updatePixelGrid();
     }
 
-    public void updateActiveToolColor() {
-        this.activeTool.setPrimaryColor(this.primaryColor);
-        this.activeTool.setSecondaryColor(this.secondaryColor);
+    public void updatePixelGrid() {
+        pixelgrid.setTool(activeTool);
+        pixelgrid.setColors(primaryColor, secondaryColor);
     }
 }

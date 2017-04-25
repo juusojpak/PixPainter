@@ -126,8 +126,6 @@ public class ColorPickerDialog extends DialogFragment {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            System.out.println(seekBar);
-            System.out.println(progress);
 
             if (seekBar.getId() == R.id.redBar) {
                 selectedColor.setR(progress);

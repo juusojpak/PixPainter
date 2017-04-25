@@ -9,19 +9,17 @@ import fi.tamk.jpak.pixpainter.Pixel;
 public class Pencil extends Tool {
 
     public Pencil() {
-        super("Pencil", 1);
+        super(ToolType.PEN, 1);
     }
 
     @Override
-    public void handleDraw(int row, int col, Pixel[][] pixels) {
-
-        System.out.println("PENCIL DRAW");
+    public void handleDraw(int row, int col, Pixel[][] pixels,
+                           ColorARGB color1, ColorARGB color2) {
 
         ColorARGB tmp = pixels[row][col].getColor();
-        tmp.setARGB(getPrimaryColor().getA(), getPrimaryColor().getR(),
-                getPrimaryColor().getG(), getPrimaryColor().getB());
+        tmp.setARGB(color1.getA(), color1.getR(),
+                color1.getG(), color1.getB());
 
-        pixels[row][col].setChecked(true);
         pixels[row][col].setColor(tmp);
     }
 }

@@ -14,4 +14,5 @@
     <string name="color">Color</string>
     <string name="pencil">Pencil</string>
     <string name="shape">Shape</string>
+    <string name="fill">Fill</string>
 </resources>

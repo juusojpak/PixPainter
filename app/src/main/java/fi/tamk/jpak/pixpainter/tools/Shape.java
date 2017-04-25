@@ -13,7 +13,7 @@ public class Shape extends Tool {
     private int height;
 
     public Shape() {
-        super("Shape", 6);
+        super(ToolType.SHAPE, 6);
         this.type = ShapeType.RECTANGLE;
         this.width = 6;
         this.height = 6;
@@ -26,27 +26,27 @@ public class Shape extends Tool {
     }
 
     @Override
-    public void handleDraw(int row, int col, Pixel[][] pixels) {
-
-        System.out.println("SHAPE DRAW");
+    public void handleDraw(int row, int col, Pixel[][] pixels,
+                           ColorARGB color1, ColorARGB color2) {
 
         switch (this.type) {
             case RECTANGLE:
-                drawRectangle(row, col, pixels);
+                drawRectangle(row, col, pixels, color1, color2);
                 break;
             default:
-                drawRectangle(row, col, pixels);
+                drawRectangle(row, col, pixels, color1, color2);
                 break;
         }
     }
 
-    public void drawRectangle(int row, int col, Pixel[][] pixels) {
+    public void drawRectangle(int row, int col, Pixel[][] pixels,
+                              ColorARGB color1, ColorARGB color2) {
 
         /* Left side */
         for (int i = 0; i < height; i++) {
             if ((row + i) < pixels.length) {
                 Pixel p = pixels[row + i][col];
-                drawPixel(p, getPrimaryColor());
+                drawPixel(p, color1);
             }
         }
 
@@ -54,7 +54,7 @@ public class Shape extends Tool {
         for (int i = 0; i < width; i++) {
             if ((col + i) < pixels[0].length) {
                 Pixel p = pixels[row][col + i];
-                drawPixel(p, getPrimaryColor());
+                drawPixel(p, color1);
             }
         }
 
@@ -63,7 +63,7 @@ public class Shape extends Tool {
             for (int i = 0; i < height; i++) {
                 if ((row + i) < pixels.length) {
                     Pixel p = pixels[row + i][((col + width) - 1)];
-                    drawPixel(p, getPrimaryColor());
+                    drawPixel(p, color1);
                 }
             }
         }
@@ -73,7 +73,7 @@ public class Shape extends Tool {
             for (int i = 0; i < width; i++) {
                 if ((col + i) < pixels[0].length) {
                     Pixel p = pixels[((row + height) - 1)][col + i];
-                    drawPixel(p, getPrimaryColor());
+                    drawPixel(p, color1);
                 }
             }
         }
@@ -81,6 +81,5 @@ public class Shape extends Tool {
 
     public void drawPixel(Pixel p, ColorARGB color) {
         p.getColor().setARGB(color.getA(), color.getR(), color.getG(), color.getB());
-        p.setChecked(true);
     }
 }

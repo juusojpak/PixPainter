@@ -5,17 +5,36 @@ package fi.tamk.jpak.pixpainter;
  */
 public class Pixel {
 
+    private int x;
+    private int y;
     private ColorARGB color;
-    private boolean isChecked;
 
-    public Pixel() {
+    public Pixel(int x, int y) {
+        this.x = x;
+        this.y = y;
         this.color = new ColorARGB();
-        this.isChecked = false;
     }
 
-    public Pixel(ColorARGB color, boolean isChecked) {
+    public Pixel(int x, int y, ColorARGB color, boolean isChecked) {
+        this.x = x;
+        this.y = y;
         this.color = color;
-        this.isChecked = isChecked;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public ColorARGB getColor() {
@@ -24,13 +43,5 @@ public class Pixel {
 
     public void setColor(ColorARGB color) {
         this.color = color;
-    }
-
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
     }
 }

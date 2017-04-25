@@ -8,27 +8,25 @@ import fi.tamk.jpak.pixpainter.Pixel;
  */
 public abstract class Tool {
 
-    private String name;
+    private ToolType type;
     private int strokeSize;
-    private ColorARGB primaryColor;
-    private ColorARGB secondaryColor;
 
     public Tool() {
-        this.name = "Unknown";
+        this.type = null;
         this.strokeSize = 1;
     }
 
-    public Tool(String name, int strokeSize){
-        this.name = name;
+    public Tool(ToolType type, int strokeSize){
+        this.type = type;
         this.strokeSize = strokeSize;
     }
 
-    public String getName() {
-        return name;
+    public ToolType getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(ToolType type) {
+        this.type = type;
     }
 
     public int getStrokeSize() {
@@ -39,21 +37,6 @@ public abstract class Tool {
         this.strokeSize = strokeSize;
     }
 
-    public ColorARGB getPrimaryColor() {
-        return primaryColor;
-    }
-
-    public void setPrimaryColor(ColorARGB primaryColor) {
-        this.primaryColor = primaryColor;
-    }
-
-    public ColorARGB getSecondaryColor() {
-        return secondaryColor;
-    }
-
-    public void setSecondaryColor(ColorARGB secondaryColor) {
-        this.secondaryColor = secondaryColor;
-    }
-
-    public abstract void handleDraw(int row, int col, Pixel[][] pixels);
+    public abstract void handleDraw(int row, int col, Pixel[][] pixels,
+                                    ColorARGB color1, ColorARGB color2);
 }

@@ -8,8 +8,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Tool;
+import fi.tamk.jpak.pixpainter.tools.ToolType;
 
 /**
  * Created by Juuso Pakarinen on 15/04/2017.
@@ -21,6 +23,8 @@ public class PixelGridView extends View {
     private Pencil defaultTool;
     private Tool tool;
     private Paint paint;
+    private ColorARGB primaryColor;
+    private ColorARGB secondaryColor;
     private Pixel[][] pixels;
 
     public PixelGridView(Context context, AttributeSet attrs) {
@@ -87,18 +91,15 @@ public class PixelGridView extends View {
         /* Fill selected cells */
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numColumns; j++) {
-                if (pixels[i][j].isChecked()) {
-
-                    ColorARGB c = pixels[i][j].getColor();
-                    paint.setARGB(c.getA(), c.getR(), c.getG(), c.getB());
-                    canvas.drawRect(
+                ColorARGB c = pixels[i][j].getColor();
+                paint.setARGB(c.getA(), c.getR(), c.getG(), c.getB());
+                canvas.drawRect(
                         j * cellWidth,
                         i * cellHeight,
                         (j + 1) * cellWidth,
                         (i + 1) * cellHeight,
                         paint
-                    );
-                }
+                );
             }
         }
 
@@ -115,9 +116,17 @@ public class PixelGridView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int column = (int)(event.getX() / cellWidth);
-        int row = (int)(event.getY() / cellHeight);
-        tool.handleDraw(row, column, pixels);
+        int column = (int) (event.getX() / cellWidth);
+        int row = (int) (event.getY() / cellHeight);
+
+        System.out.println(tool.getType());
+
+        if (tool.getType() == ToolType.FILL) {
+            tool.handleDraw(row, column, pixels, primaryColor,
+                    pixels[row][column].getColor());
+        } else {
+            tool.handleDraw(row, column, pixels, primaryColor, secondaryColor);
+        }
 
         invalidate();
         return true;
@@ -126,9 +135,14 @@ public class PixelGridView extends View {
     public void initializePixels() {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < numColumns; j++) {
-                pixels[i][j] = new Pixel();
+                pixels[i][j] = new Pixel(j, i);
             }
         }
+    }
+
+    public void setColors(ColorARGB primaryColor, ColorARGB secondaryColor) {
+        if (primaryColor != null) this.primaryColor = primaryColor;
+        if (secondaryColor != null) this.secondaryColor = secondaryColor;
     }
 
     public void setTool(Tool tool) {
