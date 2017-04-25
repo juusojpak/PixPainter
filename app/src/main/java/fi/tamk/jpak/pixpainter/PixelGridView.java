@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.tools.ToolType;
@@ -119,14 +118,10 @@ public class PixelGridView extends View {
         int column = (int) (event.getX() / cellWidth);
         int row = (int) (event.getY() / cellHeight);
 
-        System.out.println(tool.getType());
-
         if (tool.getType() == ToolType.FILL) {
-            System.out.println("FILLING");
             tool.handleDraw(row, column, pixels, primaryColor,
                     pixels[row][column].getColor());
         } else {
-            System.out.println("DRAWING");
             tool.handleDraw(row, column, pixels, primaryColor, secondaryColor);
         }
 

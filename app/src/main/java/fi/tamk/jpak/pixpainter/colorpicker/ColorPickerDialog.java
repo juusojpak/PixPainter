@@ -49,6 +49,7 @@ public class ColorPickerDialog extends DialogFragment {
 
     @Override
     public void onResume() {
+
         try {
 
             /*
