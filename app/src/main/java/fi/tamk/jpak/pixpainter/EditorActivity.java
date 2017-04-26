@@ -1,6 +1,7 @@
 package fi.tamk.jpak.pixpainter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
@@ -43,6 +45,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     private Brush brushTool;
     private Shape shapeTool;
     private PaintBucket bucketTool;
+    private AlertDialog clearAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,11 +179,14 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.item1:
+                    case R.id.saveLocal:
                         saveImageToFile(false);
                         return true;
-                    case R.id.item2:
+                    case R.id.exportGallery:
                         saveImageToFile(true);
+                        return true;
+                    case R.id.clearEditor:
+                        clearImage();
                         return true;
                     default:
                         return false;
@@ -249,5 +255,29 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
                 e.printStackTrace();
             }
         }
+    }
+
+    public void clearImage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Clear image");
+        builder.setMessage("Are you sure?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                pixelgrid.initializePixels();
+                pixelgrid.invalidate();
+            }
+        });
+        builder.setNegativeButton("No", null);
+
+        clearAlert = builder.create();
+        clearAlert.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                clearAlert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(0xff3f8c00);
+                clearAlert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(0xffe22b28);
+            }
+        });
+
+        clearAlert.show();
     }
 }

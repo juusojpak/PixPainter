@@ -19,4 +19,5 @@
     <string name="saveToLocal">Save</string>
     <string name="exportToGallery">Export to Gallery</string>
     <string name="exportedToGalleryToast">Exported to Gallery</string>
+    <string name="clearEditor">Clear image</string>
 </resources>
