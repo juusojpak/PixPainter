@@ -16,4 +16,5 @@
     <string name="brush">Brush</string>
     <string name="shape">Shape</string>
     <string name="fill">Fill</string>
+    <string name="savedToGalleryToast">Saved to Gallery</string>
 </resources>
