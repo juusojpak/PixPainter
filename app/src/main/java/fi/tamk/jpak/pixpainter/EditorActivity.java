@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -226,7 +227,12 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
                         f.getAbsolutePath(),
                         fileName,
                         "PixPainter image");
+
+                Toast.makeText(this,
+                    getResources().getString(R.string.exportedToGalleryToast),
+                    Toast.LENGTH_SHORT).show();
             }
+
         } catch (IOException | SecurityException e) {
             e.printStackTrace();
         } finally {
