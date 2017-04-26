@@ -9,23 +9,25 @@
     android:layout_height="match_parent"
     tools:context="fi.tamk.jpak.pixpainter.EditorActivity">
 
-    <LinearLayout
+    <RelativeLayout
         style="?android:attr/buttonBarStyle"
         android:id="@+id/toolsetupLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:background="@color/colorPrimaryDark">
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/colorPickerButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/color"
+            android:src="@drawable/colorwheel"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="16dp"
+            android:contentDescription="@string/color"
+            android:layout_alignParentLeft="true"
             android:onClick="handleColorPickerClick"/>
 
         <Button
@@ -33,11 +35,12 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
             android:layout_margin="1dp"
-            android:text="Menu"
+            android:text="@string/verticalEllipsis"
+            android:layout_alignParentRight="true"
             android:onClick="handleMenuClick"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/editorLayout"
@@ -93,6 +96,5 @@
             android:layout_margin="1dp"
             android:text="@string/fill"
             android:onClick="handleFillClick"/>
-
     </LinearLayout>
 </LinearLayout>
