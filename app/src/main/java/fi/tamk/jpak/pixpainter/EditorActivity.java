@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -127,8 +129,8 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         highlightToolButton();
     }
 
-    public void handleSaveClick(View v) {
-        saveImageToFile();
+    public void handleMenuClick(View v) {
+        showOperationsMenu(v);
     }
 
     @Override
@@ -166,51 +168,78 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         }
     }
 
-    public void saveImageToFile() {
+    public void showOperationsMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.inflate(R.menu.operations_menu);
+        invalidateOptionsMenu();
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item1:
+                        saveImageToFile(false);
+                        return true;
+                    case R.id.item2:
+                        saveImageToFile(true);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        popup.show();
+    }
+
+    public void saveImageToFile(boolean exportToGallery) {
         FileOutputStream outStream = null;
 
+        //Define a bitmap with the same size as the view
+        Bitmap bitmap = Bitmap.createBitmap(pixelgrid.getWidth(),
+                pixelgrid.getHeight(), Bitmap.Config.ARGB_8888);
+
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(bitmap);
+
+        //Get the view's background
+        Drawable bgDrawable = pixelgrid.getBackground();
+
+        if (bgDrawable != null) {
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        } else {
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        }
+
+        // draw the view on the canvas
+        pixelgrid.draw(canvas);
+
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-            String dateStr = dateFormat.format(new Date());
-            System.out.println(dateStr);
-            String fileName = dateStr +".jpg";
-            outStream =  this.openFileOutput("testing.png", Context.MODE_PRIVATE);
 
-            //Define a bitmap with the same size as the view
-            Bitmap bitmap = Bitmap.createBitmap(pixelgrid.getWidth(),
-                    pixelgrid.getHeight(), Bitmap.Config.ARGB_8888);
+            if (exportToGallery) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+                String dateStr = dateFormat.format(new Date());
+                System.out.println(dateStr);
+                String fileName = dateStr +".jpg";
 
+                // Bitmap to Gallery (as .jpg)
+                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,
+                        fileName, ("PixPainter image, created " + dateStr));
 
-            //Bind a canvas to it
-            Canvas canvas = new Canvas(bitmap);
-
-            //Get the view's background
-            Drawable bgDrawable = pixelgrid.getBackground();
-
-            if (bgDrawable != null) {
-                //has background drawable, then draw it on the canvas
-                bgDrawable.draw(canvas);
+                Toast.makeText(this,
+                        getResources().getString(R.string.exportedToGalleryToast),
+                        Toast.LENGTH_SHORT).show();
             } else {
-                //does not have background drawable, then draw white background on the canvas
-                canvas.drawColor(Color.WHITE);
+                outStream =  this.openFileOutput("pixpainter_save.png", Context.MODE_PRIVATE);
+
+                // Bitmap to file
+                bitmap.compress(Bitmap.CompressFormat.PNG, 80, outStream);
             }
-
-            // draw the view on the canvas
-            pixelgrid.draw(canvas);
-
-            // Bitmap to file
-            // bitmap.compress(Bitmap.CompressFormat.PNG, 80, outStream);
-
-            // Bitmap to Gallery (as .jpg)
-            MediaStore.Images.Media.insertImage(getContentResolver(), bitmap,
-                    fileName, ("PixPainter image, created " + dateStr));
-
-            Toast.makeText(this,
-                    getResources().getString(R.string.savedToGalleryToast),
-                    Toast.LENGTH_SHORT).show();
 
         } catch (FileNotFoundException | SecurityException e) {
             e.printStackTrace();
+
         } finally {
             try {
                 if (outStream != null) {

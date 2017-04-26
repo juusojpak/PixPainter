@@ -34,8 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
-            android:text="Save"
-            android:onClick="handleSaveClick"/>
+            android:text="Menu"
+            android:onClick="handleMenuClick"/>
 
     </LinearLayout>
 
