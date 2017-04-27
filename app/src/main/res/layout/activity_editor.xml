@@ -11,7 +11,7 @@
 
     <RelativeLayout
         style="?android:attr/buttonBarStyle"
-        android:id="@+id/toolsetupLayout"
+        android:id="@+id/toolSetupLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -29,6 +29,14 @@
             android:contentDescription="@string/color"
             android:layout_alignParentLeft="true"
             android:onClick="handleColorPickerClick"/>
+
+        <LinearLayout
+            android:id="@+id/toolSetupArea"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true">
+        </LinearLayout>
 
         <Button
             style="?android:attr/buttonBarButtonStyle"

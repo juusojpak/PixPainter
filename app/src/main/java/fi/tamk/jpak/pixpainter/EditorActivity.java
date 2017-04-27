@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import java.util.Date;
 
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
+import fi.tamk.jpak.pixpainter.fragments.OnSetupChanged;
+import fi.tamk.jpak.pixpainter.fragments.ToolSetupFragment;
 import fi.tamk.jpak.pixpainter.tools.Brush;
 import fi.tamk.jpak.pixpainter.tools.Eraser;
 import fi.tamk.jpak.pixpainter.tools.PaintBucket;
@@ -34,10 +37,12 @@ import fi.tamk.jpak.pixpainter.tools.Shape;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 
-public class EditorActivity extends AppCompatActivity implements ColorPickerListener {
+public class EditorActivity extends AppCompatActivity
+        implements ColorPickerListener, OnSetupChanged {
 
     private DrawingView drawing;
     private PixelGridView grid;
+    private ToolSetupFragment setupFrag;
     private ArrayList<Button> toolButtons;
     private ColorARGB primaryColor;
     private ColorARGB secondaryColor;
@@ -49,6 +54,8 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     private PaintBucket bucketTool;
     private AlertDialog clearAlert;
     private int cols, rows;
+    private int selectedStrokeSize;
+    private boolean isSetupFragInView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,8 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         grid = (PixelGridView) findViewById(R.id.pixelGridView);
         drawing = (DrawingView) findViewById(R.id.drawingView);
         setEditorDimensions();
+        setupFrag = new ToolSetupFragment();
+        isSetupFragInView = false;
         toolButtons = new ArrayList<>();
         primaryColor = new ColorARGB(255, 0, 0, 0);
         secondaryColor = new ColorARGB(255, 255, 255, 255);
@@ -78,11 +87,12 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
 
         pencilTool = new Pencil();
         brushTool = new Brush();
-        eraserTool = new Eraser(6);
+        eraserTool = new Eraser();
         shapeTool = new Shape();
         bucketTool = new PaintBucket();
         activeTool = pencilTool;
         drawing.setTool(activeTool);
+        selectedStrokeSize = 1;
 
         LinearLayout toolbarLayout = (LinearLayout) findViewById(R.id.toolbarLayout);
 
@@ -94,7 +104,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
             }
         }
 
-        highlightToolButton();
+        showActiveTool();
     }
 
     public void handleColorPickerClick(View v) {
@@ -106,31 +116,31 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     public void handlePencilClick(View v) {
         this.activeTool = pencilTool;
         updateDrawingView();
-        highlightToolButton();
+        showActiveTool();
     }
 
     public void handleShapeClick(View v) {
         this.activeTool = shapeTool;
         updateDrawingView();
-        highlightToolButton();
+        showActiveTool();
     }
 
     public void handleFillClick(View v) {
         this.activeTool = bucketTool;
         updateDrawingView();
-        highlightToolButton();
+        showActiveTool();
     }
 
     public void handleBrushClick(View v) {
         this.activeTool = brushTool;
         updateDrawingView();
-        highlightToolButton();
+        showActiveTool();
     }
 
     public void handleEraserClick(View v) {
         this.activeTool = eraserTool;
         updateDrawingView();
-        highlightToolButton();
+        showActiveTool();
     }
 
     public void handleMenuClick(View v) {
@@ -144,6 +154,8 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     }
 
     public void updateDrawingView() {
+        activeTool.setStrokeSize(selectedStrokeSize);
+        //setupFrag.updateSelectionToStokeSize(selectedStrokeSize);
         drawing.setTool(activeTool);
         drawing.setColors(primaryColor, secondaryColor);
     }
@@ -155,7 +167,10 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         drawing.setNumColumns(cols);
     }
 
-    public void highlightToolButton() {
+    public void showActiveTool() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        boolean showSetup = false;
+
         for (int i = 0; i < toolButtons.size(); i++) {
             toolButtons.get(i).setTextColor(
                     ContextCompat.getColor(this, R.color.colorAccent));
@@ -166,12 +181,15 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         switch (activeTool.getType()) {
             case PEN:
                 toolButtons.get(0).setTextColor(activeColor);
+                showSetup = true;
                 break;
             case BRUSH:
                 toolButtons.get(1).setTextColor(activeColor);
+                showSetup = true;
                 break;
             case ERASE:
                 toolButtons.get(2).setTextColor(activeColor);
+                showSetup = true;
                 break;
             case SHAPE:
                 toolButtons.get(3).setTextColor(activeColor);
@@ -182,6 +200,20 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
             default:
                 break;
         }
+
+        if (showSetup) {
+            if (!isSetupFragInView) {
+                transaction.add(R.id.toolSetupArea, setupFrag);
+                isSetupFragInView = true;
+            }
+        } else {
+            if (isSetupFragInView) {
+                transaction.remove(setupFrag);
+                isSetupFragInView = false;
+            }
+        }
+
+        transaction.commit();
     }
 
     public void showOperationsMenu(View v) {
@@ -279,5 +311,12 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         });
 
         clearAlert.show();
+    }
+
+    @Override
+    public void handleToolSetupChange(int size) {
+        System.out.println("Size: " + size);
+        this.selectedStrokeSize = size;
+        updateDrawingView();
     }
 }
