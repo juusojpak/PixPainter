@@ -3,8 +3,8 @@ package fi.tamk.jpak.pixpainter.tools;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import fi.tamk.jpak.pixpainter.ColorARGB;
-import fi.tamk.jpak.pixpainter.Pixel;
+import fi.tamk.jpak.pixpainter.utils.ColorARGB;
+import fi.tamk.jpak.pixpainter.utils.Pixel;
 
 /**
  * Created by Juuso Pakarinen on 25/04/2017.

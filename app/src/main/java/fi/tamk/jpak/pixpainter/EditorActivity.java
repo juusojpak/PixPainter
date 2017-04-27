@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -32,10 +31,12 @@ import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Shape;
 import fi.tamk.jpak.pixpainter.tools.Tool;
+import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 
 public class EditorActivity extends AppCompatActivity implements ColorPickerListener {
 
-    private PixelGridView pixelgrid;
+    private DrawingView drawing;
+    private PixelGridView grid;
     private ArrayList<Button> toolButtons;
     private ColorARGB primaryColor;
     private ColorARGB secondaryColor;
@@ -45,37 +46,42 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     private Shape shapeTool;
     private PaintBucket bucketTool;
     private AlertDialog clearAlert;
+    private int cols, rows;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-
         Intent intent = getIntent();
-        int cols = 20;
-        int rows = 24;
+        cols = 20;
+        rows = 24;
 
         if (intent != null) {
             cols = intent.getExtras().getInt("columns");
             rows = intent.getExtras().getInt("rows");
         }
+    }
 
-        pixelgrid = new PixelGridView(this, null);
-        pixelgrid.setNumColumns(cols);
-        pixelgrid.setNumRows(rows);
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        grid = (PixelGridView) findViewById(R.id.pixelGridView);
+        drawing = (DrawingView) findViewById(R.id.drawingView);
+        setEditorDimensions();
         toolButtons = new ArrayList<>();
-
         primaryColor = new ColorARGB(255, 0, 0, 0);
         secondaryColor = new ColorARGB(255, 255, 255, 255);
-        pixelgrid.setColors(primaryColor, secondaryColor);
+        drawing.setColors(primaryColor, secondaryColor);
 
         pencilTool = new Pencil();
         brushTool = new Brush(3);
         shapeTool = new Shape();
         bucketTool = new PaintBucket();
         activeTool = pencilTool;
-        pixelgrid.setTool(activeTool);
+        drawing.setTool(activeTool);
 
+        /*
         LinearLayout editorLayout = (LinearLayout) findViewById(R.id.rootLayout)
                 .findViewById(R.id.editorLayout);
 
@@ -85,9 +91,9 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         );
 
         if (editorLayout != null) {
-            pixelgrid.setBackgroundColor(Color.TRANSPARENT);
-            editorLayout.addView(pixelgrid, params);
+            editorLayout.addView(drawing, params);
         }
+        */
 
         LinearLayout toolbarLayout = (LinearLayout) findViewById(R.id.toolbarLayout);
 
@@ -110,25 +116,25 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
 
     public void handlePencilClick(View v) {
         this.activeTool = pencilTool;
-        updatePixelGrid();
+        updateDrawingView();
         highlightToolButton();
     }
 
     public void handleShapeClick(View v) {
         this.activeTool = shapeTool;
-        updatePixelGrid();
+        updateDrawingView();
         highlightToolButton();
     }
 
     public void handleFillClick(View v) {
         this.activeTool = bucketTool;
-        updatePixelGrid();
+        updateDrawingView();
         highlightToolButton();
     }
 
     public void handleBrushClick(View v) {
         this.activeTool = brushTool;
-        updatePixelGrid();
+        updateDrawingView();
         highlightToolButton();
     }
 
@@ -139,12 +145,19 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     @Override
     public void onColorChanged(ColorARGB color) {
         this.primaryColor = color;
-        updatePixelGrid();
+        updateDrawingView();
     }
 
-    public void updatePixelGrid() {
-        pixelgrid.setTool(activeTool);
-        pixelgrid.setColors(primaryColor, secondaryColor);
+    public void updateDrawingView() {
+        drawing.setTool(activeTool);
+        drawing.setColors(primaryColor, secondaryColor);
+    }
+
+    public void setEditorDimensions() {
+        grid.setNumRows(rows);
+        grid.setNumColumns(cols);
+        drawing.setNumRows(rows);
+        drawing.setNumColumns(cols);
     }
 
     public void highlightToolButton() {
@@ -215,11 +228,11 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
             System.out.println("file created " + f.toString());
 
             out = new FileOutputStream(f);
-            Bitmap bitmap = Bitmap.createBitmap(pixelgrid.getWidth(),
-                    pixelgrid.getHeight(), Bitmap.Config.ARGB_8888);
+            Bitmap bitmap = Bitmap.createBitmap(drawing.getWidth(),
+                    drawing.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
-            pixelgrid.getBackground().draw(canvas);
-            pixelgrid.draw(canvas);
+            drawing.getBackground().draw(canvas);
+            drawing.draw(canvas);
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
 
             if (exportToGallery) {
@@ -250,8 +263,8 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         builder.setMessage("Are you sure?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                pixelgrid.initializePixels();
-                pixelgrid.invalidate();
+                drawing.initializePixels();
+                drawing.invalidate();
             }
         });
         builder.setNegativeButton("No", null);

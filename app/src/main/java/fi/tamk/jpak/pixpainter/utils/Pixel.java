@@ -1,4 +1,4 @@
-package fi.tamk.jpak.pixpainter;
+package fi.tamk.jpak.pixpainter.utils;
 
 /**
  * Created by Juuso Pakarinen on 24/04/2017.

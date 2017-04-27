@@ -1,4 +1,4 @@
-package fi.tamk.jpak.pixpainter;
+package fi.tamk.jpak.pixpainter.utils;
 
 import android.graphics.Color;
 
