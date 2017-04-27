@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatImageView;
 
 /**
- * Created by Juuso Pakarinen on 15/04/2017.
+ * Created by Juuso Pakarinen on 27/04/2017.
  */
 public class PixelGridView extends AppCompatImageView {
 

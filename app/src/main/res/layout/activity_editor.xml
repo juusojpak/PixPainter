@@ -92,6 +92,15 @@
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/eraserButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/eraser"
+            android:onClick="handleEraserClick"/>
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/shapeButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

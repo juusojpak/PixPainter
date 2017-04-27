@@ -16,6 +16,7 @@
     <string name="brush">Brush</string>
     <string name="shape">Shape</string>
     <string name="fill">Fill</string>
+    <string name="eraser">Eraser</string>
     <string name="saveToLocal">Save</string>
     <string name="exportToGallery">Export to Gallery</string>
     <string name="exportedToGalleryToast">Exported to Gallery</string>

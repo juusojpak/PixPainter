@@ -8,34 +8,20 @@ import fi.tamk.jpak.pixpainter.utils.Pixel;
  */
 public class Brush extends Tool {
 
-    private int strokeSize;
     private int[] fadeValues;
 
     public Brush() {
         super(ToolType.BRUSH);
-        this.strokeSize = 1;
-        updateFadeValues();
     }
 
     public Brush(int strokeSize) {
-        super(ToolType.BRUSH);
-        this.strokeSize = strokeSize;
-        updateFadeValues();
-    }
-
-    public int getStrokeSize() {
-        return strokeSize;
-    }
-
-    public void setStrokeSize(int strokeSize) {
-        this.strokeSize = strokeSize;
-        updateFadeValues();
+        super(ToolType.BRUSH, strokeSize);
     }
 
     public void updateFadeValues() {
-        fadeValues = new int[strokeSize];
+        fadeValues = new int[getStrokeSize()];
 
-        for (int i = 0; i < strokeSize; i++) {
+        for (int i = 0; i < getStrokeSize(); i++) {
             fadeValues[i] = 5 * (i + 1);
         }
     }
@@ -44,6 +30,13 @@ public class Brush extends Tool {
     public void handleDraw(int row, int col, Pixel[][] pixels,
                            ColorARGB color1, ColorARGB color2) {
 
+        updateFadeValues();
+        ColorARGB newColor = new ColorARGB(color1.getA(), color1.getR(),
+                color1.getG(), color1.getB());
+        handleStroke(row, col, pixels, newColor, true, fadeValues);
+
+
+        /*
         ColorARGB newColor = new ColorARGB(color1.getA(), color1.getR(),
                 color1.getG(), color1.getB());
 
@@ -56,7 +49,7 @@ public class Brush extends Tool {
         for (int i = 1; i <= strokeSize; i++) {
             lineLenght += 2;
 
-            /* Draw from upper left corner to right  */
+            // Draw from upper left corner to right
             for (int j = 0; j < (lineLenght - 1); j++) {
 
                 if ((row - i) >= 0
@@ -72,7 +65,7 @@ public class Brush extends Tool {
                 }
             }
 
-            /* Draw from upper right corner to down  */
+            // Draw from upper right corner to down
             for (int j = 0; j < (lineLenght - 1); j++) {
 
                 if ((row - i) >= 0
@@ -83,7 +76,7 @@ public class Brush extends Tool {
                 }
             }
 
-            /* Draw from lower right corner to left  */
+            // Draw from lower right corner to left
             for (int j = 0; j < (lineLenght - 1); j++) {
 
                 if ((row + i) < height
@@ -94,7 +87,7 @@ public class Brush extends Tool {
                 }
             }
 
-            /* Draw from lower left corner to up  */
+            // Draw from lower left corner to up
             for (int j = 0; j < (lineLenght - 1); j++) {
 
                 if ((row + i) < height
@@ -105,5 +98,6 @@ public class Brush extends Tool {
                 }
             }
         }
+        */
     }
 }

@@ -27,6 +27,7 @@ import java.util.Date;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
 import fi.tamk.jpak.pixpainter.tools.Brush;
+import fi.tamk.jpak.pixpainter.tools.Eraser;
 import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Shape;
@@ -43,6 +44,7 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
     private Tool activeTool;
     private Pencil pencilTool;
     private Brush brushTool;
+    private Eraser eraserTool;
     private Shape shapeTool;
     private PaintBucket bucketTool;
     private AlertDialog clearAlert;
@@ -75,25 +77,12 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         drawing.setColors(primaryColor, secondaryColor);
 
         pencilTool = new Pencil();
-        brushTool = new Brush(3);
+        brushTool = new Brush();
+        eraserTool = new Eraser(6);
         shapeTool = new Shape();
         bucketTool = new PaintBucket();
         activeTool = pencilTool;
         drawing.setTool(activeTool);
-
-        /*
-        LinearLayout editorLayout = (LinearLayout) findViewById(R.id.rootLayout)
-                .findViewById(R.id.editorLayout);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        );
-
-        if (editorLayout != null) {
-            editorLayout.addView(drawing, params);
-        }
-        */
 
         LinearLayout toolbarLayout = (LinearLayout) findViewById(R.id.toolbarLayout);
 
@@ -138,6 +127,12 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
         highlightToolButton();
     }
 
+    public void handleEraserClick(View v) {
+        this.activeTool = eraserTool;
+        updateDrawingView();
+        highlightToolButton();
+    }
+
     public void handleMenuClick(View v) {
         showOperationsMenu(v);
     }
@@ -175,11 +170,16 @@ public class EditorActivity extends AppCompatActivity implements ColorPickerList
             case BRUSH:
                 toolButtons.get(1).setTextColor(activeColor);
                 break;
-            case SHAPE:
+            case ERASE:
                 toolButtons.get(2).setTextColor(activeColor);
                 break;
-            case FILL:
+            case SHAPE:
                 toolButtons.get(3).setTextColor(activeColor);
+                break;
+            case FILL:
+                toolButtons.get(4).setTextColor(activeColor);
+                break;
+            default:
                 break;
         }
     }
