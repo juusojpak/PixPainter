@@ -14,6 +14,7 @@ import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.tools.ToolType;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.Pixel;
+import fi.tamk.jpak.pixpainter.utils.PixelGridState;
 
 /**
  * Created by Juuso Pakarinen on 15/04/2017.
@@ -81,6 +82,7 @@ public class DrawingView extends AppCompatImageView {
         cellHeight = (float) getHeight() / numRows;
         pixels = new Pixel[numRows][numColumns];
         initializePixels();
+        loadPixelState();
 
         /* Invalidate view so it's redrawn */
         invalidate();
@@ -118,8 +120,34 @@ public class DrawingView extends AppCompatImageView {
             tool.handleDraw(row, column, pixels, primaryColor, secondaryColor);
         }
 
+        PixelGridState.setPixels(pixels);
         invalidate();
         return true;
+    }
+
+    public void loadPixelState() {
+        Pixel[][] pixelState = PixelGridState.getPixels();
+
+        if ((pixelState != null) && (pixelState.length == numRows)) {
+
+            for (int i = 0; i < numRows; i++) {
+                if (pixelState[i].length == numColumns) {
+
+                    for (int j = 0; j < numColumns; j++) {
+                        if (pixelState[i][j] != null) {
+                            ColorARGB color = pixelState[i][j].getColor();
+                            pixels[i][j] = new Pixel(j, i, new ColorARGB(
+                                    color.getA(), color.getR(),
+                                    color.getG(), color.getB()));
+                        } else {
+                            pixels[i][j] = new Pixel(j, i);
+                        }
+                    }
+                }
+            }
+
+            invalidate();
+        }
     }
 
     public void initializePixels() {

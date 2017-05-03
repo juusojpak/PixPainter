@@ -36,6 +36,7 @@ import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Shape;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
+import fi.tamk.jpak.pixpainter.utils.Pixel;
 
 public class EditorActivity extends AppCompatActivity
         implements ColorPickerListener, OnSetupChanged {
@@ -69,6 +70,8 @@ public class EditorActivity extends AppCompatActivity
             cols = intent.getExtras().getInt("columns");
             rows = intent.getExtras().getInt("rows");
         }
+
+        System.out.println("EditorActivity created");
     }
 
     @Override
@@ -78,6 +81,7 @@ public class EditorActivity extends AppCompatActivity
         grid = (PixelGridView) findViewById(R.id.pixelGridView);
         drawing = (DrawingView) findViewById(R.id.drawingView);
         setEditorDimensions();
+
         setupFrag = new ToolSetupFragment();
         isSetupFragInView = false;
         toolButtons = new ArrayList<>();
@@ -105,6 +109,7 @@ public class EditorActivity extends AppCompatActivity
         }
 
         showActiveTool();
+        System.out.println("EditorActivity resume");
     }
 
     public void handleColorPickerClick(View v) {
@@ -314,7 +319,6 @@ public class EditorActivity extends AppCompatActivity
 
     @Override
     public void handleToolSetupChange(int size) {
-        System.out.println("Size: " + size);
         this.selectedStrokeSize = size;
         updateDrawingView();
     }

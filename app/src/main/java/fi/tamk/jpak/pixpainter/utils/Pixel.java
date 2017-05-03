@@ -1,9 +1,11 @@
 package fi.tamk.jpak.pixpainter.utils;
 
+import java.io.Serializable;
+
 /**
  * Created by Juuso Pakarinen on 24/04/2017.
  */
-public class Pixel {
+public class Pixel implements Serializable {
 
     private int x;
     private int y;
