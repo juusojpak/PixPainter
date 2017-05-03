@@ -16,7 +16,8 @@ public class Pencil extends Tool {
     public void handleDraw(int row, int col, Pixel[][] pixels,
                            ColorARGB color1, ColorARGB color2) {
 
-        pixels[row][col].setColor(new ColorARGB(color1.getA(), color1.getR(),
-                color1.getG(), color1.getB()));
+        ColorARGB newColor = new ColorARGB(color1.getA(), color1.getR(),
+                color1.getG(), color1.getB());
+        handleStroke(row, col, pixels, newColor, false, null);
     }
 }
