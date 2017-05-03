@@ -155,7 +155,6 @@ public class EditorActivity extends AppCompatActivity
 
     public void updateDrawingView() {
         activeTool.setStrokeSize(selectedStrokeSize);
-        //setupFrag.updateSelectionToStokeSize(selectedStrokeSize);
         drawing.setTool(activeTool);
         drawing.setColors(primaryColor, secondaryColor);
     }

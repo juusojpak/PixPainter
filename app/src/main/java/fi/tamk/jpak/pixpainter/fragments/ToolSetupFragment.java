@@ -41,19 +41,7 @@ public class ToolSetupFragment extends Fragment {
         sizeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int selectedSize = 1;
-
-                try {
-                    TextView text = (TextView) view;
-
-                    if (text != null) {
-                        String str = text.getText().toString();
-                        selectedSize = Integer.parseInt(str.substring(0,1));
-                    }
-                } catch (ClassCastException | NumberFormatException | NullPointerException e) {
-                    e.printStackTrace();
-                }
-
+                int selectedSize = 1 + position;
                 callback.handleToolSetupChange(selectedSize);
             }
 
@@ -68,28 +56,5 @@ public class ToolSetupFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         System.out.println("ToolSetupFragment on attach");
-    }
-
-    public void updateSelectionToStokeSize(int strokeSize) {
-
-        if (sizeSpin != null) {
-            switch (strokeSize) {
-                case 3:
-                    sizeSpin.setSelection(1);
-                    break;
-                case 5:
-                    sizeSpin.setSelection(2);
-                    break;
-                case 7:
-                    sizeSpin.setSelection(3);
-                    break;
-                case 9:
-                    sizeSpin.setSelection(4);
-                    break;
-                default:
-                    sizeSpin.setSelection(0);
-                    break;
-            }
-        }
     }
 }
