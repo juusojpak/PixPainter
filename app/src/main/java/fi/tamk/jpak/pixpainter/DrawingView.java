@@ -34,13 +34,19 @@ public class DrawingView extends AppCompatImageView {
         super(context, attrs);
         this.setBackgroundColor(Color.TRANSPARENT);
 
-        defaultTool = new Pencil();
-        tool = defaultTool;
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setARGB(0, 0, 0, 0);
         numColumns = 1;
         numRows = 1;
+
+        defaultTool = new Pencil();
+        tool = PixelGridState.getActiveTool();
+        if (tool == null) tool = defaultTool;
+
+        primaryColor = PixelGridState.getPrimaryColor();
+        if (primaryColor == null) primaryColor = new ColorARGB(255, 0, 0, 0);
+
         calculateDimensions();
     }
 
@@ -127,6 +133,8 @@ public class DrawingView extends AppCompatImageView {
 
     public void loadPixelState() {
         Pixel[][] pixelState = PixelGridState.getPixels();
+        Tool toolState = PixelGridState.getActiveTool();
+        ColorARGB colorState = PixelGridState.getPrimaryColor();
 
         if ((pixelState != null) && (pixelState.length == numRows)) {
 
@@ -148,6 +156,14 @@ public class DrawingView extends AppCompatImageView {
 
             invalidate();
         }
+
+        if (toolState != null) {
+            this.tool = toolState;
+        }
+
+        if (colorState != null) {
+            this.primaryColor = colorState;
+        }
     }
 
     public void initializePixels() {
@@ -161,6 +177,7 @@ public class DrawingView extends AppCompatImageView {
     public void setColors(ColorARGB primaryColor, ColorARGB secondaryColor) {
         if (primaryColor != null) this.primaryColor = primaryColor;
         if (secondaryColor != null) this.secondaryColor = secondaryColor;
+        PixelGridState.setPrimaryColor(this.primaryColor);
     }
 
     public void setTool(Tool tool) {
@@ -169,5 +186,7 @@ public class DrawingView extends AppCompatImageView {
         } else {
             this.tool = defaultTool;
         }
+
+        PixelGridState.setActiveTool(this.tool);
     }
 }

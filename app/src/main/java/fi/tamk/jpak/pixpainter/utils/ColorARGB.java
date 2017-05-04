@@ -76,4 +76,8 @@ public class ColorARGB {
         String hexColor = String.format("#%06X", Color.rgb(r,g,b));
         return hexColor;
     }
+
+    public int toInt() {
+        return Color.argb(a, r, g, b);
+    }
 }

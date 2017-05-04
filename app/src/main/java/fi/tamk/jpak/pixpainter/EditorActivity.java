@@ -36,7 +36,7 @@ import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Shape;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
-import fi.tamk.jpak.pixpainter.utils.Pixel;
+import fi.tamk.jpak.pixpainter.utils.PixelGridState;
 
 public class EditorActivity extends AppCompatActivity
         implements ColorPickerListener, OnSetupChanged {
@@ -85,18 +85,27 @@ public class EditorActivity extends AppCompatActivity
         setupFrag = new ToolSetupFragment();
         isSetupFragInView = false;
         toolButtons = new ArrayList<>();
-        primaryColor = new ColorARGB(255, 0, 0, 0);
-        secondaryColor = new ColorARGB(255, 255, 255, 255);
-        drawing.setColors(primaryColor, secondaryColor);
-
         pencilTool = new Pencil();
         brushTool = new Brush();
         eraserTool = new Eraser();
         shapeTool = new Shape();
         bucketTool = new PaintBucket();
-        activeTool = pencilTool;
+
+        activeTool = PixelGridState.getActiveTool();
+        if (activeTool == null) {
+            activeTool = pencilTool;
+            selectedStrokeSize = 1;
+        } else {
+            selectedStrokeSize = activeTool.getStrokeSize();
+        }
+
+        primaryColor = PixelGridState.getPrimaryColor();
+        if (primaryColor == null) primaryColor = new ColorARGB(255, 0, 0, 0);
+
+        secondaryColor = new ColorARGB(255, 255, 255, 255);
         drawing.setTool(activeTool);
-        selectedStrokeSize = 1;
+        drawing.setColors(primaryColor, secondaryColor);
+        showSelectedColors();
 
         LinearLayout toolbarLayout = (LinearLayout) findViewById(R.id.toolbarLayout);
 
@@ -159,9 +168,11 @@ public class EditorActivity extends AppCompatActivity
     }
 
     public void updateDrawingView() {
+        PixelGridState.setActiveTool(activeTool);
         activeTool.setStrokeSize(selectedStrokeSize);
         drawing.setTool(activeTool);
         drawing.setColors(primaryColor, secondaryColor);
+        showSelectedColors();
     }
 
     public void setEditorDimensions() {
@@ -169,6 +180,13 @@ public class EditorActivity extends AppCompatActivity
         grid.setNumColumns(cols);
         drawing.setNumRows(rows);
         drawing.setNumColumns(cols);
+    }
+
+    public void showSelectedColors() {
+        View primary = findViewById(R.id.primaryColor);
+        View secondary = findViewById(R.id.secondaryColor);
+        primary.setBackgroundColor(primaryColor.toInt());
+        secondary.setBackgroundColor(secondaryColor.toInt());
     }
 
     public void showActiveTool() {
