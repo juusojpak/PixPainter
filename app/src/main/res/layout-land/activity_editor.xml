@@ -31,6 +31,27 @@
             android:onClick="handleColorPickerClick"/>
 
         <LinearLayout
+            android:id="@+id/selectedColorsArea"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_below="@id/colorPickerButton">
+
+            <View
+                android:id="@+id/primaryColor"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:adjustViewBounds="true" />
+            <View
+                android:id="@+id/secondaryColor"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/toolSetupArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

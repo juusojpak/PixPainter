@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/colorPickerLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog">
+
+    <View
+        android:id="@+id/colorArea"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+
+        <TextView
+            android:id="@+id/redText"
+            android:text="@string/red"
+            android:textColor="#ffaaaa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"/>
+
+        <SeekBar
+            android:id="@+id/redBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:max="255"/>
+
+        <TextView
+            android:id="@+id/greenText"
+            android:text="@string/green"
+            android:textColor="#aaffaa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"/>
+
+        <SeekBar
+            android:id="@+id/greenBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:max="255"/>
+
+        <TextView
+            android:id="@+id/blueText"
+            android:text="@string/blue"
+            android:textColor="#bbbbff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"/>
+
+        <SeekBar
+            android:id="@+id/blueBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:max="255"/>
+
+    </LinearLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        style="?attr/buttonBarStyle"
+        android:id="@+id/buttonsLayout"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            style="?attr/buttonBarButtonStyle"
+            android:id="@+id/cancelButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/cancel"
+            app:layout_widthPercent="50%"/>
+
+        <Button
+            style="?attr/buttonBarButtonStyle"
+            android:id="@+id/selectButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/cancelButton"
+            android:text="@string/select"
+            app:layout_widthPercent="50%"/>
+    </android.support.percent.PercentRelativeLayout>
+</LinearLayout>
