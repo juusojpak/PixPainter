@@ -33,13 +33,14 @@ import fi.tamk.jpak.pixpainter.tools.Brush;
 import fi.tamk.jpak.pixpainter.tools.Eraser;
 import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
+import fi.tamk.jpak.pixpainter.tools.Pipette;
 import fi.tamk.jpak.pixpainter.tools.Shape;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.PixelGridState;
 
 public class EditorActivity extends AppCompatActivity
-        implements ColorPickerListener, OnToolSetupChanged {
+        implements ColorPickerListener, OnToolSetupChanged, Pipette.PipetteListener {
 
     private DrawingView drawing;
     private PixelGridView grid;
@@ -53,6 +54,7 @@ public class EditorActivity extends AppCompatActivity
     private Eraser eraserTool;
     private Shape shapeTool;
     private PaintBucket bucketTool;
+    private Pipette pipetteTool;
     private AlertDialog clearAlert;
     private int cols, rows;
     private int selectedStrokeSize;
@@ -92,6 +94,7 @@ public class EditorActivity extends AppCompatActivity
         eraserTool = new Eraser();
         shapeTool = new Shape();
         bucketTool = new PaintBucket();
+        pipetteTool = new Pipette(this);
 
         activeTool = PixelGridState.getActiveTool();
         if (activeTool == null) {
@@ -159,6 +162,12 @@ public class EditorActivity extends AppCompatActivity
         showActiveTool();
     }
 
+    public void handlePipetteClick(View v) {
+        this.activeTool = pipetteTool;
+        updateDrawingView();
+        showActiveTool();
+    }
+
     public void handleMenuClick(View v) {
         showOperationsMenu(v);
     }
@@ -220,6 +229,9 @@ public class EditorActivity extends AppCompatActivity
                 break;
             case FILL:
                 toolButtons.get(4).setTextColor(activeColor);
+                break;
+            case PIP:
+                toolButtons.get(5).setTextColor(activeColor);
                 break;
             default:
                 break;
@@ -340,6 +352,12 @@ public class EditorActivity extends AppCompatActivity
     @Override
     public void handleToolSetupChange(int size) {
         this.selectedStrokeSize = size;
+        updateDrawingView();
+    }
+
+    @Override
+    public void handlePipetteDraw(ColorARGB color) {
+        this.primaryColor = color;
         updateDrawingView();
     }
 }

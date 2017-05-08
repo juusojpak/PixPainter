@@ -145,5 +145,14 @@
             android:layout_margin="1dp"
             android:text="@string/fill"
             android:onClick="handleFillClick"/>
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/pipetteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:text="@string/pipette"
+            android:onClick="handlePipetteClick"/>
     </LinearLayout>
 </LinearLayout>
