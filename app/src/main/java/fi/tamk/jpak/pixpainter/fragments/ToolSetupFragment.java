@@ -18,13 +18,13 @@ import fi.tamk.jpak.pixpainter.R;
  */
 public class ToolSetupFragment extends Fragment {
 
-    private OnSetupChanged callback;
+    private OnToolSetupChanged callback;
     private Spinner sizeSpin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callback = (OnSetupChanged) getActivity();
+        callback = (OnToolSetupChanged) getActivity();
         System.out.println("ToolSetupFragment created");
     }
 

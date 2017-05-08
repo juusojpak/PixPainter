@@ -3,6 +3,10 @@
     <string name="create_new_pic">Start drawing</string>
     <string name="columns">Columns</string>
     <string name="rows">Rows</string>
+    <string name="smallCanvas">20x20</string>
+    <string name="mediumCanvas">40x40</string>
+    <string name="largeCanvas">60x60</string>
+    <string name="customCanvas">Custom</string>
     <string name="red">Red</string>
     <string name="green">Green</string>
     <string name="blue">Blue</string>

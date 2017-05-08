@@ -27,7 +27,7 @@ import java.util.Date;
 
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
-import fi.tamk.jpak.pixpainter.fragments.OnSetupChanged;
+import fi.tamk.jpak.pixpainter.fragments.OnToolSetupChanged;
 import fi.tamk.jpak.pixpainter.fragments.ToolSetupFragment;
 import fi.tamk.jpak.pixpainter.tools.Brush;
 import fi.tamk.jpak.pixpainter.tools.Eraser;
@@ -39,7 +39,7 @@ import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.PixelGridState;
 
 public class EditorActivity extends AppCompatActivity
-        implements ColorPickerListener, OnSetupChanged {
+        implements ColorPickerListener, OnToolSetupChanged {
 
     private DrawingView drawing;
     private PixelGridView grid;
@@ -72,6 +72,8 @@ public class EditorActivity extends AppCompatActivity
         }
 
         System.out.println("EditorActivity created");
+        System.out.println("Cols: " + cols);
+        System.out.println("Rows: " + rows);
     }
 
     @Override
