@@ -22,11 +22,11 @@ public class Shape extends Tool {
         this.stateSaved = false;
     }
 
-    public Shape(ShapeType type, int width, int height) {
+    public Shape(ShapeType type) {
         super(ToolType.SHAPE);
         this.type = type;
-        this.width = width;
-        this.height = height;
+        this.width = 6;
+        this.height = 6;
         this.stateSaved = false;
     }
 
@@ -39,7 +39,7 @@ public class Shape extends Tool {
     }
 
     public void setWidth(int width) {
-        this.width = width;
+        if (width > 0 && width <= 100) this.width = width;
     }
 
     public int getHeight() {
@@ -47,7 +47,7 @@ public class Shape extends Tool {
     }
 
     public void setHeight(int height) {
-        this.height = height;
+        if (height > 0 && height <= 100) this.height = height;
     }
 
     public void handlePlacement(int row, int col, Pixel[][] pixels,
@@ -56,6 +56,9 @@ public class Shape extends Tool {
         switch (this.type) {
             case RECTANGLE:
                 drawRectangle(row, col, pixels, color1, color2, false);
+                break;
+            case CIRCLE:
+                drawCircle(row, col, pixels, color1, color2, false);
                 break;
             default:
                 drawRectangle(row, col, pixels, color1, color2, false);
@@ -73,6 +76,9 @@ public class Shape extends Tool {
         switch (this.type) {
             case RECTANGLE:
                 drawRectangle(row, col, pixels, color1, color2, true);
+                break;
+            case CIRCLE:
+                drawCircle(row, col, pixels, color1, color2, true);
                 break;
             default:
                 drawRectangle(row, col, pixels, color1, color2, true);
@@ -124,6 +130,72 @@ public class Shape extends Tool {
                     Pixel p = pixels[((row + height) - 1)][col + i];
                     drawPixel(p, color1);
                 }
+            }
+        }
+    }
+
+    public void drawCircle(int row, int col, Pixel[][] pixels,
+                              ColorARGB color1, ColorARGB color2, boolean dragging) {
+
+        int x = 15;
+        int y = 0;
+        int direction = 0;
+
+        if (dragging) {
+            for (int i = 0; i < pixels.length; i++) {
+                for (int j = 0; j < pixels[i].length; j++) {
+                    drawPixel(pixels[i][j], colorState[i][j]);
+                }
+            }
+        }
+
+        while (x >= y) {
+            if ((row + x < pixels.length) &&
+                    (row + x >= 0) &&
+                    (col + y < pixels[0].length))
+                drawPixel(pixels[row + x][col + y], color1);
+
+            if ((row + y < pixels.length) &&
+                    (col + x >= 0) &&
+                    (col + x < pixels[0].length))
+                drawPixel(pixels[row + y][col + x], color1);
+
+            if ((row - y >= 0) &&
+                    (col + x >= 0) &&
+                    (col + x < pixels[0].length))
+                drawPixel(pixels[row - y][col + x], color1);
+
+            if ((row - x >= 0) &&
+                    (row - x < pixels.length) &&
+                    (col + y < pixels[0].length))
+                drawPixel(pixels[row - x][col + y], color1);
+
+            if ((row - x >= 0) &&
+                    (row - x < pixels.length) &&
+                    (col - y >= 0))
+                drawPixel(pixels[row - x][col - y], color1);
+
+            if ((row - y >= 0) &&
+                    (col - x < pixels[0].length) &&
+                    (col - x >= 0))
+                drawPixel(pixels[row - y][col - x], color1);
+
+            if ((row + y < pixels.length) &&
+                    (col - x < pixels[0].length) &&
+                    (col - x >= 0))
+                drawPixel(pixels[row + y][col - x], color1);
+
+            if ((row + x < pixels.length) &&
+                    (row + x >= 0) &&
+                    (col - y >= 0))
+                drawPixel(pixels[row + x][col - y], color1);
+
+            y++;
+            if (direction <= 0) {
+                direction += (2 * y + 1);
+            } else {
+                x--;
+                direction -= (2 * x + 1);
             }
         }
     }

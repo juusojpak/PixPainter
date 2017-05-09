@@ -39,6 +39,7 @@ import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Pipette;
 import fi.tamk.jpak.pixpainter.tools.Shape;
+import fi.tamk.jpak.pixpainter.tools.ShapeType;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.PixelGridState;
@@ -92,7 +93,7 @@ public class EditorActivity extends AppCompatActivity
         pencilTool = new Pencil();
         brushTool = new Brush();
         eraserTool = new Eraser();
-        shapeTool = new Shape();
+        shapeTool = new Shape(ShapeType.CIRCLE);
         bucketTool = new PaintBucket();
         pipetteTool = new Pipette(this);
 
