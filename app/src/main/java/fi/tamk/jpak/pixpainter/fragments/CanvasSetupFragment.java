@@ -34,47 +34,38 @@ public class CanvasSetupFragment extends Fragment {
         EditText rowEdit = (EditText) view.findViewById(R.id.rowEdit);
         dimensions = new int[] {1,1};
         callback = (OnCanvasSetupChanged) getActivity();
-
-        colEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    dimensions[0] = Integer.parseInt(s.toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    dimensions[0] = 1;
-                }
-
-                callback.handleCanvasSetupChange(dimensions);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        rowEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    dimensions[1] = Integer.parseInt(s.toString());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    dimensions[1] = 1;
-                }
-
-                callback.handleCanvasSetupChange(dimensions);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        colEdit.addTextChangedListener(new ValueWatcher(false));
+        rowEdit.addTextChangedListener(new ValueWatcher(true));
 
         return view;
+    }
+
+    private class ValueWatcher implements TextWatcher {
+        private boolean checkRows;
+
+        public ValueWatcher(boolean checkRows) {
+            this.checkRows = checkRows;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            int pos = 0;
+            if (checkRows) pos = 1;
+
+            try {
+                dimensions[pos] = Integer.parseInt(s.toString());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                dimensions[pos] = 1;
+            }
+
+            callback.handleCanvasSetupChange(dimensions);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {}
     }
 }

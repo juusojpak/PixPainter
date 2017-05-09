@@ -16,12 +16,12 @@
     <string name="select">Select</string>
     <string name="cancel">Cancel</string>
     <string name="color">Color</string>
-    <string name="pencil">Pn</string>
-    <string name="brush">Br</string>
-    <string name="shape">Sh</string>
-    <string name="fill">Fl</string>
-    <string name="eraser">Dl</string>
-    <string name="pipette">Pi</string>
+    <string name="pencil">Pencil</string>
+    <string name="brush">Brush</string>
+    <string name="shape">Shape</string>
+    <string name="fill">Fill</string>
+    <string name="eraser">Eraser</string>
+    <string name="pipette">Pipette</string>
     <string name="saveToLocal">Save</string>
     <string name="exportToGallery">Export to Gallery</string>
     <string name="exportedToGalleryToast">Exported to Gallery</string>
@@ -29,6 +29,9 @@
     <string name="verticalEllipsis">&#8942;</string>
     <string name="primaryColorCircleDescription">Indicatior for primary color</string>
     <string name="secondaryColorCircleDescription">Indicatior for secondary color</string>
+    <string name="height">height</string>
+    <string name="width">width</string>
+    <string name="radius">radius</string>
 
     <string-array name="size_array">
         <item>1 x 1</item>
@@ -36,5 +39,16 @@
         <item>5 x 5</item>
         <item>7 x 7</item>
         <item>9 x 9</item>
+    </string-array>
+
+    <string-array name="shape_array">
+        <item>Rectangle</item>
+        <item>Circle</item>
+    </string-array>
+
+    <string-array name="shapefill_array">
+        <item>Outlines</item>
+        <item>Solid</item>
+        <item>Fill</item>
     </string-array>
 </resources>

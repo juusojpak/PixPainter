@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              style="?android:attr/buttonBarStyle"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#2b2b2b"
+              android:baselineAligned="false"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+    <Spinner
+        android:id="@+id/shapeSpinner"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:entries="@array/shape_array"
+        android:background="#fffb35"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/fillSpinner"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:entries="@array/shapefill_array"
+        android:background="#fffb35"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/shapeSizeArea"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/heightEdit"
+            android:inputType="numberSigned"
+            android:hint="@string/height"
+            android:textColorHint="#fffb35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/widthEdit"
+            android:inputType="numberSigned"
+            android:hint="@string/width"
+            android:textColorHint="#fffb35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/radiusEdit"
+            android:inputType="numberSigned"
+            android:hint="@string/radius"
+            android:textColorHint="#fffb35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>

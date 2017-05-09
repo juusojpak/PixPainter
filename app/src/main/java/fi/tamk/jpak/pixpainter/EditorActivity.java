@@ -16,10 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -31,7 +29,9 @@ import java.util.Date;
 
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog;
 import fi.tamk.jpak.pixpainter.colorpicker.ColorPickerListener;
+import fi.tamk.jpak.pixpainter.fragments.OnShapeSetupChanged;
 import fi.tamk.jpak.pixpainter.fragments.OnToolSetupChanged;
+import fi.tamk.jpak.pixpainter.fragments.ShapeSetupFragment;
 import fi.tamk.jpak.pixpainter.fragments.ToolSetupFragment;
 import fi.tamk.jpak.pixpainter.tools.Brush;
 import fi.tamk.jpak.pixpainter.tools.Eraser;
@@ -39,17 +39,19 @@ import fi.tamk.jpak.pixpainter.tools.PaintBucket;
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Pipette;
 import fi.tamk.jpak.pixpainter.tools.Shape;
+import fi.tamk.jpak.pixpainter.tools.ShapeFillType;
 import fi.tamk.jpak.pixpainter.tools.ShapeType;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.PixelGridState;
 
-public class EditorActivity extends AppCompatActivity
-        implements ColorPickerListener, OnToolSetupChanged, Pipette.PipetteListener {
+public class EditorActivity extends AppCompatActivity implements
+        ColorPickerListener, OnToolSetupChanged, OnShapeSetupChanged, Pipette.PipetteListener {
 
     private DrawingView drawing;
     private PixelGridView grid;
     private ToolSetupFragment setupFrag;
+    private ShapeSetupFragment shapeFrag;
     private ArrayList<ImageButton> toolButtons;
     private ColorARGB primaryColor;
     private ColorARGB secondaryColor;
@@ -63,7 +65,6 @@ public class EditorActivity extends AppCompatActivity
     private AlertDialog clearAlert;
     private int cols, rows;
     private int selectedStrokeSize;
-    private boolean isSetupFragInView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,16 +88,16 @@ public class EditorActivity extends AppCompatActivity
         drawing = (DrawingView) findViewById(R.id.drawingView);
         setEditorDimensions();
 
-        setupFrag = new ToolSetupFragment();
-        isSetupFragInView = false;
+        setupFrag = (ToolSetupFragment) getSupportFragmentManager().findFragmentById(R.id.setupFrag);
+        shapeFrag = (ShapeSetupFragment) getSupportFragmentManager().findFragmentById(R.id.shapeFrag);
+
         toolButtons = new ArrayList<>();
         pencilTool = new Pencil();
         brushTool = new Brush();
         eraserTool = new Eraser();
-        shapeTool = new Shape(ShapeType.CIRCLE);
+        shapeTool = new Shape(ShapeType.CIRCLE, ShapeFillType.OUTLINE);
         bucketTool = new PaintBucket();
         pipetteTool = new Pipette(this);
-
         activeTool = PixelGridState.getActiveTool();
         if (activeTool == null) {
             activeTool = pencilTool;
@@ -218,7 +219,8 @@ public class EditorActivity extends AppCompatActivity
 
     public void showActiveTool() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        boolean showSetup = false;
+        boolean showToolFrag = false;
+        boolean showShapeFrag = false;
 
         for (int i = 0; i < toolButtons.size(); i++) {
             toolButtons.get(i).setBackgroundColor(
@@ -230,18 +232,19 @@ public class EditorActivity extends AppCompatActivity
         switch (activeTool.getType()) {
             case PEN:
                 toolButtons.get(0).setBackgroundColor(activeColor);
-                showSetup = true;
+                showToolFrag = true;
                 break;
             case BRUSH:
                 toolButtons.get(1).setBackgroundColor(activeColor);
-                showSetup = true;
+                showToolFrag = true;
                 break;
             case ERASE:
                 toolButtons.get(2).setBackgroundColor(activeColor);
-                showSetup = true;
+                showToolFrag = true;
                 break;
             case SHAPE:
                 toolButtons.get(3).setBackgroundColor(activeColor);
+                showShapeFrag = true;
                 break;
             case FILL:
                 toolButtons.get(4).setBackgroundColor(activeColor);
@@ -253,16 +256,15 @@ public class EditorActivity extends AppCompatActivity
                 break;
         }
 
-        if (showSetup) {
-            if (!isSetupFragInView) {
-                transaction.add(R.id.toolSetupArea, setupFrag);
-                isSetupFragInView = true;
-            }
+        if (showToolFrag) {
+            transaction.show(setupFrag);
+            transaction.hide(shapeFrag);
+        } else if (showShapeFrag) {
+            transaction.show(shapeFrag);
+            transaction.hide(setupFrag);
         } else {
-            if (isSetupFragInView) {
-                transaction.remove(setupFrag);
-                isSetupFragInView = false;
-            }
+            transaction.hide(setupFrag);
+            transaction.hide(shapeFrag);
         }
 
         transaction.commit();
@@ -374,6 +376,25 @@ public class EditorActivity extends AppCompatActivity
     @Override
     public void handlePipetteDraw(ColorARGB color) {
         this.primaryColor = color;
+        updateDrawingView();
+    }
+
+    @Override
+    public void handleShapeChange(ShapeType type) {
+        shapeTool.setShapeType(type);
+        updateDrawingView();
+    }
+
+    @Override
+    public void handleShapeFillChange(ShapeFillType fillType) {
+        shapeTool.setShapeFillType(fillType);
+        updateDrawingView();
+    }
+
+    @Override
+    public void handleShapeSizeChange(int width, int height) {
+        shapeTool.setWidth(width);
+        shapeTool.setHeight(height);
         updateDrawingView();
     }
 }

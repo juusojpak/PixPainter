@@ -9,6 +9,7 @@ import fi.tamk.jpak.pixpainter.utils.Pixel;
 public class Shape extends Tool {
 
     private ShapeType type;
+    private ShapeFillType fillType;
     private int width;
     private int height;
     private ColorARGB[][] colorState;
@@ -17,14 +18,16 @@ public class Shape extends Tool {
     public Shape() {
         super(ToolType.SHAPE);
         this.type = ShapeType.RECTANGLE;
+        this.fillType = ShapeFillType.OUTLINE;
         this.width = 6;
         this.height = 6;
         this.stateSaved = false;
     }
 
-    public Shape(ShapeType type) {
+    public Shape(ShapeType type, ShapeFillType fillType) {
         super(ToolType.SHAPE);
         this.type = type;
+        this.fillType = fillType;
         this.width = 6;
         this.height = 6;
         this.stateSaved = false;
@@ -32,6 +35,18 @@ public class Shape extends Tool {
 
     public ShapeType getShapeType() {
         return type;
+    }
+
+    public void setShapeType(ShapeType type) {
+        this.type = type;
+    }
+
+    public ShapeFillType getShapeFillType() {
+        return fillType;
+    }
+
+    public void setShapeFillType(ShapeFillType fillType) {
+        this.fillType = fillType;
     }
 
     public int getWidth() {
