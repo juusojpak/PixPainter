@@ -11,12 +11,15 @@ public class Shape extends Tool {
     private ShapeType type;
     private int width;
     private int height;
+    private ColorARGB[][] colorState;
+    private boolean stateSaved;
 
     public Shape() {
         super(ToolType.SHAPE);
         this.type = ShapeType.RECTANGLE;
         this.width = 6;
         this.height = 6;
+        this.stateSaved = false;
     }
 
     public Shape(ShapeType type, int width, int height) {
@@ -24,6 +27,7 @@ public class Shape extends Tool {
         this.type = type;
         this.width = width;
         this.height = height;
+        this.stateSaved = false;
     }
 
     public ShapeType getShapeType() {
@@ -46,22 +50,46 @@ public class Shape extends Tool {
         this.height = height;
     }
 
+    public void handlePlacement(int row, int col, Pixel[][] pixels,
+                                ColorARGB color1, ColorARGB color2) {
+
+        switch (this.type) {
+            case RECTANGLE:
+                drawRectangle(row, col, pixels, color1, color2, false);
+                break;
+            default:
+                drawRectangle(row, col, pixels, color1, color2, false);
+                break;
+        }
+
+        stateSaved = false;
+    }
+
     @Override
     public void handleDraw(int row, int col, Pixel[][] pixels,
                            ColorARGB color1, ColorARGB color2) {
 
+        if (!stateSaved) saveColorState(pixels);
         switch (this.type) {
             case RECTANGLE:
-                drawRectangle(row, col, pixels, color1, color2);
+                drawRectangle(row, col, pixels, color1, color2, true);
                 break;
             default:
-                drawRectangle(row, col, pixels, color1, color2);
+                drawRectangle(row, col, pixels, color1, color2, true);
                 break;
         }
     }
 
     public void drawRectangle(int row, int col, Pixel[][] pixels,
-                              ColorARGB color1, ColorARGB color2) {
+                              ColorARGB color1, ColorARGB color2, boolean dragging) {
+
+        if (dragging) {
+            for (int i = 0; i < pixels.length; i++) {
+                for (int j = 0; j < pixels[i].length; j++) {
+                    drawPixel(pixels[i][j], colorState[i][j]);
+                }
+            }
+        }
 
         /* Left side */
         for (int i = 0; i < height; i++) {
@@ -102,5 +130,20 @@ public class Shape extends Tool {
 
     public void drawPixel(Pixel p, ColorARGB color) {
         p.getColor().setARGB(color.getA(), color.getR(), color.getG(), color.getB());
+    }
+
+    public void saveColorState(Pixel[][] pixels) {
+        if ((pixels != null) && (pixels.length > 0) && (pixels[0].length > 0)) {
+            colorState = new ColorARGB[pixels.length][pixels[0].length];
+            for (int i = 0; i < pixels.length; i++) {
+                for (int j = 0; j < pixels[i].length; j++) {
+                    ColorARGB c = pixels[i][j].getColor();
+                    colorState[i][j] = new ColorARGB(c.getA(), c.getR(),
+                            c.getG(), c.getB());
+                }
+            }
+
+            stateSaved = true;
+        }
     }
 }

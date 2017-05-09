@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import fi.tamk.jpak.pixpainter.fragments.CanvasSetupFragment;
 import fi.tamk.jpak.pixpainter.fragments.OnCanvasSetupChanged;
+import fi.tamk.jpak.pixpainter.utils.PixelGridState;
 
 /**
  * Created by Juuso Pakarinen on 15/04/2017.
@@ -44,6 +45,7 @@ public class SetupActivity extends AppCompatActivity implements OnCanvasSetupCha
     }
 
     public void startEditor(View v) {
+        PixelGridState.clear();
         Intent i = new Intent(this, EditorActivity.class);
         int cols = 20;
         int rows = 20;

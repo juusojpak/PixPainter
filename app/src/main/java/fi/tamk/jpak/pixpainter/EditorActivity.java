@@ -105,7 +105,9 @@ public class EditorActivity extends AppCompatActivity
         primaryColor = PixelGridState.getPrimaryColor();
         if (primaryColor == null) primaryColor = new ColorARGB(255, 0, 0, 0);
 
-        secondaryColor = new ColorARGB(255, 255, 255, 255);
+        secondaryColor = PixelGridState.getSecondaryColor();
+        if (secondaryColor == null) secondaryColor = new ColorARGB(255, 255, 255, 255);
+
         drawing.setTool(activeTool);
         drawing.setColors(primaryColor, secondaryColor);
         showSelectedColors();

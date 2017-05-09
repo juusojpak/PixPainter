@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.support.v7.widget.AppCompatImageView;
 
 import fi.tamk.jpak.pixpainter.tools.Pencil;
+import fi.tamk.jpak.pixpainter.tools.Shape;
 import fi.tamk.jpak.pixpainter.tools.Tool;
 import fi.tamk.jpak.pixpainter.tools.ToolType;
 import fi.tamk.jpak.pixpainter.utils.ColorARGB;
@@ -119,11 +120,18 @@ public class DrawingView extends AppCompatImageView {
         int column = (int) (event.getX() / cellWidth);
         int row = (int) (event.getY() / cellHeight);
 
-        if (tool.getType() == ToolType.FILL) {
-            tool.handleDraw(row, column, pixels, primaryColor,
-                    pixels[row][column].getColor());
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (tool.getType() == ToolType.SHAPE) {
+                Shape s = (Shape) tool;
+                s.handlePlacement(row, column, pixels, primaryColor, secondaryColor);
+            }
         } else {
-            tool.handleDraw(row, column, pixels, primaryColor, secondaryColor);
+            if (tool.getType() == ToolType.FILL) {
+                tool.handleDraw(row, column, pixels, primaryColor,
+                        pixels[row][column].getColor());
+            } else {
+                tool.handleDraw(row, column, pixels, primaryColor, secondaryColor);
+            }
         }
 
         PixelGridState.setPixels(pixels);
@@ -178,6 +186,7 @@ public class DrawingView extends AppCompatImageView {
         if (primaryColor != null) this.primaryColor = primaryColor;
         if (secondaryColor != null) this.secondaryColor = secondaryColor;
         PixelGridState.setPrimaryColor(this.primaryColor);
+        PixelGridState.setSecondaryColor(this.secondaryColor);
     }
 
     public void setTool(Tool tool) {

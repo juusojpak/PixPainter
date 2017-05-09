@@ -10,6 +10,7 @@ public class PixelGridState {
     private static Pixel[][] pixels;
     private static Tool activeTool;
     private static ColorARGB primaryColor;
+    private static ColorARGB secondaryColor;
 
     public static Pixel[][] getPixels() {
         return PixelGridState.pixels;
@@ -39,5 +40,22 @@ public class PixelGridState {
         if (primaryColor != null) {
             PixelGridState.primaryColor = primaryColor;
         }
+    }
+
+    public static ColorARGB getSecondaryColor() {
+        return PixelGridState.secondaryColor;
+    }
+
+    public static void setSecondaryColor(ColorARGB secondaryColor) {
+        if (secondaryColor != null) {
+            PixelGridState.secondaryColor = secondaryColor;
+        }
+    }
+
+    public static void clear() {
+        PixelGridState.pixels = null;
+        PixelGridState.activeTool = null;
+        PixelGridState.primaryColor = null;
+        PixelGridState.secondaryColor = null;
     }
 }
