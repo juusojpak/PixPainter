@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootLayout"
     android:orientation="vertical"
@@ -101,69 +102,103 @@
             android:layout_height="match_parent"/>
     </FrameLayout>
 
-    <LinearLayout
+    <android.support.percent.PercentRelativeLayout
         style="?android:attr/buttonBarStyle"
         android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
+        android:padding="2dp"
         android:gravity="center"
-        android:padding="6dp"
         android:background="@color/colorPrimaryDark">
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/pencilButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/pencil"
-            android:onClick="handlePencilClick"/>
+            android:src="@drawable/pencil"
+            android:contentDescription="@string/pencil"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handlePencilClick"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%" />
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/brushButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/brush"
-            android:onClick="handleBrushClick"/>
+            android:src="@drawable/brush"
+            android:contentDescription="@string/brush"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/pencilButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleBrushClick"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%"/>
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/eraserButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/eraser"
-            android:onClick="handleEraserClick"/>
+            android:src="@drawable/eraser"
+            android:contentDescription="@string/eraser"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/brushButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleEraserClick"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%"/>
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/shapeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/shape"
-            android:onClick="handleShapeClick"/>
+            android:src="@drawable/shape"
+            android:contentDescription="@string/shape"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/eraserButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleShapeClick"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%"/>
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/fillButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/fill"
-            android:onClick="handleFillClick"/>
+            android:src="@drawable/bucket"
+            android:contentDescription="@string/fill"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/shapeButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleFillClick"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%"/>
 
-        <Button
+        <ImageButton
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/pipetteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="1dp"
-            android:text="@string/pipette"
-            android:onClick="handlePipetteClick"/>
-    </LinearLayout>
+            android:src="@drawable/pipette"
+            android:contentDescription="@string/pipette"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_toRightOf="@id/fillButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handlePipetteClick"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%"/>
+    </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -47,7 +49,7 @@ public class EditorActivity extends AppCompatActivity
     private DrawingView drawing;
     private PixelGridView grid;
     private ToolSetupFragment setupFrag;
-    private ArrayList<Button> toolButtons;
+    private ArrayList<ImageButton> toolButtons;
     private ColorARGB primaryColor;
     private ColorARGB secondaryColor;
     private Tool activeTool;
@@ -112,12 +114,12 @@ public class EditorActivity extends AppCompatActivity
         drawing.setColors(primaryColor, secondaryColor);
         showSelectedColors();
 
-        LinearLayout toolbarLayout = (LinearLayout) findViewById(R.id.toolbarLayout);
+        PercentRelativeLayout toolbarLayout = (PercentRelativeLayout) findViewById(R.id.toolbarLayout);
 
         for (int i = 0; i < toolbarLayout.getChildCount(); i++) {
             View v = toolbarLayout.getChildAt(i);
-            if (v instanceof Button) {
-                Button b = (Button) v;
+            if (v instanceof ImageButton) {
+                ImageButton b = (ImageButton) v;
                 toolButtons.add(b);
             }
         }
@@ -218,33 +220,33 @@ public class EditorActivity extends AppCompatActivity
         boolean showSetup = false;
 
         for (int i = 0; i < toolButtons.size(); i++) {
-            toolButtons.get(i).setTextColor(
-                    ContextCompat.getColor(this, R.color.colorAccent));
+            toolButtons.get(i).setBackgroundColor(
+                    ContextCompat.getColor(this, R.color.colorPrimaryDark));
         }
 
-        int activeColor = 0xffed9135;
+        int activeColor = ContextCompat.getColor(this, R.color.colorAccent);
 
         switch (activeTool.getType()) {
             case PEN:
-                toolButtons.get(0).setTextColor(activeColor);
+                toolButtons.get(0).setBackgroundColor(activeColor);
                 showSetup = true;
                 break;
             case BRUSH:
-                toolButtons.get(1).setTextColor(activeColor);
+                toolButtons.get(1).setBackgroundColor(activeColor);
                 showSetup = true;
                 break;
             case ERASE:
-                toolButtons.get(2).setTextColor(activeColor);
+                toolButtons.get(2).setBackgroundColor(activeColor);
                 showSetup = true;
                 break;
             case SHAPE:
-                toolButtons.get(3).setTextColor(activeColor);
+                toolButtons.get(3).setBackgroundColor(activeColor);
                 break;
             case FILL:
-                toolButtons.get(4).setTextColor(activeColor);
+                toolButtons.get(4).setBackgroundColor(activeColor);
                 break;
             case PIP:
-                toolButtons.get(5).setTextColor(activeColor);
+                toolButtons.get(5).setBackgroundColor(activeColor);
                 break;
             default:
                 break;
