@@ -27,6 +27,8 @@
     <string name="exportedToGalleryToast">Exported to Gallery</string>
     <string name="clearEditor">Clear image</string>
     <string name="verticalEllipsis">&#8942;</string>
+    <string name="primaryColorCircleDescription">Indicatior for primary color</string>
+    <string name="secondaryColorCircleDescription">Indicatior for secondary color</string>
 
     <string-array name="size_array">
         <item>1 x 1</item>

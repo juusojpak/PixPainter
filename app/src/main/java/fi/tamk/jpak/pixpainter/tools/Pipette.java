@@ -29,6 +29,5 @@ public class Pipette extends Tool {
                     selectedColor.getG(),
                     selectedColor.getB()));
         }
-
     }
 }

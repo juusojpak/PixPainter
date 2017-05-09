@@ -48,7 +48,6 @@ public class CanvasSetupFragment extends Fragment {
                     dimensions[0] = 1;
                 }
 
-                System.out.println(dimensions[0] + ", " + dimensions[1]);
                 callback.handleCanvasSetupChange(dimensions);
             }
 
@@ -69,7 +68,6 @@ public class CanvasSetupFragment extends Fragment {
                     dimensions[1] = 1;
                 }
 
-                System.out.println(dimensions[0] + ", " + dimensions[1]);
                 callback.handleCanvasSetupChange(dimensions);
             }
 

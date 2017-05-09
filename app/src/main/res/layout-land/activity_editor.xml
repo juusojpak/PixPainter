@@ -30,26 +30,37 @@
             android:layout_alignParentTop="true"
             android:onClick="handleColorPickerClick"/>
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/selectedColorsArea"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="10dp"
-            android:layout_below="@id/colorPickerButton">
+            android:layout_below="@id/colorPickerButton"
+            android:onClick="handleColorsIndicatorClick">
 
-            <View
-                android:id="@+id/primaryColor"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:adjustViewBounds="true" />
-            <View
+            <ImageView
                 android:id="@+id/secondaryColor"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="20dp" />
-        </LinearLayout>
+                android:src="@drawable/secondary_color_circle"
+                android:contentDescription="@string/secondaryColorCircleDescription"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/primaryColor"
+                android:src="@drawable/primary_color_circle"
+                android:contentDescription="@string/primaryColorCircleDescription"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/toolSetupArea"

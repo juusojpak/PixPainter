@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,6 +16,7 @@ import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -72,10 +74,6 @@ public class EditorActivity extends AppCompatActivity
             cols = intent.getExtras().getInt("columns");
             rows = intent.getExtras().getInt("rows");
         }
-
-        System.out.println("EditorActivity created");
-        System.out.println("Cols: " + cols);
-        System.out.println("Rows: " + rows);
     }
 
     @Override
@@ -130,6 +128,17 @@ public class EditorActivity extends AppCompatActivity
         ColorPickerDialog cpDialog = ColorPickerDialog.newInstance(primaryColor);
         cpDialog.setColorPickerListener(this);
         cpDialog.show(getFragmentManager(), "ColorPickerDialog");
+    }
+
+    public void handleColorsIndicatorClick(View v) {
+        ColorARGB tmp = new ColorARGB(primaryColor.getA(),
+                primaryColor.getR(), primaryColor.getG(), primaryColor.getB());
+
+        primaryColor = new ColorARGB(secondaryColor.getA(),
+                secondaryColor.getR(), secondaryColor.getG(), secondaryColor.getB());
+
+        secondaryColor = tmp;
+        updateDrawingView();
     }
 
     public void handlePencilClick(View v) {
@@ -194,10 +203,12 @@ public class EditorActivity extends AppCompatActivity
     }
 
     public void showSelectedColors() {
-        View primary = findViewById(R.id.primaryColor);
-        View secondary = findViewById(R.id.secondaryColor);
-        primary.setBackgroundColor(primaryColor.toInt());
-        secondary.setBackgroundColor(secondaryColor.toInt());
+        ImageView primary = (ImageView) findViewById(R.id.primaryColor);
+        ImageView secondary = (ImageView) findViewById(R.id.secondaryColor);
+        GradientDrawable bgShape = (GradientDrawable) primary.getDrawable();
+        bgShape.setColor(primaryColor.toInt());
+        bgShape = (GradientDrawable) secondary.getDrawable();
+        bgShape.setColor(secondaryColor.toInt());
     }
 
     public void showActiveTool() {
