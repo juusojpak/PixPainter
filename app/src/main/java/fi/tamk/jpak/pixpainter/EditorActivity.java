@@ -195,7 +195,7 @@ public class EditorActivity extends AppCompatActivity implements
 
     public void updateDrawingView() {
         PixelGridState.setActiveTool(activeTool);
-        activeTool.setStrokeSize(selectedStrokeSize);
+        if (activeTool != null) activeTool.setStrokeSize(selectedStrokeSize);
         drawing.setTool(activeTool);
         drawing.setColors(primaryColor, secondaryColor);
         showSelectedColors();
@@ -393,10 +393,11 @@ public class EditorActivity extends AppCompatActivity implements
 
     @Override
     public void handleShapeSizeChange(int width, int height) {
-        System.out.println("!!!!!!!!");
-        System.out.println("row: " + height + ", col: " + width);
-        shapeTool.setWidth(width);
-        shapeTool.setHeight(height);
+        if (shapeTool != null) {
+            shapeTool.setWidth(width);
+            shapeTool.setHeight(height);
+        }
+
         updateDrawingView();
     }
 }

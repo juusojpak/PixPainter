@@ -6,6 +6,7 @@
     <string name="smallCanvas">20x20</string>
     <string name="mediumCanvas">40x40</string>
     <string name="largeCanvas">60x60</string>
+    <string name="size">Size:</string>
     <string name="customCanvas">Custom</string>
     <string name="current">current</string>
     <string name="newColor">new</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               style="?android:attr/buttonBarStyle"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:gravity="center"
               android:background="#2b2b2b"
               android:layout_width="match_parent"
@@ -9,21 +9,22 @@
 
     <TextView
         android:id="@+id/sizeText"
-        android:text="Size: "
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:text="@string/size"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="6dp"
         android:gravity="center"
         android:textColor="#fffb35"
-        android:textSize="20sp"/>
+        android:textSize="14sp"/>
 
     <Spinner
         android:id="@+id/sizeSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="4"
         android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:entries="@array/size_array"
         android:background="#fffb35"
         android:textSize="20sp"/>
