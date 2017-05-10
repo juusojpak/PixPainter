@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -44,6 +45,8 @@ public class ColorPickerDialog extends DialogFragment {
         selectedColor.setR(getArguments().getInt("r"));
         selectedColor.setG(getArguments().getInt("g"));
         selectedColor.setB(getArguments().getInt("b"));
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         return inflater.inflate(R.layout.color_dialog, container);
     }
 

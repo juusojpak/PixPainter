@@ -7,5 +7,4 @@
         <item name="colorAccent">#fffb35</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
 </resources>
