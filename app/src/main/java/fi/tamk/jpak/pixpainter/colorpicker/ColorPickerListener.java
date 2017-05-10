@@ -12,7 +12,7 @@ public interface ColorPickerListener {
 
     /**
      * Called when color or alpha values have been changed.
-     * @param color Current state of color and alpha values.
+     * @param color Color received from the {@link ColorPickerDialog color picker}.
      */
     void onColorChanged(ColorARGB color);
 }

@@ -30,6 +30,7 @@
     <string name="saveToLocal">Save</string>
     <string name="exportToGallery">Export to Gallery</string>
     <string name="exportedToGalleryToast">Exported to Gallery</string>
+    <string name="saveFailedToast">Save failed</string>
     <string name="clearEditor">Clear image</string>
     <string name="verticalEllipsis">&#8942;</string>
     <string name="titleDescription">Animated title for the application</string>

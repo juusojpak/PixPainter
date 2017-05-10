@@ -4,20 +4,40 @@ import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.Pixel;
 
 /**
- * Created by Juuso Pakarinen on 25/04/2017.
+ * Brush tool.
+ *
+ * Draws with soft/gradient stroke.
+ *
+ * @author Juuso Pakarinen
+ * @version 25.04.2017
  */
 public class Brush extends Tool {
 
+    /**
+     * Array containing fade values used to make gradient effect.
+     */
     private int[] fadeValues;
 
+    /**
+     * Default constructor.
+     */
     public Brush() {
         super(ToolType.BRUSH);
     }
 
+    /**
+     * Constructor.
+     *
+     * Initializes stroke size.
+     * @param strokeSize Size of stroke.
+     */
     public Brush(int strokeSize) {
         super(ToolType.BRUSH, strokeSize);
     }
 
+    /**
+     * Updates fade values according to stroke size.
+     */
     public void updateFadeValues() {
         fadeValues = new int[getStrokeSize()];
 
@@ -26,6 +46,15 @@ public class Brush extends Tool {
         }
     }
 
+    /**
+     * Handle drawing.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color1 Primary color.
+     * @param color2 Secondary color. Not used.
+     */
     @Override
     public void handleDraw(int row, int col, Pixel[][] pixels,
                            ColorARGB color1, ColorARGB color2) {

@@ -19,7 +19,7 @@ public interface OnShapeSetupChanged {
 
     /**
      * Called when {@link ShapeFillType} has been changed.
-     * @param fillType Method of filling the inside of the shape.
+     * @param fillType Type of the shape fill.
      */
     void handleShapeFillChange(ShapeFillType fillType);
 

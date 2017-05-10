@@ -1,6 +1,7 @@
 package fi.tamk.jpak.pixpainter.fragments;
 
 import android.os.Bundle;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,7 +33,7 @@ public class ShapeSetupFragment extends Fragment {
     /**
      * Container for shape size {@link EditText input fields}.
      */
-    private LinearLayout sizeArea;
+    private PercentRelativeLayout sizeArea;
 
     /**
      * Input for width.
@@ -87,7 +88,7 @@ public class ShapeSetupFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_shapesetup, container, false);
-        sizeArea = (LinearLayout) view.findViewById(R.id.shapeSizeArea);
+        sizeArea = (PercentRelativeLayout) view.findViewById(R.id.shapeSizeArea);
 
         heightEdit = (EditText) view.findViewById(R.id.heightEdit);
         widthEdit = (EditText) view.findViewById(R.id.widthEdit);

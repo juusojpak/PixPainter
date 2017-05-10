@@ -4,17 +4,55 @@ import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.Pixel;
 
 /**
- * Created by Juuso Pakarinen on 24/04/2017.
+ * Shape tool.
+ *
+ * Inserts circles or rectangles to canvas. These shapes can be only
+ * {@link ShapeFillType#OUTLINE outlines} of the shape,
+ * {@link ShapeFillType#SOLID solid} with one color,
+ * or have outlines drawn with primary color and
+ * {@link ShapeFillType#FILL filled} with secondary color.
+ *
+ * @author Juuso Pakarinen
+ * @version 24.04.2017
  */
 public class Shape extends Tool {
 
+    /**
+     * Type of the shape. Circle or rectangle.
+     */
     private ShapeType type;
+
+    /**
+     * Type of the shape fill.
+     */
     private ShapeFillType fillType;
+
+    /**
+     * Width of the shape.
+     */
     private int width;
+
+    /**
+     * Height of the shape.
+     */
     private int height;
+
+    /**
+     * Saved state of {@link fi.tamk.jpak.pixpainter.DrawingView#pixels pixel grid}
+     * used to keep the starting state of canvas while
+     * {@link Shape#handleDraw(int, int, Pixel[][], ColorARGB, ColorARGB) hovering}
+     * the shape.
+     */
     private ColorARGB[][] colorState;
+
+    /**
+     * Whether the the starting state of canvas is saved.
+     */
     private boolean stateSaved;
 
+    /**
+     * Default constructor.
+     */
     public Shape() {
         super(ToolType.SHAPE);
         this.type = ShapeType.RECTANGLE;
@@ -24,6 +62,12 @@ public class Shape extends Tool {
         this.stateSaved = false;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param type Type of the shape.
+     * @param fillType Type of the shape fill.
+     */
     public Shape(ShapeType type, ShapeFillType fillType) {
         super(ToolType.SHAPE);
         this.type = type;
@@ -33,38 +77,82 @@ public class Shape extends Tool {
         this.stateSaved = false;
     }
 
+    /**
+     * Returns type of the shape.
+     * @return type of the shape.
+     */
     public ShapeType getShapeType() {
         return type;
     }
 
+    /**
+     * Sets type of the shape.
+     * @param type Type of the shape.
+     */
     public void setShapeType(ShapeType type) {
         this.type = type;
     }
 
+    /**
+     * Returns type of the shape fill.
+     * @return type of the shape fill.
+     */
     public ShapeFillType getShapeFillType() {
         return fillType;
     }
 
+    /**
+     * Sets type of the shape fill.
+     * @param fillType Type of the shape fill.
+     */
     public void setShapeFillType(ShapeFillType fillType) {
         this.fillType = fillType;
     }
 
+    /**
+     * Returns width of the shape.
+     * @return width of the shape.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Sets width of the shape.
+     * @param width Width of the shape.
+     */
     public void setWidth(int width) {
         if (width > 0 && width <= 100) this.width = width;
     }
 
+    /**
+     * Returns height of the shape.
+     * @return height of the shape.
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Sets height of the shape.
+     * @param height Height of the shape.
+     */
     public void setHeight(int height) {
         if (height > 0 && height <= 100) this.height = height;
     }
 
+    /**
+     * Handle placement of the shape.
+     *
+     * Places the shape to {@link fi.tamk.jpak.pixpainter.DrawingView canvas}
+     * when touch is lifted.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color1 Primary color.
+     * @param color2 Secondary color.
+     */
     public void handlePlacement(int row, int col, Pixel[][] pixels,
                                 ColorARGB color1, ColorARGB color2) {
 
@@ -83,6 +171,18 @@ public class Shape extends Tool {
         stateSaved = false;
     }
 
+    /**
+     * Handle drawing.
+     *
+     * Hovers the shape over the {@link fi.tamk.jpak.pixpainter.DrawingView canvas}
+     * while touch is down.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color1 Primary color.
+     * @param color2 Secondary color.
+     */
     @Override
     public void handleDraw(int row, int col, Pixel[][] pixels,
                            ColorARGB color1, ColorARGB color2) {
@@ -101,6 +201,18 @@ public class Shape extends Tool {
         }
     }
 
+    /**
+     * Draw rectangle.
+     *
+     * Draws the outlines first. Then fills the shape according to shape fill type.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color1 Primary color.
+     * @param color2 Secondary color.
+     * @param dragging Whether the touch is down or lifted.
+     */
     public void drawRectangle(int row, int col, Pixel[][] pixels,
                               ColorARGB color1, ColorARGB color2, boolean dragging) {
 
@@ -164,6 +276,18 @@ public class Shape extends Tool {
         }
     }
 
+    /**
+     * Draw circle.
+     *
+     * Draws circle using the midpoint circle algorithm.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color1 Primary color.
+     * @param color2 Secondary color.
+     * @param dragging Whether the touch is down or lifted.
+     */
     public void drawCircle(int row, int col, Pixel[][] pixels,
                               ColorARGB color1, ColorARGB color2, boolean dragging) {
 
@@ -179,6 +303,7 @@ public class Shape extends Tool {
             }
         }
 
+        /* Fill the inside */
         if (fillType != ShapeFillType.OUTLINE) {
             ColorARGB c = color1;
             if (fillType == ShapeFillType.FILL) c = color2;
@@ -197,6 +322,7 @@ public class Shape extends Tool {
 
                 for (int i = (col - x); i < (col + x); i++) {
                     if ((row + y < pixels.length) &&
+                            (row + y >= 0) &&
                             (i >= 0) &&
                             (i >= 0) &&
                             (i < pixels[0].length)) {
@@ -240,6 +366,10 @@ public class Shape extends Tool {
         y = 0;
         direction = 0;
 
+        /*
+         * Draws to every pixel that has the distance of length of the radius
+         * from origin.
+         */
         while (x >= y) {
 
             if ((row + x < pixels.length) &&
@@ -293,10 +423,24 @@ public class Shape extends Tool {
         }
     }
 
+    /**
+     * Set color of the pixel.
+     *
+     * @param p Selected pixel.
+     * @param color Selected color.
+     */
     public void drawPixel(Pixel p, ColorARGB color) {
         p.getColor().setARGB(color.getA(), color.getR(), color.getG(), color.getB());
     }
 
+    /**
+     * Save state of the {@link fi.tamk.jpak.pixpainter.DrawingView#pixels pixel grid}
+     * to keep the starting state of canvas while
+     * {@link Shape#handleDraw(int, int, Pixel[][], ColorARGB, ColorARGB) hovering}
+     * the shape.
+     *
+     * @param pixels Reference to pixel grid.
+     */
     public void saveColorState(Pixel[][] pixels) {
         if ((pixels != null) && (pixels.length > 0) && (pixels[0].length > 0)) {
             colorState = new ColorARGB[pixels.length][pixels[0].length];
