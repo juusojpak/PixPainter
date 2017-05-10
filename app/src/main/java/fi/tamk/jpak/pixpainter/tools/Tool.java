@@ -121,7 +121,10 @@ public abstract class Tool {
         int lineLenght = 1;
         int height = pixels.length;
         int width = pixels[0].length;
-        pixels[row][col].setColor(color);
+
+        if (row >= 0 && col >= 0 && row < pixels.length && col < pixels[0].length) {
+            pixels[row][col].setColor(color);
+        }
 
         if (strokeSize > 1) {
 

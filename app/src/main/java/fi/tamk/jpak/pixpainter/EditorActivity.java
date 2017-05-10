@@ -466,8 +466,8 @@ public class EditorActivity extends AppCompatActivity implements
             String fileName = dateStr +".png";
 
             /* Create save folder */
-            String sdcard = Environment.getExternalStorageDirectory().toString();
-            File root = new File(sdcard + "/pixpainter_saves");
+            File picDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            File root = new File(picDir, "pixpainter_saves");
             root.mkdirs();
 
             File f = new File(root, fileName);
@@ -491,6 +491,10 @@ public class EditorActivity extends AppCompatActivity implements
                 Toast.makeText(this,
                     getResources().getString(R.string.exportedToGalleryToast),
                     Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this,
+                        getResources().getString(R.string.exportedToGalleryToast),
+                        Toast.LENGTH_SHORT).show();
             }
 
         } catch (IOException | SecurityException e) {
