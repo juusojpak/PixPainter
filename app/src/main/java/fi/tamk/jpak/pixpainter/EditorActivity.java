@@ -493,7 +493,7 @@ public class EditorActivity extends AppCompatActivity implements
                     Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this,
-                        getResources().getString(R.string.exportedToGalleryToast),
+                        getResources().getString(R.string.saveToLocal),
                         Toast.LENGTH_SHORT).show();
             }
 
