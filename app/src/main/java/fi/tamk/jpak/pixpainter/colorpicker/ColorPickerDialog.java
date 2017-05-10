@@ -22,7 +22,6 @@ public class ColorPickerDialog extends DialogFragment {
 
     private ColorARGB selectedColor;
     private ColorPickerListener cpListener;
-    private SeekBar redBar, greenBar, blueBar;
 
     public ColorPickerDialog() {}
 
@@ -83,21 +82,24 @@ public class ColorPickerDialog extends DialogFragment {
                 }
             });
 
-            redBar = (SeekBar) getDialog().findViewById(R.id.redBar);
-            greenBar = (SeekBar) getDialog().findViewById(R.id.greenBar);
-            blueBar = (SeekBar) getDialog().findViewById(R.id.blueBar);
+            SeekBar alphaBar = (SeekBar) getDialog().findViewById(R.id.alphaBar);
+            SeekBar redBar = (SeekBar) getDialog().findViewById(R.id.redBar);
+            SeekBar greenBar = (SeekBar) getDialog().findViewById(R.id.greenBar);
+            SeekBar blueBar = (SeekBar) getDialog().findViewById(R.id.blueBar);
 
             ColorBarChangeListener barListener = new ColorBarChangeListener();
+            alphaBar.setOnSeekBarChangeListener(barListener);
             redBar.setOnSeekBarChangeListener(barListener);
             greenBar.setOnSeekBarChangeListener(barListener);
             blueBar.setOnSeekBarChangeListener(barListener);
 
             if (selectedColor != null) {
+                alphaBar.setProgress(selectedColor.getA());
                 redBar.setProgress(selectedColor.getR());
                 greenBar.setProgress(selectedColor.getG());
                 blueBar.setProgress(selectedColor.getB());
                 setColorTexts();
-                setColorArea();
+                setColorAreas(true);
             }
 
         } catch (NullPointerException e) {
@@ -112,35 +114,61 @@ public class ColorPickerDialog extends DialogFragment {
     }
 
     public void setColorTexts() {
+        String aStr = getString(R.string.alphaVal) + " " + selectedColor.getA();
         String rStr = getString(R.string.redVal) + " " + selectedColor.getR();
         String gStr = getString(R.string.greenVal) + " " + selectedColor.getG();
         String bStr = getString(R.string.blueVal) + " " + selectedColor.getB();
+        ((TextView) getDialog().findViewById(R.id.alphaText)).setText(aStr);
         ((TextView) getDialog().findViewById(R.id.redText)).setText(rStr);
         ((TextView) getDialog().findViewById(R.id.greenText)).setText(gStr);
         ((TextView) getDialog().findViewById(R.id.blueText)).setText(bStr);
     }
 
-    public void setColorArea() {
-        View area = getDialog().findViewById(R.id.colorArea);
+    public void setColorAreas(boolean setCurrent) {
         int colorInt = Color.parseColor(selectedColor.toHexString());
-        area.setBackgroundColor(colorInt);
+        TextView newColor = (TextView) getDialog().findViewById(R.id.colorArea);
+        newColor.setBackgroundColor(colorInt);
+
+        if (setCurrent) {
+            TextView currentColor = (TextView) getDialog().findViewById(R.id.currentColorArea);
+            currentColor.setBackgroundColor(colorInt);
+            if (isDark()) {
+                currentColor.setTextColor(0xffffffff);
+            } else {
+                currentColor.setTextColor(0xff000000);
+            }
+        }
+
+        if (isDark()) {
+            newColor.setTextColor(0xffffffff);
+        } else {
+            newColor.setTextColor(0xff000000);
+        }
     }
 
     public class ColorBarChangeListener implements SeekBar.OnSeekBarChangeListener {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            if (seekBar.getId() == R.id.redBar) {
-                selectedColor.setR(progress);
-            } else if (seekBar.getId() == R.id.greenBar) {
-                selectedColor.setG(progress);
-            } else if (seekBar.getId() == R.id.blueBar) {
-                selectedColor.setB(progress);
+            switch (seekBar.getId()) {
+                case R.id.alphaBar:
+                    selectedColor.setA(progress);
+                    break;
+                case R.id.redBar:
+                    selectedColor.setR(progress);
+                    break;
+                case R.id.greenBar:
+                    selectedColor.setG(progress);
+                    break;
+                case R.id.blueBar:
+                    selectedColor.setB(progress);
+                    break;
+                default:
+                    break;
             }
 
             setColorTexts();
-            setColorArea();
+            setColorAreas(false);
         }
 
         @Override
@@ -148,5 +176,11 @@ public class ColorPickerDialog extends DialogFragment {
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {}
+    }
+
+    public boolean isDark() {
+        return (selectedColor.getR() < 60 &&
+                selectedColor.getG() < 60 &&
+                selectedColor.getB() < 60);
     }
 }

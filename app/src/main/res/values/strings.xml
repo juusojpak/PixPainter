@@ -7,9 +7,13 @@
     <string name="mediumCanvas">40x40</string>
     <string name="largeCanvas">60x60</string>
     <string name="customCanvas">Custom</string>
+    <string name="current">current</string>
+    <string name="newColor">new</string>
+    <string name="alpha">Alpha</string>
     <string name="red">Red</string>
     <string name="green">Green</string>
     <string name="blue">Blue</string>
+    <string name="alphaVal">Alpha: </string>
     <string name="redVal">Red: </string>
     <string name="greenVal">Green: </string>
     <string name="blueVal">Blue: </string>

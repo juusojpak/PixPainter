@@ -10,65 +10,126 @@
     android:background="@color/colorPrimaryDark"
     tools:context="fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog">
 
-    <View
-        android:id="@+id/colorArea"
+    <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_height="0dp"
-        android:layout_weight="2"/>
+        android:layout_weight="2">
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/colorArea"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/newColor"
+            android:padding="8dp"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="70%"/>
+
+        <TextView
+            android:id="@+id/currentColorArea"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_toRightOf="@id/colorArea"
+            android:text="@string/current"
+            android:padding="8dp"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="30%"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+    <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_weight="5">
+
+        <TextView
+            android:id="@+id/alphaText"
+            android:text="@string/alpha"
+            android:textColor="#fbfbfb"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%"/>
+
+        <SeekBar
+            android:id="@+id/alphaBar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/alphaText"
+            android:max="255"
+            android:maxHeight="1000dp"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
 
         <TextView
             android:id="@+id/redText"
             android:text="@string/red"
             android:textColor="#ffaaaa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/alphaBar"
+            android:gravity="center"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%"/>
+
+        <SeekBar
+            android:id="@+id/redBar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/redText"
+            android:max="255"
+            android:maxHeight="1000dp"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
 
         <TextView
             android:id="@+id/greenText"
             android:text="@string/green"
             android:textColor="#aaffaa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/redBar"
+            android:gravity="center"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%"/>
+
+        <SeekBar
+            android:id="@+id/greenBar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/greenText"
+            android:max="255"
+            android:maxHeight="1000dp"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
 
         <TextView
             android:id="@+id/blueText"
             android:text="@string/blue"
             android:textColor="#bbbbff"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"/>
-
-        <SeekBar
-            android:id="@+id/redBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"
-            android:max="255"/>
-
-        <SeekBar
-            android:id="@+id/greenBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:max="255"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/greenBar"
+            android:gravity="center"
+            app:layout_heightPercent="15%"
+            app:layout_widthPercent="100%"/>
 
         <SeekBar
             android:id="@+id/blueBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:max="255"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/blueText"
+            android:layout_alignParentBottom="true"
+            android:max="255"
+            android:maxHeight="1000dp"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
 
-    </LinearLayout>
+    </android.support.percent.PercentRelativeLayout>
 
     <android.support.percent.PercentRelativeLayout
         style="?attr/buttonBarStyle"
