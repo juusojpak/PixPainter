@@ -1,11 +1,13 @@
 package fi.tamk.jpak.pixpainter;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -42,6 +44,11 @@ public class SetupActivity extends AppCompatActivity implements OnCanvasSetupCha
     protected void onResume() {
         super.onResume();
         handleSmallClick(findViewById(R.id.smallArea));
+
+        ImageView title = (ImageView) findViewById(R.id.appTitle);
+        title.setBackgroundResource(R.drawable.title_animation);
+        AnimationDrawable frameAnimation = (AnimationDrawable) title.getBackground();
+        frameAnimation.start();
     }
 
     public void startEditor(View v) {

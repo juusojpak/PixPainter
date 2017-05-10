@@ -31,8 +31,10 @@
     <string name="exportedToGalleryToast">Exported to Gallery</string>
     <string name="clearEditor">Clear image</string>
     <string name="verticalEllipsis">&#8942;</string>
+    <string name="titleDescription">Animated title for the application</string>
     <string name="primaryColorCircleDescription">Indicatior for primary color</string>
     <string name="secondaryColorCircleDescription">Indicatior for secondary color</string>
+    <string name="paperDescription">Icon for paper</string>
     <string name="height">height</string>
     <string name="width">width</string>
     <string name="radius">radius</string>

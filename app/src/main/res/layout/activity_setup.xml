@@ -10,21 +10,19 @@
     android:background="#2b2b2b"
     tools:context="fi.tamk.jpak.pixpainter.SetupActivity">
 
-    <TextView
+    <ImageView
         android:id="@+id/appTitle"
+        android:contentDescription="@string/titleDescription"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textSize="30sp"
-        android:textColor="#edad00"/>
+        android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/smallArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:padding="20dp"
         android:onClick="handleSmallClick"
         android:gravity="center_vertical"
@@ -34,6 +32,7 @@
             android:id="@+id/smallImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/paperDescription"
             android:src="@drawable/paper"
             android:scaleType="centerInside"
             android:adjustViewBounds="true"/>
@@ -51,7 +50,7 @@
         android:id="@+id/mediumArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:padding="20dp"
         android:onClick="handleMediumClick"
         android:gravity="center_vertical"
@@ -61,6 +60,7 @@
             android:id="@+id/mediumImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/paperDescription"
             android:src="@drawable/paper"
             android:scaleType="centerInside"
             android:adjustViewBounds="true"/>
@@ -78,7 +78,7 @@
         android:id="@+id/largeArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:padding="20dp"
         android:onClick="handleLargeClick"
         android:gravity="center_vertical"
@@ -88,6 +88,7 @@
             android:id="@+id/largeImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/paperDescription"
             android:src="@drawable/paper"
             android:scaleType="centerInside"
             android:adjustViewBounds="true"/>
@@ -105,7 +106,7 @@
         android:id="@+id/customArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:padding="20dp"
         android:onClick="handleCustomClick"
         android:gravity="center_vertical"
@@ -115,6 +116,7 @@
             android:id="@+id/customImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/paperDescription"
             android:src="@drawable/paper"
             android:scaleType="centerInside"
             android:adjustViewBounds="true"/>
@@ -132,7 +134,7 @@
         android:id="@+id/customSetupArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="horizontal"
         android:gravity="center">
     </LinearLayout>
@@ -142,7 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:padding="10dp"
         android:text="@string/create_new_pic"
         android:onClick="startEditor"/>
