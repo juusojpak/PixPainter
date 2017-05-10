@@ -43,6 +43,7 @@
             android:inputType="numberSigned"
             android:hint="@string/height"
             android:textColorHint="#fffb35"
+            android:textColor="#edad00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -51,6 +52,7 @@
             android:inputType="numberSigned"
             android:hint="@string/width"
             android:textColorHint="#fffb35"
+            android:textColor="#edad00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -59,6 +61,7 @@
             android:inputType="numberSigned"
             android:hint="@string/radius"
             android:textColorHint="#fffb35"
+            android:textColor="#edad00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>

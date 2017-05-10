@@ -95,7 +95,7 @@ public class EditorActivity extends AppCompatActivity implements
         pencilTool = new Pencil();
         brushTool = new Brush();
         eraserTool = new Eraser();
-        shapeTool = new Shape(ShapeType.CIRCLE, ShapeFillType.OUTLINE);
+        shapeTool = new Shape();
         bucketTool = new PaintBucket();
         pipetteTool = new Pipette(this);
         activeTool = PixelGridState.getActiveTool();
@@ -393,6 +393,8 @@ public class EditorActivity extends AppCompatActivity implements
 
     @Override
     public void handleShapeSizeChange(int width, int height) {
+        System.out.println("!!!!!!!!");
+        System.out.println("row: " + height + ", col: " + width);
         shapeTool.setWidth(width);
         shapeTool.setHeight(height);
         updateDrawingView();

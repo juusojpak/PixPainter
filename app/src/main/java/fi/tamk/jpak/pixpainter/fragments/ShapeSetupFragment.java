@@ -43,9 +43,14 @@ public class ShapeSetupFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_shapesetup, container, false);
         sizeArea = (LinearLayout) view.findViewById(R.id.shapeSizeArea);
+
         heightEdit = (EditText) view.findViewById(R.id.heightEdit);
         widthEdit = (EditText) view.findViewById(R.id.widthEdit);
         radiusEdit = (EditText) view.findViewById(R.id.radiusEdit);
+        widthEdit.addTextChangedListener(new ValueWatcher(0));
+        heightEdit.addTextChangedListener(new ValueWatcher(1));
+        radiusEdit.addTextChangedListener(new ValueWatcher(2));
+
         Spinner shapeSpin = (Spinner) view.findViewById(R.id.shapeSpinner);
         Spinner fillSpin = (Spinner) view.findViewById(R.id.fillSpinner);
         width = 3;
@@ -70,12 +75,19 @@ public class ShapeSetupFragment extends Fragment {
         fillSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    callback.handleShapeFillChange(ShapeFillType.OUTLINE);
-                } if (position == 0) {
-                    callback.handleShapeFillChange(ShapeFillType.SOLID);
-                } else {
-                    callback.handleShapeFillChange(ShapeFillType.FILL);
+                switch (position) {
+                    case 0:
+                        callback.handleShapeFillChange(ShapeFillType.OUTLINE);
+                        break;
+                    case 1:
+                        callback.handleShapeFillChange(ShapeFillType.SOLID);
+                        break;
+                    case 2:
+                        callback.handleShapeFillChange(ShapeFillType.FILL);
+                        break;
+                    default:
+                        callback.handleShapeFillChange(ShapeFillType.OUTLINE);
+                        break;
                 }
             }
 
@@ -115,16 +127,18 @@ public class ShapeSetupFragment extends Fragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (checkMode <= 0) {
-                width = Integer.parseInt(s.toString());
-            } else if (checkMode == 1) {
-                height = Integer.parseInt(s.toString());
-            } else {
-                width = Integer.parseInt(s.toString());
-                height = Integer.parseInt(s.toString());
-            }
+            if (s.length() > 0) {
+                if (checkMode <= 0) {
+                    width = Integer.parseInt(s.toString());
+                } else if (checkMode == 1) {
+                    height = Integer.parseInt(s.toString());
+                } else {
+                    width = Integer.parseInt(s.toString());
+                    height = Integer.parseInt(s.toString());
+                }
 
-            callback.handleShapeSizeChange(width, height);
+                callback.handleShapeSizeChange(width, height);
+            }
         }
 
         @Override

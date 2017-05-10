@@ -114,7 +114,7 @@ public class Shape extends Tool {
 
         /* Left side */
         for (int i = 0; i < height; i++) {
-            if ((row + i) < pixels.length) {
+            if ((row + i) < pixels.length && (row + i) >= 0 && col >= 0) {
                 Pixel p = pixels[row + i][col];
                 drawPixel(p, color1);
             }
@@ -122,7 +122,7 @@ public class Shape extends Tool {
 
         /* Top side */
         for (int i = 0; i < width; i++) {
-            if ((col + i) < pixels[0].length) {
+            if ((col + i) < pixels[0].length && (col + i) >= 0 && row >= 0) {
                 Pixel p = pixels[row][col + i];
                 drawPixel(p, color1);
             }
@@ -131,7 +131,7 @@ public class Shape extends Tool {
         /* Right side */
         if ((col + width) < pixels[0].length) {
             for (int i = 0; i < height; i++) {
-                if ((row + i) < pixels.length) {
+                if ((row + i) < pixels.length && (row + i) >= 0) {
                     Pixel p = pixels[row + i][((col + width) - 1)];
                     drawPixel(p, color1);
                 }
@@ -141,9 +141,24 @@ public class Shape extends Tool {
         /* Bottom side */
         if ((row + height) < pixels.length) {
             for (int i = 0; i < width; i++) {
-                if ((col + i) < pixels[0].length) {
+                if ((col + i) < pixels[0].length && (col + i) >= 0) {
                     Pixel p = pixels[((row + height) - 1)][col + i];
                     drawPixel(p, color1);
+                }
+            }
+        }
+
+        /* Fill inside of rectangle with color if selected so */
+        if (fillType != ShapeFillType.OUTLINE) {
+            ColorARGB c = color1;
+            if (fillType == ShapeFillType.FILL) c = color2;
+
+            for (int i = 0; i < height - 2; i++) {
+                for (int j = 0; j < width - 2; j++) {
+                    if ((row + (i + 1) < pixels.length) && (col + (j + 1) < pixels[0].length)) {
+                        Pixel p = pixels[row + (i + 1)][col + (j + 1)];
+                        drawPixel(p, c);
+                    }
                 }
             }
         }
@@ -152,7 +167,7 @@ public class Shape extends Tool {
     public void drawCircle(int row, int col, Pixel[][] pixels,
                               ColorARGB color1, ColorARGB color2, boolean dragging) {
 
-        int x = 15;
+        int x = width;
         int y = 0;
         int direction = 0;
 
@@ -164,7 +179,69 @@ public class Shape extends Tool {
             }
         }
 
+        if (fillType != ShapeFillType.OUTLINE) {
+            ColorARGB c = color1;
+            if (fillType == ShapeFillType.FILL) c = color2;
+
+            while (x >= y) {
+
+                for (int i = (col - y); i < (col + y); i++) {
+                    if ((row + x < pixels.length) &&
+                            (row + x >= 0) &&
+                            (i >= 0) &&
+                            (i < pixels[0].length)) {
+
+                        drawPixel(pixels[row + x][i], c);
+                    }
+                }
+
+                for (int i = (col - x); i < (col + x); i++) {
+                    if ((row + y < pixels.length) &&
+                            (i >= 0) &&
+                            (i >= 0) &&
+                            (i < pixels[0].length)) {
+
+                        drawPixel(pixels[row + y][i], c);
+                    }
+                }
+
+                for (int i = (col - y); i < (col + y); i++) {
+                    if ((row - x < pixels.length) &&
+                            (row - x >= 0) &&
+                            (i >= 0) &&
+                            (i < pixels[0].length)) {
+
+                        drawPixel(pixels[row - x][i], c);
+                    }
+                }
+
+                for (int i = (col - x); i < (col + x); i++) {
+                    if ((row - y >= 0) &&
+                            (row < pixels.length) &&
+                            (i >= 0) &&
+                            (i >= 0) &&
+                            (i < pixels[0].length)) {
+
+                        drawPixel(pixels[row - y][i], c);
+                    }
+                }
+
+                y++;
+                if (direction <= 0) {
+                    direction += (2 * y + 1);
+                } else {
+                    x--;
+                    direction -= (2 * x + 1);
+                }
+            }
+        }
+
+        x = width;
+        y = 0;
+        direction = 0;
+
         while (x >= y) {
+
             if ((row + x < pixels.length) &&
                     (row + x >= 0) &&
                     (col + y < pixels[0].length))
@@ -176,6 +253,7 @@ public class Shape extends Tool {
                 drawPixel(pixels[row + y][col + x], color1);
 
             if ((row - y >= 0) &&
+                    (row < pixels.length) &&
                     (col + x >= 0) &&
                     (col + x < pixels[0].length))
                 drawPixel(pixels[row - y][col + x], color1);
@@ -222,6 +300,7 @@ public class Shape extends Tool {
     public void saveColorState(Pixel[][] pixels) {
         if ((pixels != null) && (pixels.length > 0) && (pixels[0].length > 0)) {
             colorState = new ColorARGB[pixels.length][pixels[0].length];
+
             for (int i = 0; i < pixels.length; i++) {
                 for (int j = 0; j < pixels[i].length; j++) {
                     ColorARGB c = pixels[i][j].getColor();
