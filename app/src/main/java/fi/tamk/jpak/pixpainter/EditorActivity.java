@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -187,17 +188,12 @@ public class EditorActivity extends AppCompatActivity implements
         bucketTool = new PaintBucket();
         pipetteTool = new Pipette(this);
         activeTool = PixelGridState.getActiveTool();
-        if (activeTool == null) {
-            activeTool = pencilTool;
-            selectedStrokeSize = 1;
-        } else {
-            selectedStrokeSize = activeTool.getStrokeSize();
-        }
+        if (activeTool == null) activeTool = pencilTool;
+        selectedStrokeSize = 1;
 
         primaryColor = PixelGridState.getPrimaryColor();
-        if (primaryColor == null) primaryColor = new ColorARGB(255, 0, 0, 0);
-
         secondaryColor = PixelGridState.getSecondaryColor();
+        if (primaryColor == null) primaryColor = new ColorARGB(255, 0, 0, 0);
         if (secondaryColor == null) secondaryColor = new ColorARGB(255, 255, 255, 255);
 
         drawing.setTool(activeTool);
@@ -214,7 +210,9 @@ public class EditorActivity extends AppCompatActivity implements
             }
         }
 
+        updateDrawingView();
         showActiveTool();
+        toggleRedoButtonColor();
     }
 
     /**
@@ -311,6 +309,39 @@ public class EditorActivity extends AppCompatActivity implements
     }
 
     /**
+     * Undo last stroke to drawing area.
+     * @param v Clicked view.
+     */
+    public void handleUndoClick(View v) {
+        drawing.undo();
+        toggleRedoButtonColor();
+    }
+
+    /**
+     * Redo last stroke to drawing area.
+     * @param v Clicked view.
+     */
+    public void handleRedoClick(View v) {
+        drawing.redo();
+        toggleRedoButtonColor();
+    }
+
+    /**
+     * Grey out the redo button if unable to go forward in history.
+     */
+    public void toggleRedoButtonColor() {
+        ImageButton redo = (ImageButton) findViewById(R.id.redoButton);
+
+        if (PixelGridState.getHistoryCursor() > 0) {
+            redo.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent),
+                    PorterDuff.Mode.SRC_IN);
+        } else {
+            redo.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary),
+                    PorterDuff.Mode.SRC_IN);
+        }
+    }
+
+    /**
      * Set the selected color from the color picker dialog as primary color.
      * @param color Color received from the {@link ColorPickerDialog color picker}.
      */
@@ -326,8 +357,8 @@ public class EditorActivity extends AppCompatActivity implements
     public void updateDrawingView() {
         if (drawing != null) {
             if (activeTool != null) {
-                PixelGridState.setActiveTool(activeTool);
                 activeTool.setStrokeSize(selectedStrokeSize);
+                PixelGridState.setActiveTool(activeTool);
                 drawing.setTool(activeTool);
             }
 

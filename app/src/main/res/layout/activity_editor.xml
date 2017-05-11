@@ -74,7 +74,7 @@
             android:orientation="vertical"
             android:layout_toRightOf="@id/selectedColorsArea"
             app:layout_heightPercent="100%"
-            app:layout_widthPercent="62%">
+            app:layout_widthPercent="32%">
 
             <fragment
                 android:id="@+id/setupFrag"
@@ -89,6 +89,34 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/undoButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:src="@drawable/ic_undo_black_24dp"
+            android:contentDescription="@string/undoDescription"
+            android:layout_toRightOf="@id/toolSetupArea"
+            android:onClick="handleUndoClick"
+            android:tint="@color/colorAccent"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%"/>
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/redoButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:src="@drawable/ic_redo_black_24dp"
+            android:contentDescription="@string/redoDescription"
+            android:layout_toRightOf="@id/undoButton"
+            android:onClick="handleRedoClick"
+            android:tint="@color/colorAccent"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="14%"/>
+
         <Button
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/saveButton"
@@ -96,11 +124,12 @@
             android:layout_height="0dp"
             android:layout_margin="1dp"
             android:text="@string/verticalEllipsis"
-            android:layout_toRightOf="@id/toolSetupArea"
+            android:textColor="@color/darkest"
+            android:layout_toRightOf="@id/redoButton"
             android:layout_alignParentRight="true"
             android:onClick="handleMenuClick"
             app:layout_heightPercent="100%"
-            app:layout_widthPercent="10%"/>
+            app:layout_widthPercent="12%"/>
     </android.support.percent.PercentRelativeLayout>
 
     <FrameLayout

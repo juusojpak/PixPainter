@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              style="?android:attr/buttonBarStyle"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#2b2b2b"
-              android:baselineAligned="false"
-              android:gravity="center"
-              android:orientation="vertical">
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?android:attr/buttonBarStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:baselineAligned="false"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/shapeSpinner"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/shapeIcon"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:entries="@array/shape_array"
-        android:background="#fffb35"
-        android:textSize="20sp" />
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:textColor="@color/darkest"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="100%"/>
 
-    <Spinner
-        android:id="@+id/fillSpinner"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/fillIcon"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:entries="@array/shapefill_array"
-        android:background="#fffb35"
-        android:textSize="20sp" />
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/shapeIcon"
+        android:gravity="center"
+        android:textColor="@color/darkest"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="100%"/>
 
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/shapeSizeArea"
-        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/fillIcon"
         android:gravity="center"
-        android:layout_weight="3"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:orientation="vertical"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="100%">
 
         <EditText
             android:id="@+id/heightEdit"
-            android:inputType="numberSigned"
-            android:hint="@string/height"
-            android:textColorHint="#fffb35"
-            android:textColor="#edad00"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:hint="@string/height"
+            android:inputType="numberSigned"
+            android:textColor="@color/darkest"
+            android:textColorHint="@color/colorAccentDark"
             app:layout_heightPercent="50%"
             app:layout_widthPercent="100%"/>
 
         <EditText
             android:id="@+id/widthEdit"
-            android:inputType="numberSigned"
-            android:hint="@string/width"
-            android:textColorHint="#fffb35"
-            android:textColor="#edad00"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_below="@id/heightEdit"
             android:layout_alignParentBottom="true"
+            android:layout_below="@id/heightEdit"
+            android:gravity="center"
+            android:hint="@string/width"
+            android:inputType="numberSigned"
+            android:textColor="@color/darkest"
+            android:textColorHint="@color/colorAccentDark"
             app:layout_heightPercent="50%"
             app:layout_widthPercent="100%"/>
 
         <EditText
             android:id="@+id/radiusEdit"
-            android:inputType="numberSigned"
-            android:hint="@string/radius"
-            android:textColorHint="#fffb35"
-            android:textColor="#edad00"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:gravity="center"
+            android:hint="@string/radius"
+            android:inputType="numberSigned"
+            android:textColor="@color/darkest"
+            android:textColorHint="@color/colorAccentDark"
             app:layout_heightPercent="100%"
             app:layout_widthPercent="100%"/>
     </android.support.percent.PercentRelativeLayout>
-</LinearLayout>
+</android.support.percent.PercentRelativeLayout>

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/darkest"
     tools:context="fi.tamk.jpak.pixpainter.colorpicker.ColorPickerDialog">
 
     <android.support.percent.PercentRelativeLayout

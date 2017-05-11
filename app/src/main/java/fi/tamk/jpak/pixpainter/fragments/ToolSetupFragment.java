@@ -2,12 +2,9 @@ package fi.tamk.jpak.pixpainter.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import fi.tamk.jpak.pixpainter.R;
@@ -24,6 +21,16 @@ public class ToolSetupFragment extends Fragment {
      * Callback interface for handling changes in tool setup.
      */
     private OnToolSetupChanged callback;
+
+    /**
+     * View showing current tool stroke size.
+     */
+    private TextView sizeText;
+
+    /**
+     * Selected stroke ize.
+     */
+    private int size;
 
     /**
      * Called when the activity is starting.
@@ -52,22 +59,29 @@ public class ToolSetupFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_toolsetup, container, false);
+        size = 1;
+        callback.handleToolSetupChange(size);
 
-        TextView sizeText = (TextView) view.findViewById(R.id.sizeText);
-        Spinner sizeSpin = (Spinner) view.findViewById(R.id.sizeSpinner);
-        sizeText.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-        sizeSpin.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-        sizeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sizeText = (TextView) view.findViewById(R.id.sizeText);
+        sizeText.setText(getString(R.string.size, getSizeDisplayNumber()));
+        sizeText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int selectedSize = 1 + position;
-                callback.handleToolSetupChange(selectedSize);
+            public void onClick(View v) {
+                size++;
+                if (size > 5 || size < 1) size = 1;
+                callback.handleToolSetupChange(size);
+                sizeText.setText(getString(R.string.size, getSizeDisplayNumber()));
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         return view;
+    }
+
+    /**
+     * Returns integer that is showed as size to user.
+     * @return integer that is showed as size to user.
+     */
+    public int getSizeDisplayNumber() {
+        return (1 + ((size - 1) * 2));
     }
 }
