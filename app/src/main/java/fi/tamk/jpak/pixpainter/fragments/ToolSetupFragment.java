@@ -35,7 +35,6 @@ public class ToolSetupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         callback = (OnToolSetupChanged) getActivity();
-        System.out.println("ToolSetupFragment created");
     }
 
     /**

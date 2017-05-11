@@ -215,7 +215,6 @@ public class EditorActivity extends AppCompatActivity implements
         }
 
         showActiveTool();
-        System.out.println("EditorActivity resume");
     }
 
     /**
@@ -472,7 +471,6 @@ public class EditorActivity extends AppCompatActivity implements
 
             File f = new File(root, fileName);
             f.createNewFile();
-            System.out.println("file created " + f.toString());
 
             out = new FileOutputStream(f);
             Bitmap bitmap = Bitmap.createBitmap(drawing.getWidth(),

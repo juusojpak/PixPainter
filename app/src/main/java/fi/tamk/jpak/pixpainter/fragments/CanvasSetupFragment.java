@@ -39,7 +39,6 @@ public class CanvasSetupFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("CanvasSetupFragment created");
     }
 
     /**

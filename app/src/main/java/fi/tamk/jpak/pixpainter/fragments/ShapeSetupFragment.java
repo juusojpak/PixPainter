@@ -70,7 +70,6 @@ public class ShapeSetupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         callback = (OnShapeSetupChanged) getActivity();
-        System.out.println("ShapeSetupFragment created");
     }
 
     /**
