@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              style="?android:attr/buttonBarStyle"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#2b2b2b"
+              android:baselineAligned="false"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+    <Spinner
+        android:id="@+id/shapeSpinner"
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:padding="10dp"
+        android:entries="@array/shape_array"
+        android:background="#fffb35"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/fillSpinner"
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:padding="10dp"
+        android:entries="@array/shapefill_array"
+        android:background="#fffb35"
+        android:textSize="20sp" />
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/shapeSizeArea"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/heightEdit"
+            android:inputType="numberSigned"
+            android:hint="@string/height"
+            android:textColorHint="#fffb35"
+            android:textColor="#edad00"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentLeft="true"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="50%"/>
+
+        <EditText
+            android:id="@+id/widthEdit"
+            android:inputType="numberSigned"
+            android:hint="@string/width"
+            android:textColorHint="#fffb35"
+            android:textColor="#edad00"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_toRightOf="@id/heightEdit"
+            android:layout_alignParentRight="true"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="50%"/>
+
+        <EditText
+            android:id="@+id/radiusEdit"
+            android:inputType="numberSigned"
+            android:hint="@string/radius"
+            android:textColorHint="#fffb35"
+            android:textColor="#edad00"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="100%"
+            app:layout_widthPercent="100%"/>
+    </android.support.percent.PercentRelativeLayout>
+</LinearLayout>

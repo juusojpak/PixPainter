@@ -4,20 +4,40 @@ import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.Pixel;
 
 /**
- * Created by Juuso Pakarinen on 25/04/2017.
+ * Brush tool.
+ *
+ * Draws with soft/gradient stroke.
+ *
+ * @author Juuso Pakarinen
+ * @version 25.04.2017
  */
 public class Brush extends Tool {
 
+    /**
+     * Array containing fade values used to make gradient effect.
+     */
     private int[] fadeValues;
 
+    /**
+     * Default constructor.
+     */
     public Brush() {
         super(ToolType.BRUSH);
     }
 
+    /**
+     * Constructor.
+     *
+     * Initializes stroke size.
+     * @param strokeSize Size of stroke.
+     */
     public Brush(int strokeSize) {
         super(ToolType.BRUSH, strokeSize);
     }
 
+    /**
+     * Updates fade values according to stroke size.
+     */
     public void updateFadeValues() {
         fadeValues = new int[getStrokeSize()];
 
@@ -26,6 +46,15 @@ public class Brush extends Tool {
         }
     }
 
+    /**
+     * Handle drawing.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color1 Primary color.
+     * @param color2 Secondary color. Not used.
+     */
     @Override
     public void handleDraw(int row, int col, Pixel[][] pixels,
                            ColorARGB color1, ColorARGB color2) {
@@ -34,70 +63,5 @@ public class Brush extends Tool {
         ColorARGB newColor = new ColorARGB(color1.getA(), color1.getR(),
                 color1.getG(), color1.getB());
         handleStroke(row, col, pixels, newColor, true, fadeValues);
-
-
-        /*
-        ColorARGB newColor = new ColorARGB(color1.getA(), color1.getR(),
-                color1.getG(), color1.getB());
-
-        int lineLenght = 1;
-        int height = pixels.length;
-        int width = pixels[0].length;
-
-        pixels[row][col].setColor(newColor);
-
-        for (int i = 1; i <= strokeSize; i++) {
-            lineLenght += 2;
-
-            // Draw from upper left corner to right
-            for (int j = 0; j < (lineLenght - 1); j++) {
-
-                if ((row - i) >= 0
-                        && (col - i) >= 0
-                        && ((col - i) + j) < width) {
-
-                    System.out.println("row: " + row);
-                    System.out.println("col: " + col);
-                    System.out.println(row - i);
-                    System.out.println((col - i) + j);
-
-                    pixels[row - i][(col - i) + j].blendColor(newColor, fadeValues[i - 1]);
-                }
-            }
-
-            // Draw from upper right corner to down
-            for (int j = 0; j < (lineLenght - 1); j++) {
-
-                if ((row - i) >= 0
-                        && (col + i) < width
-                        && ((row - i) + j) < height) {
-
-                    pixels[(row - i) + j][col + i].blendColor(newColor, fadeValues[i - 1]);
-                }
-            }
-
-            // Draw from lower right corner to left
-            for (int j = 0; j < (lineLenght - 1); j++) {
-
-                if ((row + i) < height
-                        && (col + i) < width
-                        && ((col + i) - j) >= 0) {
-
-                    pixels[row + i][(col + i) - j].blendColor(newColor, fadeValues[i - 1]);
-                }
-            }
-
-            // Draw from lower left corner to up
-            for (int j = 0; j < (lineLenght - 1); j++) {
-
-                if ((row + i) < height
-                        && (col - i) >= 0
-                        && ((row + i) - j) >= 0) {
-
-                    pixels[(row + i) - j][col - i].blendColor(newColor, fadeValues[i - 1]);
-                }
-            }
-        }
-        */
     }
 }

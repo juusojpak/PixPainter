@@ -6,21 +6,45 @@ import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.Pixel;
 
 /**
- * Created by Juuso Pakarinen on 24/04/2017.
+ * Base class for editor tools.
+ *
+ * @author Juuso Pakarinen
+ * @version 24.04.2017
  */
 public abstract class Tool {
 
+    /**
+     * Type of the tool.
+     */
     private ToolType type;
+
+    /**
+     * Size of the tool stroke.
+     */
     private int strokeSize;
 
+    /**
+     * Default constructor. Calls main constructor.
+     */
     public Tool() {
         this(null, 1);
     }
 
+    /**
+     * Constructor. Calls main constructor.
+     *
+     * @param type Type of the tool.
+     */
     public Tool(ToolType type){
         this(type, 1);
     }
 
+    /**
+     * Main constructor.
+     *
+     * @param type Type of the tool.
+     * @param strokeSize Size of the tool stroke.
+     */
     public Tool(ToolType type, int strokeSize){
         this.type = type;
         if (strokeSize > 0 && strokeSize < 100) {
@@ -30,32 +54,77 @@ public abstract class Tool {
         }
     }
 
+    /**
+     * Returns type of the tool.
+     * @return type of the tool.
+     */
     public ToolType getType() {
         return type;
     }
 
+    /**
+     * Sets type of the tool.
+     * @param type Type of the tool.
+     */
     public void setType(ToolType type) {
         this.type = type;
     }
 
+    /**
+     * Returns size of the tool stroke.
+     * @return size of the tool stroke.
+     */
     public int getStrokeSize() {
         return strokeSize;
     }
 
+    /**
+     * Sets size of the tool stroke.
+     * @param strokeSize Size of the tool stroke.
+     */
     public void setStrokeSize(int strokeSize) {
         if (strokeSize > 0 && strokeSize < 100) this.strokeSize = strokeSize;
     }
 
+    /**
+     * Handle drawing.
+     *
+     * Implemented in subclasses.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color1 Primary color.
+     * @param color2 Secondary color.
+     */
     public abstract void handleDraw(int row, int col, Pixel[][] pixels,
                                     ColorARGB color1, ColorARGB color2);
 
+    /**
+     * Handle drawing with stroke.
+     *
+     * Draw so that adjacent pixels of the origin are drawn according to the
+     * stroke size. Selected color can either blend with or replace the color
+     * of adjacent pixels and it can be faded gradually.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param color Selected color.
+     * @param blend Whether to blend with or replace the color
+     *              of adjacent pixels
+     * @param fadeValues Array holding fade values. Can be null.
+     */
     public void handleStroke(int row, int col, Pixel[][] pixels,
                              ColorARGB color, boolean blend, @Nullable int[] fadeValues) {
 
         int lineLenght = 1;
         int height = pixels.length;
         int width = pixels[0].length;
-        pixels[row][col].setColor(color);
+
+        if (row >= 0 && col >= 0 && row < pixels.length && col < pixels[0].length) {
+            pixels[row][col].setColor(color);
+        }
 
         if (strokeSize > 1) {
 

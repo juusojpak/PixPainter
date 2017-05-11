@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fi.tamk.jpak.pixpainter.EditorActivity">
+
+    <android.support.percent.PercentRelativeLayout
+        style="?android:attr/buttonBarStyle"
+        android:id="@+id/toolSetupLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/colorPickerButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/colorwheel"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:padding="16dp"
+            android:contentDescription="@string/color"
+            android:layout_alignParentTop="true"
+            android:onClick="handleColorPickerClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%" />
+
+        <FrameLayout
+            android:id="@+id/selectedColorsArea"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_below="@id/colorPickerButton"
+            android:onClick="handleColorsIndicatorClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%" >
+
+            <ImageView
+                android:id="@+id/secondaryColor"
+                android:src="@drawable/secondary_color_circle"
+                android:contentDescription="@string/secondaryColorCircleDescription"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/primaryColor"
+                android:src="@drawable/primary_color_circle"
+                android:contentDescription="@string/primaryColorCircleDescription"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/toolSetupArea"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/selectedColorsArea"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            app:layout_heightPercent="62%"
+            app:layout_widthPercent="100%">
+
+            <fragment
+                android:id="@+id/setupFrag"
+                android:name="fi.tamk.jpak.pixpainter.fragments.ToolSetupFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <fragment
+                android:id="@+id/shapeFrag"
+                android:name="fi.tamk.jpak.pixpainter.fragments.ShapeSetupFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/saveButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_margin="1dp"
+            android:text="@string/verticalEllipsis"
+            android:layout_below="@id/toolSetupArea"
+            android:layout_alignParentBottom="true"
+            android:onClick="handleMenuClick"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+    </android.support.percent.PercentRelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/editorLayout"
+        android:orientation="horizontal"
+        android:background="#00000000"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="8">
+
+        <fi.tamk.jpak.pixpainter.PixelGridView
+            android:id="@+id/pixelGridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <fi.tamk.jpak.pixpainter.DrawingView
+            android:id="@+id/drawingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        style="?android:attr/buttonBarStyle"
+        android:id="@+id/toolbarLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="2dp"
+        android:gravity="center"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/pencilButton"
+            android:src="@drawable/pencil"
+            android:contentDescription="@string/pencil"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handlePencilClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%" />
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/brushButton"
+            android:src="@drawable/brush"
+            android:contentDescription="@string/brush"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_below="@id/pencilButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleBrushClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%"/>
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/eraserButton"
+            android:src="@drawable/eraser"
+            android:contentDescription="@string/eraser"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_below="@id/brushButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleEraserClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%"/>
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/shapeButton"
+            android:src="@drawable/shape"
+            android:contentDescription="@string/shape"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_below="@id/eraserButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleShapeClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%"/>
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/fillButton"
+            android:src="@drawable/bucket"
+            android:contentDescription="@string/fill"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_below="@id/shapeButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handleFillClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%"/>
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/pipetteButton"
+            android:src="@drawable/pipette"
+            android:contentDescription="@string/pipette"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_below="@id/fillButton"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:onClick="handlePipetteClick"
+            app:layout_heightPercent="14%"
+            app:layout_widthPercent="100%"/>
+    </android.support.percent.PercentRelativeLayout>
+</LinearLayout>

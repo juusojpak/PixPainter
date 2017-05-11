@@ -7,14 +7,34 @@ import fi.tamk.jpak.pixpainter.utils.ColorARGB;
 import fi.tamk.jpak.pixpainter.utils.Pixel;
 
 /**
- * Created by Juuso Pakarinen on 25/04/2017.
+ * Paint bucket tool.
+ *
+ * Fills area of pixels that are the same color.
+ *
+ * @author Juuso Pakarinen
+ * @version 25.04.2017
  */
 public class PaintBucket extends Tool {
 
+    /**
+     * Default constructor.
+     */
     public PaintBucket() {
         super(ToolType.FILL);
     }
 
+    /**
+     * Handle drawing.
+     *
+     * Fills all adjacent {@link Pixel pixels} that are the same exact color as origin.
+     * Uses queue-based flood-fill algorithm.
+     *
+     * @param row Row of the origin point.
+     * @param col Column of the origin point.
+     * @param pixels Reference to pixel grid.
+     * @param newColor Color that is set for the filled pixels.
+     * @param targetColor Pixels with this color are filled.
+     */
     @Override
     public void handleDraw(int row, int col, Pixel[][] pixels,
                            ColorARGB newColor, ColorARGB targetColor) {
@@ -66,6 +86,13 @@ public class PaintBucket extends Tool {
         }
     }
 
+    /**
+     * Whether two colours are exactly the same.
+     *
+     * @param color1 Color 1.
+     * @param color2 Color 2.
+     * @return whether two colours are exactly the same.
+     */
     public boolean isColorMatch(ColorARGB color1, ColorARGB color2) {
         return (color1.toHexString().equals(color2.toHexString()));
     }

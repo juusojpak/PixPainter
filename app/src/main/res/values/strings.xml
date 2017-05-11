@@ -3,9 +3,18 @@
     <string name="create_new_pic">Start drawing</string>
     <string name="columns">Columns</string>
     <string name="rows">Rows</string>
+    <string name="smallCanvas">20x20</string>
+    <string name="mediumCanvas">40x40</string>
+    <string name="largeCanvas">60x60</string>
+    <string name="size">Size:</string>
+    <string name="customCanvas">Custom</string>
+    <string name="current">current</string>
+    <string name="newColor">new</string>
+    <string name="alpha">Alpha</string>
     <string name="red">Red</string>
     <string name="green">Green</string>
     <string name="blue">Blue</string>
+    <string name="alphaVal">Alpha: </string>
     <string name="redVal">Red: </string>
     <string name="greenVal">Green: </string>
     <string name="blueVal">Blue: </string>
@@ -17,9 +26,37 @@
     <string name="shape">Shape</string>
     <string name="fill">Fill</string>
     <string name="eraser">Eraser</string>
-    <string name="saveToLocal">Save</string>
-    <string name="exportToGallery">Export to Gallery</string>
+    <string name="pipette">Pipette</string>
+    <string name="saveToLocal">Save to Pictures/</string>
+    <string name="exportToGallery">Save \u0026 Export to Gallery</string>
     <string name="exportedToGalleryToast">Exported to Gallery</string>
+    <string name="saveFailedToast">Save failed</string>
     <string name="clearEditor">Clear image</string>
     <string name="verticalEllipsis">&#8942;</string>
+    <string name="titleDescription">Animated title for the application</string>
+    <string name="primaryColorCircleDescription">Indicatior for primary color</string>
+    <string name="secondaryColorCircleDescription">Indicatior for secondary color</string>
+    <string name="paperDescription">Icon for paper</string>
+    <string name="height">height</string>
+    <string name="width">width</string>
+    <string name="radius">radius</string>
+
+    <string-array name="size_array">
+        <item>1 x 1</item>
+        <item>3 x 3</item>
+        <item>5 x 5</item>
+        <item>7 x 7</item>
+        <item>9 x 9</item>
+    </string-array>
+
+    <string-array name="shape_array">
+        <item>Rectangle</item>
+        <item>Circle</item>
+    </string-array>
+
+    <string-array name="shapefill_array">
+        <item>Outlines</item>
+        <item>Solid</item>
+        <item>Fill</item>
+    </string-array>
 </resources>

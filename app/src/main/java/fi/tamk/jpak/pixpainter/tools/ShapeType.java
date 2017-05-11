@@ -1,8 +1,13 @@
 package fi.tamk.jpak.pixpainter.tools;
 
 /**
- * Created by Juuso Pakarinen on 24/04/2017.
+ * Enum for shape types.
+ *
+ * Rectangle or circle.
+ *
+ * @author Juuso Pakarinen
+ * @version 24.04.2017
  */
 public enum ShapeType {
-    RECTANGLE, CIRCLE;
+    RECTANGLE, CIRCLE
 }

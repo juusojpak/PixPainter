@@ -9,14 +9,38 @@ import android.util.AttributeSet;
 import android.support.v7.widget.AppCompatImageView;
 
 /**
- * Created by Juuso Pakarinen on 27/04/2017.
+ * View that is used for displaying pixel grid below the {@link DrawingView drawing}.
+ *
+ * With the exact same dimensions as the {@link DrawingView} and the placement right
+ * under it, this view draws {@link DrawingView#pixels pixel grid's} lines to
+ * help the user to better comprehend pixel sizes and locations.
+ *
+ * @author Juuso Pakarinen
+ * @version 27.04.2017
  */
 public class PixelGridView extends AppCompatImageView {
 
+    /**
+     * Number of columns and rows.
+     */
     private int numColumns, numRows;
+
+    /**
+     * Width and height of a single grid cell.
+     */
     private float cellWidth, cellHeight;
+
+    /**
+     * Paint used to draw the gird lines to the view.
+     */
     private Paint paint;
 
+    /**
+     * Constructor.
+     *
+     * @param context Context.
+     * @param attrs Attribute set.
+     */
     public PixelGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setBackgroundColor(Color.TRANSPARENT);
@@ -28,30 +52,44 @@ public class PixelGridView extends AppCompatImageView {
         calculateDimensions();
     }
 
+    /**
+     * Sets the number of columns.
+     * @param numColumns number of columns.
+     */
     public void setNumColumns(int numColumns) {
         this.numColumns = numColumns;
         calculateDimensions();
     }
 
-    public int getNumColumns() {
-        return numColumns;
-    }
-
+    /**
+     * Sets the number of rows.
+     * @param numRows number of rows.
+     */
     public void setNumRows(int numRows) {
         this.numRows = numRows;
         calculateDimensions();
     }
 
-    public int getNumRows() {
-        return numRows;
-    }
-
+    /**
+     * This is called during layout when the size of this view has changed.
+     *
+     * @param w Current width of this view.
+     * @param h Current height of this view.
+     * @param oldw Old width of this view.
+     * @param oldh Old height of this view.
+     */
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         calculateDimensions();
     }
 
+    /**
+     * Calculates and sets pixel grid dimensions.
+     *
+     * Validates number of rows and columns and calculates width and height
+     * of a single cell based on them.
+     */
     private void calculateDimensions() {
 
         if (numColumns < 1) {
@@ -67,6 +105,14 @@ public class PixelGridView extends AppCompatImageView {
         invalidate();
     }
 
+    /**
+     * Handles drawing on the {@link android.view.View view's} {@link Canvas canvas}.
+     *
+     * Draws the lines of the {@link DrawingView#pixels grid} separating columns
+     * and rows.
+     *
+     * @param canvas View's canvas.
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         int width = getWidth();
