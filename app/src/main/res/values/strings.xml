@@ -37,6 +37,8 @@
     <string name="primaryColorCircleDescription">Indicatior for primary color</string>
     <string name="secondaryColorCircleDescription">Indicatior for secondary color</string>
     <string name="paperDescription">Icon for paper</string>
+    <string name="undoDescription">Icon for undoing last draw to canvas</string>
+    <string name="redoDescription">Icon for redoing last draw to canvas</string>
     <string name="height">height</string>
     <string name="width">width</string>
     <string name="radius">radius</string>

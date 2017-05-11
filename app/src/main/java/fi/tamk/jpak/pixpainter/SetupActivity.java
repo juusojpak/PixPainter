@@ -3,6 +3,7 @@ package fi.tamk.jpak.pixpainter;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,7 @@ public class SetupActivity extends AppCompatActivity implements OnCanvasSetupCha
 
     /**
      * Called when the activity is starting.
+     *
      * @param savedInstanceState  If the activity is being re-initialized after
      *                            previously being shut down then this Bundle
      *                            contains the saved data.
@@ -57,8 +59,18 @@ public class SetupActivity extends AppCompatActivity implements OnCanvasSetupCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
-        canvasFrag = new CanvasSetupFragment();
-        isFragInView = false;
+
+        FragmentManager manager = getSupportFragmentManager();
+        CanvasSetupFragment frag = (CanvasSetupFragment) manager.findFragmentById(R.id.customSetupArea);
+
+        if (frag != null) {
+            canvasFrag = frag;
+            isFragInView = true;
+        } else {
+            canvasFrag = new CanvasSetupFragment();
+            isFragInView = false;
+        }
+
         dimensions = new int[] {1,1};
         setupAreas = new ArrayList<>();
         setupAreas.add((LinearLayout) findViewById(R.id.smallArea));

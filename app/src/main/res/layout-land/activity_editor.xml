@@ -75,7 +75,7 @@
             android:layout_below="@id/selectedColorsArea"
             android:orientation="horizontal"
             android:layout_centerVertical="true"
-            app:layout_heightPercent="62%"
+            app:layout_heightPercent="36%"
             app:layout_widthPercent="100%">
 
             <fragment
@@ -91,6 +91,34 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/undoButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:src="@drawable/ic_undo_black_24dp"
+            android:contentDescription="@string/undoDescription"
+            android:layout_below="@id/toolSetupArea"
+            android:onClick="handleUndoClick"
+            android:tint="@color/colorAccent"
+            app:layout_heightPercent="12%"
+            app:layout_widthPercent="100%"/>
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/redoButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="1dp"
+            android:src="@drawable/ic_redo_black_24dp"
+            android:contentDescription="@string/redoDescription"
+            android:layout_below="@id/undoButton"
+            android:onClick="handleRedoClick"
+            android:tint="@color/colorAccent"
+            app:layout_heightPercent="12%"
+            app:layout_widthPercent="100%"/>
+
         <Button
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/saveButton"
@@ -99,10 +127,10 @@
             android:layout_marginRight="20dp"
             android:layout_margin="1dp"
             android:text="@string/verticalEllipsis"
-            android:layout_below="@id/toolSetupArea"
+            android:layout_below="@id/redoButton"
             android:layout_alignParentBottom="true"
             android:onClick="handleMenuClick"
-            app:layout_heightPercent="10%"
+            app:layout_heightPercent="12%"
             app:layout_widthPercent="100%"/>
     </android.support.percent.PercentRelativeLayout>
 

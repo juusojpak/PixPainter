@@ -1,5 +1,7 @@
 package fi.tamk.jpak.pixpainter.utils;
 
+import java.util.LinkedList;
+
 import fi.tamk.jpak.pixpainter.tools.Tool;
 
 /**
@@ -15,9 +17,19 @@ import fi.tamk.jpak.pixpainter.tools.Tool;
 public class PixelGridState {
 
     /**
-     * State of the {@link fi.tamk.jpak.pixpainter.DrawingView#pixels pixel grid}.
+     * Current state of the {@link fi.tamk.jpak.pixpainter.DrawingView#pixels pixel grid}.
      */
     private static Pixel[][] pixels;
+
+    /**
+     * List of previous pixel grid states.
+     */
+    private static LinkedList<Pixel[][]> history = new LinkedList<>();
+
+    /**
+     * Current position in history timeline.
+     */
+    private static int historyCursor = 0;
 
     /**
      * Selected tool.
@@ -103,6 +115,74 @@ public class PixelGridState {
     public static void setSecondaryColor(ColorARGB secondaryColor) {
         if (secondaryColor != null) {
             PixelGridState.secondaryColor = secondaryColor;
+        }
+    }
+
+    /**
+     * Returns current position in history timeline.
+     * @return current position in history timeline.
+     */
+    public static int getHistoryCursor() {
+        return historyCursor;
+    }
+
+    /**
+     * Returns previous grid state from cursor.
+     * @return previous grid state from cursor or null if out of bounds.
+     */
+    public static Pixel[][] getPreviousStateFromHistory() {
+        if (history != null && history.size() > 0) {
+            if ((historyCursor + 1) < history.size()) {
+                historyCursor++;
+                return history.get(historyCursor);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns next grid state from cursor.
+     * @return next grid state from cursor or null if out of bounds.
+     */
+    public static Pixel[][] getNextStateFromHistory() {
+        if (history != null && history.size() > 0) {
+            if (historyCursor > 0) {
+                historyCursor--;
+                return history.get(historyCursor);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Add current pixel grid state to history.
+     * @param pixels Current pixel grid state.
+     */
+    public static void saveToHistory(Pixel[][] pixels) {
+        if (pixels != null && pixels.length > 0 && pixels[0].length > 0) {
+            Pixel[][] state = new Pixel[pixels.length][pixels[0].length];
+
+            if (history.size() > 10) {
+                history.removeLast();
+            }
+
+            for (int i = 0; i < pixels.length; i++) {
+                for (int j = 0; j < pixels[i].length; j++) {
+                    ColorARGB c = pixels[i][j].getColor();
+                    state[i][j] = new Pixel(j, i,
+                            new ColorARGB(c.getA(), c.getR(), c.getG(), c.getB()));
+                }
+            }
+
+            while (historyCursor > 0) {
+                history.removeFirst();
+                historyCursor--;
+            }
+
+            history.addFirst(state);
+            historyCursor = 0;
         }
     }
 

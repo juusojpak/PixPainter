@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -215,6 +217,7 @@ public class EditorActivity extends AppCompatActivity implements
         }
 
         showActiveTool();
+        toggleRedoButtonColor();
     }
 
     /**
@@ -308,6 +311,39 @@ public class EditorActivity extends AppCompatActivity implements
      */
     public void handleMenuClick(View v) {
         showOperationsMenu(v);
+    }
+
+    /**
+     * Undo last stroke to drawing area.
+     * @param v Clicked view.
+     */
+    public void handleUndoClick(View v) {
+        drawing.undo();
+        toggleRedoButtonColor();
+    }
+
+    /**
+     * Redo last stroke to drawing area.
+     * @param v Clicked view.
+     */
+    public void handleRedoClick(View v) {
+        drawing.redo();
+        toggleRedoButtonColor();
+    }
+
+    /**
+     * Grey out the redo button if unable to go forward in history.
+     */
+    public void toggleRedoButtonColor() {
+        ImageButton redo = (ImageButton) findViewById(R.id.redoButton);
+
+        if (PixelGridState.getHistoryCursor() > 0) {
+            redo.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent),
+                    PorterDuff.Mode.SRC_IN);
+        } else {
+            redo.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary),
+                    PorterDuff.Mode.SRC_IN);
+        }
     }
 
     /**

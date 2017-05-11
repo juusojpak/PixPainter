@@ -5,9 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.support.v7.widget.AppCompatImageView;
 
 import fi.tamk.jpak.pixpainter.tools.Pencil;
 import fi.tamk.jpak.pixpainter.tools.Shape;
@@ -211,6 +211,8 @@ public class DrawingView extends AppCompatImageView {
                 Shape s = (Shape) tool;
                 s.handlePlacement(row, column, pixels, primaryColor, secondaryColor);
             }
+
+            PixelGridState.saveToHistory(pixels);
         } else {
             if (tool.getType() == ToolType.FILL) {
                 tool.handleDraw(row, column, pixels, primaryColor,
@@ -265,6 +267,50 @@ public class DrawingView extends AppCompatImageView {
 
         if (sColorState != null) {
             this.secondaryColor = sColorState;
+        }
+    }
+
+    /**
+     * Undo last action.
+     */
+    public void undo() {
+        Pixel[][] state = PixelGridState.getPreviousStateFromHistory();
+
+        if (state != null &&
+                state.length == pixels.length &&
+                state[0].length == pixels[0].length) {
+
+            for (int i = 0; i < state.length; i++) {
+                for (int j = 0; j < state[0].length; j++) {
+                    ColorARGB c = state[i][j].getColor();
+                    pixels[i][j] = new Pixel(j, i,
+                            new ColorARGB(c.getA(), c.getR(), c.getG(), c.getB()));
+                }
+            }
+
+            invalidate();
+        }
+    }
+
+    /**
+     * Redo previously undone action.
+     */
+    public void redo() {
+        Pixel[][] state = PixelGridState.getNextStateFromHistory();
+
+        if (state != null &&
+                state.length == pixels.length &&
+                state[0].length == pixels[0].length) {
+
+            for (int i = 0; i < state.length; i++) {
+                for (int j = 0; j < state[0].length; j++) {
+                    ColorARGB c = state[i][j].getColor();
+                    pixels[i][j] = new Pixel(j, i,
+                            new ColorARGB(c.getA(), c.getR(), c.getG(), c.getB()));
+                }
+            }
+
+            invalidate();
         }
     }
 
