@@ -2,9 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#3a3a3a</item>
-        <item name="colorPrimaryDark">#2b2b2b</item>
-        <item name="colorAccent">#fffb35</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimary">#d4d8dd</item>
+        <item name="colorPrimaryDark">#aaadaf</item>
+        <item name="colorAccent">#777a7c</item>
     </style>
 </resources>

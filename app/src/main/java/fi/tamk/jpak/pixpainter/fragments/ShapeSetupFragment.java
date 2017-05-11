@@ -8,10 +8,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
+import android.widget.TextView;
 
 import fi.tamk.jpak.pixpainter.R;
 import fi.tamk.jpak.pixpainter.tools.ShapeFillType;
@@ -51,6 +49,16 @@ public class ShapeSetupFragment extends Fragment {
     private EditText radiusEdit;
 
     /**
+     * Icon for shape type.
+     */
+    private TextView shapeText;
+
+    /**
+     * Icon for shape fill type.
+     */
+    private TextView fillText;
+
+    /**
      * Current set state of width or radius.
      */
     private int width;
@@ -59,6 +67,16 @@ public class ShapeSetupFragment extends Fragment {
      * Current state of height.
      */
     private int height;
+
+    /**
+     * Selected shape type.
+     */
+    private int shapeMode;
+
+    /**
+     * Selected shape fill type.
+     */
+    private int fillMode;
 
     /**
      * Called when the activity is starting.
@@ -88,58 +106,75 @@ public class ShapeSetupFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_shapesetup, container, false);
         sizeArea = (PercentRelativeLayout) view.findViewById(R.id.shapeSizeArea);
-
+        shapeMode = 1;
+        fillMode = 1;
         heightEdit = (EditText) view.findViewById(R.id.heightEdit);
         widthEdit = (EditText) view.findViewById(R.id.widthEdit);
         radiusEdit = (EditText) view.findViewById(R.id.radiusEdit);
         widthEdit.addTextChangedListener(new ValueWatcher(0));
         heightEdit.addTextChangedListener(new ValueWatcher(1));
         radiusEdit.addTextChangedListener(new ValueWatcher(2));
-
-        Spinner shapeSpin = (Spinner) view.findViewById(R.id.shapeSpinner);
-        Spinner fillSpin = (Spinner) view.findViewById(R.id.fillSpinner);
+        shapeText = (TextView) view.findViewById(R.id.shapeIcon);
+        fillText = (TextView) view.findViewById(R.id.fillIcon);
         width = 3;
         height = 3;
 
-        shapeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        shapeText.setText(R.string.rectangle);
+        shapeText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    showRectangleSizeSetup();
-                    callback.handleShapeChange(ShapeType.RECTANGLE);
-                } else {
-                    showCircleSizeSetup();
-                    callback.handleShapeChange(ShapeType.CIRCLE);
-                }
-            }
+            public void onClick(View v) {
+                shapeMode++;
+                if (shapeMode > 2) shapeMode = 1;
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
-        fillSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        callback.handleShapeFillChange(ShapeFillType.OUTLINE);
-                        break;
+                switch (shapeMode) {
                     case 1:
-                        callback.handleShapeFillChange(ShapeFillType.SOLID);
+                        shapeText.setText(R.string.rectangle);
+                        showRectangleSizeSetup();
+                        callback.handleShapeChange(ShapeType.RECTANGLE);
                         break;
                     case 2:
+                        shapeText.setText(R.string.circle);
+                        showCircleSizeSetup();
+                        callback.handleShapeChange(ShapeType.CIRCLE);
+                        break;
+                    default:
+                        shapeText.setText(R.string.rectangle);
+                        showRectangleSizeSetup();
+                        callback.handleShapeChange(ShapeType.RECTANGLE);
+                        break;
+                }
+            }
+        });
+
+        fillText.setText(R.string.outlines);
+        fillText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fillMode++;
+                if (fillMode > 3) fillMode = 1;
+
+                switch (fillMode) {
+                    case 1:
+                        fillText.setText(R.string.outlines);
+                        callback.handleShapeFillChange(ShapeFillType.OUTLINE);
+                        break;
+                    case 2:
+                        fillText.setText(R.string.solid);
+                        callback.handleShapeFillChange(ShapeFillType.SOLID);
+                        break;
+                    case 3:
+                        fillText.setText(R.string.filled);
                         callback.handleShapeFillChange(ShapeFillType.FILL);
                         break;
                     default:
+                        fillText.setText(R.string.outlines);
                         callback.handleShapeFillChange(ShapeFillType.OUTLINE);
                         break;
                 }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        showRectangleSizeSetup();
         return view;
     }
 

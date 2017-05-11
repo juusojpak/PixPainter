@@ -7,15 +7,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#2b2b2b"
+    android:background="@color/colorPrimaryDark"
     tools:context="fi.tamk.jpak.pixpainter.SetupActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_marginLeft="10dp"
-        android:padding="10dp"
+        android:layout_weight="4"
+        android:padding="6dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -25,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
+            android:padding="6dp"
             android:gravity="center"/>
 
         <Button
@@ -41,7 +41,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/darkest"/>
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/darkest"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -107,7 +107,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/darkest"/>
         </LinearLayout>
 
         <LinearLayout
@@ -164,7 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/darkest"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -172,7 +172,7 @@
         android:id="@+id/customSetupArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:orientation="horizontal"
         android:gravity="center">
     </LinearLayout>

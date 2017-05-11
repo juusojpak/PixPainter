@@ -74,7 +74,7 @@
             android:orientation="vertical"
             android:layout_toRightOf="@id/selectedColorsArea"
             app:layout_heightPercent="100%"
-            app:layout_widthPercent="36%">
+            app:layout_widthPercent="32%">
 
             <fragment
                 android:id="@+id/setupFrag"
@@ -101,7 +101,7 @@
             android:onClick="handleUndoClick"
             android:tint="@color/colorAccent"
             app:layout_heightPercent="100%"
-            app:layout_widthPercent="12%"/>
+            app:layout_widthPercent="14%"/>
 
         <ImageButton
             style="?android:attr/buttonBarButtonStyle"
@@ -115,7 +115,7 @@
             android:onClick="handleRedoClick"
             android:tint="@color/colorAccent"
             app:layout_heightPercent="100%"
-            app:layout_widthPercent="12%"/>
+            app:layout_widthPercent="14%"/>
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
@@ -124,6 +124,7 @@
             android:layout_height="0dp"
             android:layout_margin="1dp"
             android:text="@string/verticalEllipsis"
+            android:textColor="@color/darkest"
             android:layout_toRightOf="@id/redoButton"
             android:layout_alignParentRight="true"
             android:onClick="handleMenuClick"

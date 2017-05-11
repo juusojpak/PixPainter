@@ -3,7 +3,7 @@
               style="?android:attr/buttonBarStyle"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#2b2b2b"
+              android:background="@color/colorPrimaryDark"
               android:baselineAligned="false"
               android:gravity="center"
               android:orientation="horizontal">
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/columns"
-            android:textColor="#fffb35"
+            android:textColor="@color/darkest"
             android:textSize="20sp"/>
 
         <EditText
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
-            android:textColor="#edad00"/>
+            android:textColor="@color/darkest"/>
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rows"
-            android:textColor="#fffb35"
+            android:textColor="@color/darkest"
             android:textSize="20sp"/>
 
         <EditText
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
-            android:textColor="#edad00"/>
+            android:textColor="@color/darkest"/>
     </LinearLayout>
 
 </LinearLayout>

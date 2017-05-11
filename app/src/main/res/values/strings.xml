@@ -6,7 +6,7 @@
     <string name="smallCanvas">20x20</string>
     <string name="mediumCanvas">40x40</string>
     <string name="largeCanvas">60x60</string>
-    <string name="size">Size:</string>
+    <string name="size">x%1$d</string>
     <string name="customCanvas">Custom</string>
     <string name="current">current</string>
     <string name="newColor">new</string>
@@ -39,17 +39,14 @@
     <string name="paperDescription">Icon for paper</string>
     <string name="undoDescription">Icon for undoing last draw to canvas</string>
     <string name="redoDescription">Icon for redoing last draw to canvas</string>
-    <string name="height">height</string>
-    <string name="width">width</string>
-    <string name="radius">radius</string>
-
-    <string-array name="size_array">
-        <item>1 x 1</item>
-        <item>3 x 3</item>
-        <item>5 x 5</item>
-        <item>7 x 7</item>
-        <item>9 x 9</item>
-    </string-array>
+    <string name="height">h</string>
+    <string name="width">w</string>
+    <string name="radius">r</string>
+    <string name="circle">&#9675;</string>
+    <string name="rectangle">&#9633;</string>
+    <string name="outlines">&#9723;</string>
+    <string name="solid">&#9724;</string>
+    <string name="filled">&#8865;</string>
 
     <string-array name="shape_array">
         <item>Rectangle</item>

@@ -27,11 +27,11 @@
             android:src="@drawable/colorwheel"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:padding="16dp"
+            android:padding="8dp"
             android:contentDescription="@string/color"
             android:layout_alignParentTop="true"
             android:onClick="handleColorPickerClick"
-            app:layout_heightPercent="14%"
+            app:layout_heightPercent="10%"
             app:layout_widthPercent="100%" />
 
         <FrameLayout
@@ -75,7 +75,7 @@
             android:layout_below="@id/selectedColorsArea"
             android:orientation="horizontal"
             android:layout_centerVertical="true"
-            app:layout_heightPercent="36%"
+            app:layout_heightPercent="44%"
             app:layout_widthPercent="100%">
 
             <fragment
@@ -102,7 +102,7 @@
             android:layout_below="@id/toolSetupArea"
             android:onClick="handleUndoClick"
             android:tint="@color/colorAccent"
-            app:layout_heightPercent="12%"
+            app:layout_heightPercent="10%"
             app:layout_widthPercent="100%"/>
 
         <ImageButton
@@ -116,7 +116,7 @@
             android:layout_below="@id/undoButton"
             android:onClick="handleRedoClick"
             android:tint="@color/colorAccent"
-            app:layout_heightPercent="12%"
+            app:layout_heightPercent="10%"
             app:layout_widthPercent="100%"/>
 
         <Button
@@ -127,6 +127,7 @@
             android:layout_marginRight="20dp"
             android:layout_margin="1dp"
             android:text="@string/verticalEllipsis"
+            android:textColor="@color/darkest"
             android:layout_below="@id/redoButton"
             android:layout_alignParentBottom="true"
             android:onClick="handleMenuClick"
