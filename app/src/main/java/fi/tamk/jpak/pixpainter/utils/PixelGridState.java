@@ -22,6 +22,11 @@ public class PixelGridState {
     private static Pixel[][] pixels;
 
     /**
+     * Number of rows and columns in the grid.
+     */
+    private static int rows, cols;
+
+    /**
      * List of previous pixel grid states.
      */
     private static LinkedList<Pixel[][]> history = new LinkedList<>();
@@ -30,6 +35,16 @@ public class PixelGridState {
      * Current position in history timeline.
      */
     private static int historyCursor = 0;
+
+    /**
+     * Max number of pixel grid states saved in history.
+     */
+    private static final int HISTORY_LENGTH = 40;
+
+    /**
+     * Whether the starting pixel grid state is saved in history.
+     */
+    private static boolean startStateSaved = false;
 
     /**
      * Selected tool.
@@ -123,7 +138,7 @@ public class PixelGridState {
      * @return current position in history timeline.
      */
     public static int getHistoryCursor() {
-        return historyCursor;
+        return PixelGridState.historyCursor;
     }
 
     /**
@@ -131,10 +146,12 @@ public class PixelGridState {
      * @return previous grid state from cursor or null if out of bounds.
      */
     public static Pixel[][] getPreviousStateFromHistory() {
-        if (history != null && history.size() > 0) {
-            if ((historyCursor + 1) < history.size()) {
-                historyCursor++;
-                return history.get(historyCursor);
+
+        if (PixelGridState.history != null && PixelGridState.history.size() > 0) {
+            if ((PixelGridState.historyCursor + 1) < PixelGridState.history.size()) {
+                PixelGridState.historyCursor = PixelGridState.historyCursor + 1;
+
+                return PixelGridState.history.get(PixelGridState.historyCursor);
             }
         }
 
@@ -146,10 +163,12 @@ public class PixelGridState {
      * @return next grid state from cursor or null if out of bounds.
      */
     public static Pixel[][] getNextStateFromHistory() {
-        if (history != null && history.size() > 0) {
-            if (historyCursor > 0) {
-                historyCursor--;
-                return history.get(historyCursor);
+
+        if (PixelGridState.history != null && PixelGridState.history.size() > 0) {
+            if (PixelGridState.historyCursor > 0) {
+                PixelGridState.historyCursor = PixelGridState.historyCursor - 1;
+
+                return PixelGridState.history.get(PixelGridState.historyCursor);
             }
         }
 
@@ -164,8 +183,8 @@ public class PixelGridState {
         if (pixels != null && pixels.length > 0 && pixels[0].length > 0) {
             Pixel[][] state = new Pixel[pixels.length][pixels[0].length];
 
-            if (history.size() > 10) {
-                history.removeLast();
+            if (PixelGridState.history.size() > PixelGridState.HISTORY_LENGTH) {
+                PixelGridState.history.removeLast();
             }
 
             for (int i = 0; i < pixels.length; i++) {
@@ -176,14 +195,49 @@ public class PixelGridState {
                 }
             }
 
-            while (historyCursor > 0) {
-                history.removeFirst();
-                historyCursor--;
-            }
-
-            history.addFirst(state);
-            historyCursor = 0;
+            PixelGridState.history.addFirst(state);
+            PixelGridState.historyCursor = 0;
         }
+    }
+
+    public static int getRows() {
+        return PixelGridState.rows;
+    }
+
+    public static void setRows(int rows) {
+        if (rows > 0) PixelGridState.rows = rows;
+    }
+
+    public static int getCols() {
+        return PixelGridState.cols;
+    }
+
+    public static void setCols(int cols) {
+        if (cols > 0) PixelGridState.cols = cols;
+    }
+
+    public static boolean isStartStateSaved() {
+        return PixelGridState.startStateSaved;
+    }
+
+    public static void setStartStateSaved(boolean startStateSaved) {
+        PixelGridState.startStateSaved = startStateSaved;
+    }
+
+    public static int getHistorySize() {
+        return PixelGridState.history.size();
+    }
+
+    public static void setStartStateToHistory(int rows, int cols) {
+        Pixel[][] state = new Pixel[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                state[i][j] = new Pixel(j, i);
+            }
+        }
+
+        PixelGridState.history.addFirst(state);
     }
 
     /**
@@ -194,5 +248,9 @@ public class PixelGridState {
         PixelGridState.activeTool = null;
         PixelGridState.primaryColor = null;
         PixelGridState.secondaryColor = null;
+        PixelGridState.history.clear();
+        PixelGridState.startStateSaved = false;
+        PixelGridState.cols = 0;
+        PixelGridState.rows = 0;
     }
 }

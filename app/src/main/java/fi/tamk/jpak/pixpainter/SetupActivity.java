@@ -102,10 +102,12 @@ public class SetupActivity extends AppCompatActivity implements OnCanvasSetupCha
     public void startEditor(View v) {
         PixelGridState.clear();
         Intent i = new Intent(this, EditorActivity.class);
-        int cols = 20;
-        int rows = 20;
-        if (dimensions[0] <= 100) cols = dimensions[0];
-        if (dimensions[1] <= 100) rows = dimensions[1];
+        int cols = 0;
+        int rows = 0;
+        if (dimensions[0] <= 100 && dimensions[0] > 0) cols = dimensions[0];
+        if (dimensions[1] <= 100 && dimensions[1] > 0) rows = dimensions[1];
+        PixelGridState.setCols(cols);
+        PixelGridState.setRows(rows);
         i.putExtra("columns", cols);
         i.putExtra("rows", rows);
         startActivity(i);

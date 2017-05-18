@@ -91,8 +91,13 @@ public class DrawingView extends AppCompatImageView {
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setARGB(0, 0, 0, 0);
-        numColumns = 1;
-        numRows = 1;
+
+        numColumns = 0;
+        numRows = 0;
+        int colCount = PixelGridState.getCols();
+        if (colCount > 0) numColumns = colCount;
+        int rowCount = PixelGridState.getRows();
+        if (rowCount > 0) numRows = rowCount;
 
         defaultTool = new Pencil();
         tool = PixelGridState.getActiveTool();
@@ -118,6 +123,12 @@ public class DrawingView extends AppCompatImageView {
      * @param numRows number of rows.
      */
     public void setNumRows(int numRows) {
+        this.numRows = numRows;
+        calculateDimensions();
+    }
+
+    public void setDimensions(int numRows, int numColumns) {
+        this.numColumns = numColumns;
         this.numRows = numRows;
         calculateDimensions();
     }
@@ -323,6 +334,11 @@ public class DrawingView extends AppCompatImageView {
             for (int j = 0; j < numColumns; j++) {
                 pixels[i][j] = new Pixel(j, i);
             }
+        }
+
+        if (!(PixelGridState.isStartStateSaved())) {
+            PixelGridState.setStartStateToHistory(numRows, numColumns);
+            PixelGridState.setStartStateSaved(true);
         }
     }
 

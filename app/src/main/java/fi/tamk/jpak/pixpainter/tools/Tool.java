@@ -133,7 +133,10 @@ public abstract class Tool {
 
                 /* Draw from upper left corner to right  */
                 for (int j = 0; j < (lineLenght - 1); j++) {
-                    if ((row - i) >= 0 && (col - i) >= 0 && ((col - i) + j) < width) {
+                    if ((row - i) >= 0 &&
+                            (row - i) < height &&
+                            ((col - i) + j) >= 0 &&
+                            ((col - i) + j) < width) {
 
                         if (blend) {
                             if (fadeValues != null) {
@@ -151,7 +154,10 @@ public abstract class Tool {
 
                 /* Draw from upper right corner to down  */
                 for (int j = 0; j < (lineLenght - 1); j++) {
-                    if ((row - i) >= 0 && (col + i) < width && ((row - i) + j) < height) {
+                    if ((col + i) >= 0 &&
+                            (col + i) < width &&
+                            ((row - i) + j) >= 0 &&
+                            ((row - i) + j) < height) {
 
                         if (blend) {
                             if (fadeValues != null) {
@@ -169,7 +175,10 @@ public abstract class Tool {
 
                 /* Draw from lower right corner to left  */
                 for (int j = 0; j < (lineLenght - 1); j++) {
-                    if ((row + i) < height && (col + i) < width && ((col + i) - j) >= 0) {
+                    if ((row + i) < height &&
+                            (row + i) >= 0 &&
+                            ((col + i) - j) < width &&
+                            ((col + i) - j) >= 0) {
 
                         if (blend) {
                             if (fadeValues != null) {
@@ -187,7 +196,10 @@ public abstract class Tool {
 
                 /* Draw from lower left corner to up  */
                 for (int j = 0; j < (lineLenght - 1); j++) {
-                    if ((row + i) < height && (col - i) >= 0 && ((row + i) - j) >= 0) {
+                    if (((row + i) - j) < height &&
+                            (col - i) >= 0 &&
+                            (col - i) < width &&
+                            ((row + i) - j) >= 0) {
 
                         if (blend) {
                             if (fadeValues != null) {

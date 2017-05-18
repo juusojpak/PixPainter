@@ -155,8 +155,8 @@ public class EditorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
         Intent intent = getIntent();
-        cols = 20;
-        rows = 24;
+        cols = 0;
+        rows = 0;
 
         if (intent != null) {
             cols = intent.getExtras().getInt("columns");
@@ -172,9 +172,13 @@ public class EditorActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-
         grid = (PixelGridView) findViewById(R.id.pixelGridView);
         drawing = (DrawingView) findViewById(R.id.drawingView);
+
+        int colCount = PixelGridState.getCols();
+        if (colCount > 0) cols = colCount;
+        int rowCount = PixelGridState.getRows();
+        if (rowCount > 0) rows = rowCount;
         setEditorDimensions();
 
         setupFrag = (ToolSetupFragment) getSupportFragmentManager().findFragmentById(R.id.setupFrag);
@@ -374,8 +378,7 @@ public class EditorActivity extends AppCompatActivity implements
     public void setEditorDimensions() {
         grid.setNumRows(rows);
         grid.setNumColumns(cols);
-        drawing.setNumRows(rows);
-        drawing.setNumColumns(cols);
+        drawing.setDimensions(rows, cols);
     }
 
     /**
